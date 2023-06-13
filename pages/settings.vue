@@ -22,18 +22,17 @@
         @before-leave="handleBeforeLeave"
         @update:value="handleUpdateValue"
       >
-        <n-tab-pane name="General" tab="General">
+        <n-tab-pane name="Clock" tab="Clock">
           <template #tab>
             <div class="flex items-center justify-start space-x-2 text-white">
-              <Icon
-                name="material-symbols:settings-account-box-rounded"
-                size="25"
-              />
-              <span class="text-base">General</span>
+              <Icon name="mdi:web-clock" size="25" />
+              <span class="text-base">Clock</span>
             </div>
           </template>
 
-          <div class="text-white">General</div>
+          <div class="text-white">
+            Use 24 Hour clock: <n-switch :round="false" />
+          </div>
         </n-tab-pane>
 
         <n-tab-pane name="My Profile" tab="My Profile">
@@ -46,7 +45,7 @@
 
           <div class="text-white">My Profile</div>
         </n-tab-pane>
-
+        s
         <n-tab-pane name="Todo" tab="Todo">
           <template #tab>
             <div class="flex items-center justify-start space-x-2 text-white">

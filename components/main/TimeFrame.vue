@@ -1,9 +1,19 @@
 <template>
   <div class="flex items-center space-x-4 rounded-xl p-4">
-    <ClockNormalTimeComponent />
+    <Transition name="fast-fade-blur" appear mode="out-in">
+      <div v-if="clockType === 'pomodoro'">
+        <ClockTimeComponent />
+      </div>
+      <div v-else-if="clockType === 'percent'">
+        <ClockTimeComponent />
+      </div>
+      <div v-else>
+        <ClockTimeComponent />
+      </div>
+    </Transition>
 
     <n-popover
-      trigger="click"
+      trigger="hover"
       content-style=" border-radius: 5px; background-color: transparent; border: 1px solid white"
       placement="bottom-start"
       raw
@@ -15,25 +25,16 @@
           <Icon name="material-symbols:swap-horiz-rounded" size="40" />
         </div>
       </template>
-      <div class="flex flex-row space-x-1">
-        <div
-          class="flex cursor-pointer items-center space-x-1 rounded-md p-2 text-slate-100 transition-all hover:bg-sky-500"
-          @click="changeClockType('clock')"
-        >
+      <div class="flex flex-row space-x-1 bg-slate-50">
+        <div class="popover-item" @click="changeClockType('time')">
           <Icon name="uil:clock-seven" size="20" />
           <span> Clock </span>
         </div>
-        <div
-          class="flex cursor-pointer items-center space-x-1 rounded-md p-2 text-slate-100 transition-all hover:bg-sky-500"
-          @click="changeClockType('percent')"
-        >
+        <div class="popover-item" @click="changeClockType('percent')">
           <Icon name="mdi:clock-digital" size="20" />
           <span> Percent </span>
         </div>
-        <div
-          class="flex cursor-pointer items-center space-x-1 rounded-md p-2 text-slate-100 transition-all hover:bg-sky-500"
-          @click="changeClockType('pomodoro')"
-        >
+        <div class="popover-item" @click="changeClockType('pomodoro')">
           <Icon name="emojione-monotone:timer-clock" size="20" />
           <span> Pomodoro </span>
         </div>
@@ -43,7 +44,16 @@
 </template>
 
 <script setup lang="ts">
+const clockType = ref("time");
+
 const changeClockType = (value: string) => {
+  clockType.value = value;
   console.log("changeClockType", value);
 };
 </script>
+
+<style scoped>
+.popover-item {
+  @apply flex cursor-pointer items-center space-x-1 rounded-md  p-2 text-[#07518d] transition-all hover:bg-sky-300;
+}
+</style>

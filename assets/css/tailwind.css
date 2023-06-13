@@ -191,20 +191,24 @@ body {
   transition: opacity 0.3s ease-in-out;
 }
 
-.fade-enter-from,
-.fade-leave-to {
+.blur-enter-from,
+.blur-leave-to {
+  filter: blur(0.5rem);
   opacity: 0;
 }
-
 .blur-enter-active,
 .blur-leave-active {
   transition: all 1s ease-in;
 }
 
-.blur-enter-from,
-.blur-leave-to {
+.fast-fade-blur-enter-from,
+.fast-fade-blur-leave-to {
   filter: blur(0.5rem);
   opacity: 0;
+}
+.fast-fade-blur-enter-active,
+.fast-fade-blur-leave-active {
+  transition: all 0.3s ease-in;
 }
 
 .glass-container {
