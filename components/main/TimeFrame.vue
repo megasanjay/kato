@@ -5,7 +5,7 @@
         <ClockTimeComponent />
       </div>
       <div v-else-if="clockType === 'percent'">
-        <ClockTimeComponent />
+        <ClockPercentComponent />
       </div>
       <div v-else>
         <ClockTimeComponent />
@@ -25,7 +25,7 @@
           <Icon name="material-symbols:swap-horiz-rounded" size="40" />
         </div>
       </template>
-      <div class="flex flex-row space-x-1 bg-slate-50">
+      <div class="flex flex-row bg-slate-50">
         <div
           class="popover-item"
           :class="{
@@ -62,16 +62,19 @@
 </template>
 
 <script setup lang="ts">
-const clockType = ref("time");
+import { useClockStore } from "~/stores/clock";
+
+const clockStore = useClockStore();
+
+const clockType = computed(() => clockStore.currentView);
 
 const changeClockType = (value: string) => {
-  clockType.value = value;
-  console.log("changeClockType", value);
+  clockStore.updateCurrentView(value);
 };
 </script>
 
 <style scoped>
 .popover-item {
-  @apply flex cursor-pointer items-center space-x-1 rounded-md  p-2 text-[#07518d] transition-all hover:bg-sky-300;
+  @apply flex cursor-pointer items-center space-x-1  p-2 text-[#07518d] transition-all hover:bg-sky-300;
 }
 </style>
