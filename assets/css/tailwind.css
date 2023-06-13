@@ -28,32 +28,32 @@ body {
 
   /* #region  /**=========== Typography =========== */
   .h0 {
-    @apply font-primary text-3xl font-bold md:text-5xl;
+    @apply font-primary text-3xl font-bold text-white md:text-5xl;
   }
 
   h1,
   .h1 {
-    @apply font-primary text-2xl font-bold md:text-4xl;
+    @apply font-primary text-2xl font-bold text-white md:text-4xl;
   }
 
   h2,
   .h2 {
-    @apply font-primary text-xl font-bold md:text-3xl;
+    @apply font-primary text-xl font-bold text-white md:text-3xl;
   }
 
   h3,
   .h3 {
-    @apply font-primary text-lg font-bold md:text-2xl;
+    @apply font-primary text-lg font-bold text-white md:text-2xl;
   }
 
   h4,
   .h4 {
-    @apply font-primary text-base font-bold md:text-lg;
+    @apply font-primary text-base font-bold text-white md:text-lg;
   }
 
   body,
   .p {
-    @apply font-primary text-sm md:text-base;
+    @apply font-primary text-base text-white md:text-base;
   }
   /* #endregion  /**======== Typography =========== */
 
@@ -263,4 +263,8 @@ body {
 
 .vignette > * {
   @apply relative z-10;
+}
+
+.debug {
+  @apply !border-2 !border-red-500;
 }

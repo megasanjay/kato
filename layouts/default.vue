@@ -1,6 +1,6 @@
 <template>
   <div
-    class="relative flex h-screen w-full flex-col justify-between bg-cover bg-center bg-no-repeat p-4"
+    class="relative flex h-screen w-full flex-col justify-between overflow-hidden bg-cover bg-center bg-no-repeat p-4"
     :class="{ 'debug-screenss': devMode }"
     :style="{
       backgroundImage:

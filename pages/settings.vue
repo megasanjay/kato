@@ -1,20 +1,28 @@
 <template>
   <main class="vignette h-full w-full px-4 py-3 backdrop-blur-sm">
     <div class="mb-2 mt-8 flex items-center justify-start space-x-3 text-white">
-      <Icon name="material-symbols:settings-account-box-rounded" size="33" />
+      <Icon name="ic:twotone-settings" size="33" />
       <h1 class="text-2xl font-bold drop-shadow-lg sm:text-4xl">Settings</h1>
     </div>
 
     <n-divider />
 
     <div class="mt-8">
+      <!-- <n-breadcrumb separator=">" class="my-4">
+        <n-breadcrumb-item class="text-white"> Home </n-breadcrumb-item>
+        <n-breadcrumb-item> Account </n-breadcrumb-item>
+        <n-breadcrumb-item> Category </n-breadcrumb-item>
+      </n-breadcrumb> -->
+
       <n-tabs
         type="line"
         animated
         placement="left"
+        size="large"
         @before-leave="handleBeforeLeave"
+        @update:value="handleUpdateValue"
       >
-        <n-tab-pane name="oasis" tab="Oasis">
+        <n-tab-pane name="General" tab="General">
           <template #tab>
             <div class="flex items-center justify-start space-x-2 text-white">
               <Icon
@@ -28,7 +36,7 @@
           <div class="text-white">General</div>
         </n-tab-pane>
 
-        <n-tab-pane name="myProfile" tab="MyProfile">
+        <n-tab-pane name="My Profile" tab="My Profile">
           <template #tab>
             <div class="flex items-center justify-start space-x-2 text-white">
               <Icon name="mdi:account-settings-variant" size="25" />
@@ -39,7 +47,7 @@
           <div class="text-white">My Profile</div>
         </n-tab-pane>
 
-        <n-tab-pane name="todo" tab="Todo">
+        <n-tab-pane name="Todo" tab="Todo">
           <template #tab>
             <div class="flex items-center justify-start space-x-2 text-white">
               <Icon name="pajamas:todo-done" size="25" />
@@ -50,7 +58,7 @@
           <div class="text-white">Todo</div>
         </n-tab-pane>
 
-        <n-tab-pane name="help" tab="Help">
+        <n-tab-pane name="Help" tab="Help">
           <template #tab>
             <div class="flex items-center justify-start space-x-2 text-white">
               <Icon name="material-symbols:help-rounded" size="25" />
@@ -61,7 +69,7 @@
           <div class="text-white">Help</div>
         </n-tab-pane>
 
-        <n-tab-pane name="about" tab="About">
+        <n-tab-pane name="About" tab="About">
           <template #tab>
             <div class="flex items-center justify-start space-x-2 text-white">
               <Icon name="material-symbols:info-rounded" size="25" />
@@ -72,7 +80,7 @@
           <div class="text-white">About</div>
         </n-tab-pane>
 
-        <n-tab-pane name="changelog" tab="Oasis">
+        <n-tab-pane name="Changelog" tab="Changelog">
           <template #tab>
             <div class="flex items-center justify-start space-x-2 text-white">
               <Icon name="simple-icons:keepachangelog" size="25" />
@@ -83,7 +91,7 @@
           <div class="text-white">Changelog</div>
         </n-tab-pane>
 
-        <n-tab-pane name="logout" tab="Logout">
+        <n-tab-pane v-if="isLoggedIn" name="Log Out" tab="Log Out">
           <template #tab>
             <div class="flex items-center justify-start space-x-2 text-white">
               <Icon name="ion:log-out" size="25" />
@@ -91,7 +99,18 @@
             </div>
           </template>
 
-          <div class="text-white">Log Out</div>
+          <SettingsUserLogout />
+        </n-tab-pane>
+
+        <n-tab-pane v-if="!isLoggedIn" name="Login" tab="Login">
+          <template #tab>
+            <div class="flex items-center justify-start space-x-2 text-white">
+              <Icon name="ion:log-out" size="25" />
+              <span class="text-base">Login</span>
+            </div>
+          </template>
+
+          <div class="text-white">Redirecting to login page</div>
         </n-tab-pane>
       </n-tabs>
     </div>
@@ -104,13 +123,23 @@ const user = useSupabaseUser();
 
 const message = useMessage();
 
-const handleBeforeLeave = (tabName: string) => {
-  const loggedIn = user.value?.id;
+const isLoggedIn = computed(() => user.value);
 
-  if (!loggedIn) {
+const handleUpdateValue = (value: string) => {
+  if (value === "Login") {
+    navigateTo("/auth/login");
+  }
+};
+
+const handleBeforeLeave = (tabName: string) => {
+  console.log(tabName);
+  if (!isLoggedIn.value) {
     switch (tabName) {
-      case "myProfile":
-        message.error("You must be logged in to view this section!");
+      case "My Profile":
+        message.error("You must be logged in to view this section");
+        return false;
+      case "Log Out":
+        message.error("You must be logged in to view this section");
         return false;
 
       default:
