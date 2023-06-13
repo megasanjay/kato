@@ -19,12 +19,15 @@ export default defineNuxtConfig({
 
   css: ["@/assets/css/tailwind.css"],
 
+  devtools: { enabled: true },
+
   imports: {
     dirs: ["stores"],
   },
 
   modules: [
     "@nuxtjs/supabase",
+    "@nuxt/devtools",
     "@nuxtjs/tailwindcss",
     "@pinia/nuxt",
     "@pinia-plugin-persistedstate/nuxt",
