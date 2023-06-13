@@ -16,12 +16,7 @@
       />
     </transition>
 
-    <header class="relative z-10 flex w-full bg-red-500 px-4 py-2">
-      <div class="dropdown-item" @click="logout">
-        <Icon name="majesticons:logout" size="20" />
-        <span> Logout </span>
-      </div>
-    </header>
+    <UiHeader />
 
     <div
       class="content relative z-10 flex h-full items-start justify-start p-4"
@@ -31,23 +26,7 @@
       <n-button @click="changeImage"> change image </n-button> -->
     </div>
 
-    <footer
-      class="group relative z-10 flex w-full cursor-pointer items-center justify-between px-4 py-2"
-    >
-      <nuxt-link v-if="!loggedIn" to="/settings">
-        <div
-          class="flex flex-row items-center justify-start space-x-2 text-white transition-all hover:text-cyan-200"
-        >
-          <Icon
-            name="material-symbols:settings-b-roll-outline-rounded"
-            size="20"
-          />
-          <div class="w-0 overflow-hidden transition-all group-hover:w-[64px]">
-            Settings
-          </div>
-        </div>
-      </nuxt-link>
-    </footer>
+    <UiFooter />
   </div>
 </template>
 

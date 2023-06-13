@@ -223,6 +223,7 @@ body {
 .vignette::before {
   @apply absolute inset-0 z-0 scale-[2];
   content: "";
+  pointer-events: none;
 
   /* ff 3.6+ */
   background: -moz-radial-gradient(
