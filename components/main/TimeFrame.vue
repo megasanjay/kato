@@ -26,15 +26,33 @@
         </div>
       </template>
       <div class="flex flex-row space-x-1 bg-slate-50">
-        <div class="popover-item" @click="changeClockType('time')">
+        <div
+          class="popover-item"
+          :class="{
+            'bg-sky-200': clockType === 'time',
+          }"
+          @click="changeClockType('time')"
+        >
           <Icon name="uil:clock-seven" size="20" />
           <span> Clock </span>
         </div>
-        <div class="popover-item" @click="changeClockType('percent')">
+        <div
+          class="popover-item"
+          :class="{
+            'bg-sky-200': clockType === 'percent',
+          }"
+          @click="changeClockType('percent')"
+        >
           <Icon name="mdi:clock-digital" size="20" />
           <span> Percent </span>
         </div>
-        <div class="popover-item" @click="changeClockType('pomodoro')">
+        <div
+          class="popover-item"
+          :class="{
+            'bg-sky-200': clockType === 'pomodoro',
+          }"
+          @click="changeClockType('pomodoro')"
+        >
           <Icon name="emojione-monotone:timer-clock" size="20" />
           <span> Pomodoro </span>
         </div>

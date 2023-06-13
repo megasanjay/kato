@@ -1,5 +1,5 @@
 <template>
-  <div class="vignette">
+  <div class="">
     <div class="text-[160px] font-black text-white drop-shadow-lg">
       {{ currentTime }}
     </div>

@@ -57,6 +57,10 @@ body {
   }
   /* #endregion  /**======== Typography =========== */
 
+  * {
+    @apply !font-primary;
+  }
+
   .layout {
     /* 1100px */
     max-width: 68.75rem;
@@ -225,7 +229,7 @@ body {
 }
 
 .vignette::before {
-  @apply absolute inset-0 z-0 scale-[2];
+  @apply absolute inset-0 z-0 h-screen w-screen;
   content: "";
   pointer-events: none;
 

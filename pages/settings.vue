@@ -24,7 +24,7 @@
       >
         <n-tab-pane name="Clock" tab="Clock">
           <template #tab>
-            <div class="flex items-center justify-start space-x-2 text-white">
+            <div class="tab-pane-title">
               <Icon name="mdi:web-clock" size="25" />
               <span class="text-base">Clock</span>
             </div>
@@ -37,7 +37,7 @@
 
         <n-tab-pane name="My Profile" tab="My Profile">
           <template #tab>
-            <div class="flex items-center justify-start space-x-2 text-white">
+            <div class="tab-pane-title">
               <Icon name="mdi:account-settings-variant" size="25" />
               <span class="text-base">My Profile</span>
             </div>
@@ -48,7 +48,7 @@
         s
         <n-tab-pane name="Todo" tab="Todo">
           <template #tab>
-            <div class="flex items-center justify-start space-x-2 text-white">
+            <div class="tab-pane-title">
               <Icon name="pajamas:todo-done" size="25" />
               <span class="text-base">Todo</span>
             </div>
@@ -59,7 +59,7 @@
 
         <n-tab-pane name="Help" tab="Help">
           <template #tab>
-            <div class="flex items-center justify-start space-x-2 text-white">
+            <div class="tab-pane-title">
               <Icon name="material-symbols:help-rounded" size="25" />
               <span class="text-base">Help</span>
             </div>
@@ -70,7 +70,7 @@
 
         <n-tab-pane name="About" tab="About">
           <template #tab>
-            <div class="flex items-center justify-start space-x-2 text-white">
+            <div class="tab-pane-title">
               <Icon name="material-symbols:info-rounded" size="25" />
               <span class="text-base">About</span>
             </div>
@@ -81,7 +81,7 @@
 
         <n-tab-pane name="Changelog" tab="Changelog">
           <template #tab>
-            <div class="flex items-center justify-start space-x-2 text-white">
+            <div class="tab-pane-title">
               <Icon name="simple-icons:keepachangelog" size="25" />
               <span class="text-base">Changelog</span>
             </div>
@@ -92,7 +92,7 @@
 
         <n-tab-pane v-if="isLoggedIn" name="Log Out" tab="Log Out">
           <template #tab>
-            <div class="flex items-center justify-start space-x-2 text-white">
+            <div class="tab-pane-title">
               <Icon name="ion:log-out" size="25" />
               <span class="text-base">Log Out</span>
             </div>
@@ -103,7 +103,7 @@
 
         <n-tab-pane v-if="!isLoggedIn" name="Login" tab="Login">
           <template #tab>
-            <div class="flex items-center justify-start space-x-2 text-white">
+            <div class="tab-pane-title">
               <Icon name="ion:log-out" size="25" />
               <span class="text-base">Login</span>
             </div>
@@ -149,3 +149,9 @@ const handleBeforeLeave = (tabName: string) => {
   return true;
 };
 </script>
+
+<style scoped>
+.tab-pane-title {
+  @apply flex items-center justify-start space-x-2 text-white drop-shadow-lg;
+}
+</style>
