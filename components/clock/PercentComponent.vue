@@ -39,8 +39,6 @@ const getCurrentTime = () => {
   // set current time
   if (percent > 100) {
     currentTime.value = `+${percent - 100}`;
-  } else if (percent < 0) {
-    currentTime.value = `-${percent + 100}`;
   } else {
     currentTime.value = percent.toString();
   }

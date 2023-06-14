@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col space-y-2 p-4 text-white">
-    <n-form-item label="Display Name" class="">
+    <n-form-item label="Display Name" size="large">
       <div class="flex items-center space-x-4">
         <n-input
           v-model:value="displayName"
@@ -16,7 +16,7 @@
       </div>
     </n-form-item>
 
-    <n-form-item label="Full Name" class="">
+    <n-form-item label="Full Name" size="large">
       <div class="flex items-center space-x-4">
         <n-input
           v-model:value="fullName"
