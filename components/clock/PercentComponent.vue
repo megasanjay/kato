@@ -1,11 +1,9 @@
 <template>
-  <div class="">
-    <div class="font-black text-white drop-shadow-lg">
-      <span class="text-[160px]">
-        {{ currentTime }}
-      </span>
-      <span class="text-[50px]"> % </span>
-    </div>
+  <div v-if="currentTime" class="font-black text-white drop-shadow-lg">
+    <span class="text-[160px]">
+      {{ currentTime }}
+    </span>
+    <span class="text-[50px]"> % </span>
   </div>
 </template>
 

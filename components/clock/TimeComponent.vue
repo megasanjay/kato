@@ -1,8 +1,9 @@
 <template>
-  <div class="">
-    <div class="text-[160px] font-black text-white drop-shadow-lg">
-      {{ currentTime }}
-    </div>
+  <div
+    v-if="currentTime"
+    class="text-[160px] font-black text-white drop-shadow-lg"
+  >
+    {{ currentTime }}
   </div>
 </template>
 
