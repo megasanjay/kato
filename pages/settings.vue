@@ -15,7 +15,7 @@
       </n-breadcrumb> -->
 
       <n-tabs
-        type="line"
+        type="bar"
         animated
         placement="left"
         size="large"
@@ -32,6 +32,8 @@
 
           <div class="text-white">
             Use 24 Hour clock: <n-switch :round="false" />
+
+            <n-time-picker use-12-hours format="h:mm a" />
           </div>
         </n-tab-pane>
 
@@ -88,6 +90,17 @@
           </template>
 
           <div class="text-white">Changelog</div>
+        </n-tab-pane>
+
+        <n-tab-pane name="Advanced" tab="Advanced">
+          <template #tab>
+            <div class="tab-pane-title">
+              <Icon name="simple-icons:keepachangelog" size="25" />
+              <span class="text-base">Advanced</span>
+            </div>
+          </template>
+
+          <div class="text-white">Advanced</div>
         </n-tab-pane>
 
         <n-tab-pane v-if="isLoggedIn" name="Log Out" tab="Log Out">
@@ -152,6 +165,6 @@ const handleBeforeLeave = (tabName: string) => {
 
 <style scoped>
 .tab-pane-title {
-  @apply flex items-center justify-start space-x-2 text-white drop-shadow-lg;
+  @apply flex items-center justify-start space-x-2 font-medium drop-shadow-lg;
 }
 </style>

@@ -1,6 +1,10 @@
 <template>
-  <main class="vignette mx-auto my-auto px-4 py-3">
+  <main class="vignette mx-auto my-auto w-full">
     <MainTimeFrame />
+
+    <MainAffirmationsComponent />
+
+    <MainSearchComponent />
   </main>
 </template>
 

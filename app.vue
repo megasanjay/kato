@@ -35,6 +35,12 @@ const themeConfig: ThemeConfig = {
       placeholderColor: "#bfbeba",
       textColor: "#ffffff",
     },
+    Tabs: {
+      barColor: "#07518d",
+      tabTextColorActiveBar: "#07518d",
+      tabTextColorBar: "#fff",
+      tabTextColorHoverBar: "#0369a1",
+    },
   }, // Common theme options
 };
 

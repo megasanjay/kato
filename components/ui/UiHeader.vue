@@ -4,7 +4,7 @@
   >
     <nuxt-link
       to="/"
-      class="vignette group relative z-10 cursor-pointer text-white hover:text-cyan-200"
+      class="group relative z-10 cursor-pointer text-white hover:text-cyan-200"
     >
       <div
         class="flex scale-95 flex-row items-center justify-start space-x-2 transition-all group-hover:scale-100 group-hover:drop-shadow-xl"
