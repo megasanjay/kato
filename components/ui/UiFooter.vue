@@ -18,7 +18,17 @@
         </div>
       </div>
     </nuxt-link>
+
+    <transition name="fast-fade-blur" appear>
+      <div v-if="requestsInFlight" class="absolute -top-[50px] left-0">
+        <LoadersSunLoader />
+      </div>
+    </transition>
   </footer>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useLoaderStore } from "@/stores/loader";
+
+const { requestsInFlight } = useLoaderStore();
+</script>

@@ -9,12 +9,19 @@
 
 <script setup lang="ts">
 import dayjs from "dayjs";
+import { useClockStore } from "~/stores/clock";
+
+const clockStore = useClockStore();
 
 const currentTime = ref("");
 const mounted = ref(true);
 
+const display24Hours = computed(() => clockStore.display24Hours);
+
 const getCurrentTime = () => {
-  currentTime.value = dayjs().format("h:mm");
+  const timeFormat = display24Hours.value ? "H:mm" : "h:mm";
+
+  currentTime.value = dayjs().format(timeFormat);
 
   if (mounted.value) {
     setTimeout(getCurrentTime, 1000);

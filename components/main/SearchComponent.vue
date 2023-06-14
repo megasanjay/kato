@@ -43,6 +43,8 @@ const runSearch = () => {
         window.open(`https://www.google.com/search?q=${searchTerm}`);
         break;
     }
+
+    inputTerm.value = "";
   }
 };
 </script>

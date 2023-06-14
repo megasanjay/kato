@@ -1,5 +1,7 @@
 <template>
-  <main class="vignette h-full w-full px-4 py-3 backdrop-blur-sm">
+  <main
+    class="vignette h-full w-full rounded-xl bg-slate-900/20 px-4 py-3 backdrop-blur-sm"
+  >
     <div class="mb-2 mt-8 flex items-center justify-start space-x-3 text-white">
       <Icon name="ic:twotone-settings" size="33" />
       <h1 class="text-2xl font-bold drop-shadow-lg sm:text-4xl">Settings</h1>
@@ -30,11 +32,7 @@
             </div>
           </template>
 
-          <div class="text-white">
-            Use 24 Hour clock: <n-switch :round="false" />
-
-            <n-time-picker use-12-hours format="h:mm a" />
-          </div>
+          <SettingsClockOptions />
         </n-tab-pane>
 
         <n-tab-pane name="My Profile" tab="My Profile">
@@ -45,13 +43,13 @@
             </div>
           </template>
 
-          <div class="text-white">My Profile</div>
+          <SettingsMyProfile />
         </n-tab-pane>
         s
         <n-tab-pane name="Todo" tab="Todo">
           <template #tab>
             <div class="tab-pane-title">
-              <Icon name="pajamas:todo-done" size="25" />
+              <Icon name="mdi:format-list-checkbox" size="25" />
               <span class="text-base">Todo</span>
             </div>
           </template>
@@ -62,7 +60,7 @@
         <n-tab-pane name="Help" tab="Help">
           <template #tab>
             <div class="tab-pane-title">
-              <Icon name="material-symbols:help-rounded" size="25" />
+              <Icon name="material-symbols:help-outline-rounded" size="25" />
               <span class="text-base">Help</span>
             </div>
           </template>
@@ -73,7 +71,7 @@
         <n-tab-pane name="About" tab="About">
           <template #tab>
             <div class="tab-pane-title">
-              <Icon name="material-symbols:info-rounded" size="25" />
+              <Icon name="material-symbols:info-outline-rounded" size="25" />
               <span class="text-base">About</span>
             </div>
           </template>
@@ -95,7 +93,7 @@
         <n-tab-pane name="Advanced" tab="Advanced">
           <template #tab>
             <div class="tab-pane-title">
-              <Icon name="simple-icons:keepachangelog" size="25" />
+              <Icon name="fluent:developer-board-16-regular" size="25" />
               <span class="text-base">Advanced</span>
             </div>
           </template>

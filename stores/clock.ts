@@ -4,13 +4,14 @@ export const useClockStore = defineStore(
   "clock",
   () => {
     const currentView = ref("time");
-    const settingsDisplay24Hour = ref(false);
+
+    const display24Hours = ref(false);
 
     const percentStartTime = ref(0);
     const percentEndTime = ref(0);
 
-    const updateSettingsDisplay24Hour = (value: boolean) => {
-      settingsDisplay24Hour.value = value;
+    const updateDisplay24Hours = (value: boolean) => {
+      display24Hours.value = value;
     };
 
     const updateCurrentView = (value: string) => {
@@ -27,13 +28,13 @@ export const useClockStore = defineStore(
 
     return {
       currentView,
+      display24Hours,
       percentEndTime,
       percentStartTime,
-      settingsDisplay24Hour,
       updateCurrentView,
+      updateDisplay24Hours,
       updatePercentEndTime,
       updatePercentStartTime,
-      updateSettingsDisplay24Hour,
     };
   },
   {

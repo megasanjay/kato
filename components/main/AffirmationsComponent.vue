@@ -2,7 +2,7 @@
   <div>
     <transition name="fast-fade-blur" appear mode="out-in">
       <p v-if="showGreeting" class="text-center text-6xl font-bold text-white">
-        {{ greeting }}, Sanjay.
+        {{ greeting }}<span v-if="name !== ''">, {{ name }}. </span>
       </p>
       <p v-else class="text-center text-5xl font-bold text-white">
         {{ affirmation }}
@@ -13,6 +13,11 @@
 
 <script setup lang="ts">
 import dayjs from "dayjs";
+import { useUserStore } from "~/stores/user";
+
+const userStore = useUserStore();
+
+const name = computed(() => userStore.displayName);
 
 const showGreeting = ref(true);
 const greeting = ref("Hello");
