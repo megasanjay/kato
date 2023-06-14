@@ -9,7 +9,14 @@
 
 <script setup lang="ts">
 import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
 import { useClockStore } from "~/stores/clock";
+
+// eslint-disable-next-line import/no-named-as-default-member
+dayjs.extend(utc);
+// eslint-disable-next-line import/no-named-as-default-member
+dayjs.extend(timezone);
 
 const clockStore = useClockStore();
 
@@ -17,12 +24,22 @@ const currentTime = ref("");
 
 const mounted = ref(true);
 
+const timeZone = computed(() => clockStore.timeZone);
+
 const getCurrentTime = () => {
   // set start time to 9;30 today
-  const startTime = dayjs().set("hour", 9).set("minute", 30).set("second", 0);
+  const startTime = dayjs()
+    .tz(timeZone.value)
+    .set("hour", 9)
+    .set("minute", 30)
+    .set("second", 0);
 
   // set end time to 18:00 today
-  const endTime = dayjs().set("hour", 17).set("minute", 0).set("second", 0);
+  const endTime = dayjs()
+    .tz(timeZone.value)
+    .set("hour", 17)
+    .set("minute", 0)
+    .set("second", 0);
 
   // get current time
   const now = dayjs();

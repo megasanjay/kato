@@ -13,11 +13,22 @@
 
 <script setup lang="ts">
 import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+import { useClockStore } from "~/stores/clock";
 import { useUserStore } from "~/stores/user";
 
+// eslint-disable-next-line import/no-named-as-default-member
+dayjs.extend(utc);
+// eslint-disable-next-line import/no-named-as-default-member
+dayjs.extend(timezone);
+
+const clockStore = useClockStore();
 const userStore = useUserStore();
 
 const name = computed(() => userStore.displayName);
+
+const timeZone = computed(() => clockStore.timeZone);
 
 const showGreeting = ref(true);
 const greeting = ref("Hello");
@@ -25,7 +36,7 @@ const greeting = ref("Hello");
 const affirmation = ref("");
 
 const getGreeting = () => {
-  const currentTime = dayjs().hour();
+  const currentTime = dayjs().tz(timeZone.value).hour();
 
   if (currentTime < 12) {
     greeting.value = "Good morning";
