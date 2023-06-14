@@ -37,9 +37,9 @@ const themeConfig: ThemeConfig = {
     },
     Tabs: {
       barColor: "#07518d",
-      tabTextColorActiveBar: "#07518d",
+      tabTextColorActiveBar: "#eff6ff",
       tabTextColorBar: "#fff",
-      tabTextColorHoverBar: "#0369a1",
+      tabTextColorHoverBar: "#bae6fd",
     },
   }, // Common theme options
 };
