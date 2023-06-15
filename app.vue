@@ -2,6 +2,7 @@
   <NaiveConfig :theme-config="themeConfig">
     <n-message-provider>
       <NuxtLayout>
+        <SeoKit />
         <NuxtLoadingIndicator color="#be185d" :height="5" />
         <NuxtPage />
       </NuxtLayout>
