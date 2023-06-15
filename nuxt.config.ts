@@ -27,17 +27,18 @@ export default defineNuxtConfig({
     dirs: ["stores"],
   },
 
-  lodash: {
-    prefix: "_",
-  },
-
   modules: [
     "@nuxtjs/supabase",
     "@nuxt/devtools",
     "@nuxtjs/tailwindcss",
     "@pinia/nuxt",
     "@nuxtjs/html-validator",
-    "nuxt-lodash",
+    [
+      "nuxt-lodash",
+      {
+        prefix: "_",
+      },
+    ],
     "@pinia-plugin-persistedstate/nuxt",
     "@bg-dev/nuxt-naiveui",
     "nuxt-icon", // icons are found here: https://icones.js.org/
