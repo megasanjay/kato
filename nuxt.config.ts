@@ -32,7 +32,6 @@ export default defineNuxtConfig({
     "@nuxt/devtools",
     "@nuxtjs/tailwindcss",
     "@pinia/nuxt",
-    "@nuxtjs/html-validator",
     [
       "nuxt-lodash",
       {
