@@ -1,11 +1,20 @@
 <template>
   <main class="vignette mx-auto my-auto w-full">
-    <MainTimeFrame />
+    <Transition name="fast-fade-blur" appear mode="out-in">
+      <div v-if="mounted">
+        <MainTimeFrame />
+        <MainAffirmationsComponent />
 
-    <MainAffirmationsComponent />
-
-    <MainSearchComponent />
+        <MainSearchComponent />
+      </div>
+    </Transition>
   </main>
 </template>
 
-<script setup></script>
+<script setup>
+const mounted = ref(false);
+
+onMounted(() => {
+  mounted.value = true;
+});
+</script>
