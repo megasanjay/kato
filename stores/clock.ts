@@ -10,7 +10,7 @@ export const useClockStore = defineStore(
     const percentStartTime = ref(0);
     const percentEndTime = ref(0);
 
-    const timeZone = ref("America/New_York");
+    const timeZone = ref("");
 
     const updateDisplay24Hours = (value: boolean) => {
       display24Hours.value = value;
@@ -46,6 +46,8 @@ export const useClockStore = defineStore(
     };
   },
   {
-    persist: true,
+    persist: {
+      storage: persistedState.localStorage,
+    },
   }
 );

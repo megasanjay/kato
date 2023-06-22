@@ -30,7 +30,9 @@ import { generateListOfTimezones } from "~/utils/listofTimezones";
 const clockStore = useClockStore();
 
 const display24Hours = computed(() => clockStore.display24Hours);
-const timezone = ref(clockStore.timeZone);
+const timezone = ref(
+  clockStore.timeZone || Intl.DateTimeFormat().resolvedOptions().timeZone
+);
 
 const handle24hourChange = (value: boolean) => {
   clockStore.updateDisplay24Hours(value);

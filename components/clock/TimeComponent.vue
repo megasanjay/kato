@@ -24,7 +24,9 @@ const currentTime = ref("");
 const mounted = ref(true);
 
 const display24Hours = computed(() => clockStore.display24Hours);
-const timeZone = computed(() => clockStore.timeZone);
+const timeZone = computed(
+  () => clockStore.timeZone || Intl.DateTimeFormat().resolvedOptions().timeZone
+);
 
 const getCurrentTime = () => {
   const timeFormat = display24Hours.value ? "H:mm" : "h:mm";

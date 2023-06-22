@@ -24,7 +24,9 @@ const currentTime = ref("");
 
 const mounted = ref(true);
 
-const timeZone = computed(() => clockStore.timeZone);
+const timeZone = computed(
+  () => clockStore.timeZone || Intl.DateTimeFormat().resolvedOptions().timeZone
+);
 
 const getCurrentTime = () => {
   // set start time to 9;30 today

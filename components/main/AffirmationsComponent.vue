@@ -1,7 +1,7 @@
 <template>
   <div>
     <transition name="fast-fade-blur" appear mode="out-in">
-      <p v-if="showGreeting" class="text-center text-6xl font-bold text-white">
+      <p v-if="showGreeting" class="text-center text-5xl font-bold text-white">
         {{ greeting }}<span v-if="name !== ''">, {{ name }}. </span>
       </p>
       <p v-else class="text-center text-5xl font-bold text-white">
@@ -28,7 +28,9 @@ const userStore = useUserStore();
 
 const name = computed(() => userStore.displayName);
 
-const timeZone = computed(() => clockStore.timeZone);
+const timeZone = computed(
+  () => clockStore.timeZone || Intl.DateTimeFormat().resolvedOptions().timeZone
+);
 
 const showGreeting = ref(true);
 const greeting = ref("Hello");
