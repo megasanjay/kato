@@ -10,11 +10,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model BackgroundImage {
+model Background {
   id String @id @default(cuid())
 
   theme String
   url   String
+
+  date String
 
   created DateTime @default(now())
 }
