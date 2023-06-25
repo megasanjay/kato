@@ -20,11 +20,14 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Create environment file
-        run: |
-          touch .env
-          echo UNSPLASH_ACCESS_KEY=${{ secrets.UNSPLASH_ACCESS_KEY }} >> .env
-          echo DATABASE_URL=${{ secrets.DATABASE_URL }} >> .env
+      # - name: Create environment file
+      #   run: |
+      #     touch .env
+      #     echo UNSPLASH_ACCESS_KEY=${{ secrets.UNSPLASH_ACCESS_KEY }} >> .env
+      #     echo DATABASE_URL=${{ secrets.DATABASE_URL }} >> .env
 
       - name: Run script
+        env:
+          UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: yarn scripts:generate:background:images
