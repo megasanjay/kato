@@ -13,10 +13,19 @@ datasource db {
 model Background {
   id String @id @default(cuid())
 
+  date  String
   theme String
-  url   String
 
-  date String
+  imageID  String @unique
+  url      String
+  blurHash String
 
-  created DateTime @default(now())
+  index Int
+
+  description String
+
+  username String
+
+  city    String
+  country String
 }

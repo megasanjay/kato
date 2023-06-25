@@ -12,9 +12,17 @@
 </template>
 
 <script setup>
+import { useBackgroundImageStore } from "~/stores/backgroundImage";
+
 const mounted = ref(false);
+
+const backgroundStore = useBackgroundImageStore();
 
 onMounted(() => {
   mounted.value = true;
+
+  backgroundStore.getDailyImages().then(() => {
+    backgroundStore.setBackgroundImage();
+  });
 });
 </script>

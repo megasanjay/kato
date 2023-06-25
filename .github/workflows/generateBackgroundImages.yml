@@ -1,0 +1,30 @@
+name: Generate new background images
+
+on:
+  workflow_dispatch:
+
+  schedule:
+    - cron: "0 */1 * * *"
+
+jobs:
+  update-counters:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the repo
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Create environment file
+        run: |
+          touch .env.local
+          echo UNSPLASH_ACCESS_KEY=${{ secrets.UNSPLASH_ACCESS_KEY }} >> .env.local
+          echo DATABASE_URL=${{ secrets.DATABASE_URL }} >> .env.local
+
+      - name: Update counters
+        run: yarn scripts:generate:background:images

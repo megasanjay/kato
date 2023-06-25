@@ -4,7 +4,7 @@
     :class="{ 'debug-screenss': devMode }"
     :style="{
       backgroundImage:
-        'url(' + backgroundImageStore.previousBackgroundImage + ')',
+        'url(' + backgroundImageStore.previousBackgroundImage.url + ')',
     }"
   >
     <transition name="blur" appear mode="out-in">
@@ -43,23 +43,9 @@ const logout = async () => {
   window.location.href = "/";
 };
 
-const imageSources = [
-  "https://images.unsplash.com/photo-1501854140801-50d01698950b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format",
-  "https://images.unsplash.com/photo-1469474968028-56623f02e42e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format",
-  "https://images.unsplash.com/photo-1426604966848-d7adac402bff?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format",
-];
-
-const backgroundImage = computed(() => backgroundImageStore.backgroundImage);
-
-let index = 0;
-
-const changeImage = () => {
-  index = (index + 1) % 3;
-
-  backgroundImageStore.setBackgroundImage(imageSources[index]);
-
-  console.log("Background image changed");
-};
+const backgroundImage = computed(
+  () => backgroundImageStore.backgroundImage.url
+);
 </script>
 
 <style scoped>

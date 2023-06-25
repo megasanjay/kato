@@ -1,7 +1,7 @@
 <template>
-  <div class="mt-[8%] flex justify-center shadow-md">
+  <div class="mt-[8%] flex justify-center">
     <div
-      class="flex h-[60px] items-center justify-start rounded-[30px] bg-white/20 px-3 py-2 text-white backdrop-blur-sm transition-all"
+      class="flex h-[60px] items-center justify-start rounded-[30px] bg-white/20 px-3 py-2 text-white shadow-md backdrop-blur-sm transition-all"
     >
       <Icon name="tabler:world-search" size="30" />
       <input
