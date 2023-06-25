@@ -23,8 +23,8 @@ jobs:
       - name: Create environment file
         run: |
           touch .env.local
-          echo UNSPLASH_ACCESS_KEY=${{ secrets.UNSPLASH_ACCESS_KEY }} >> .env.local
-          echo DATABASE_URL=${{ secrets.DATABASE_URL }} >> .env.local
+          echo UNSPLASH_ACCESS_KEY=${{ secrets.UNSPLASH_ACCESS_KEY }} >> .env
+          echo DATABASE_URL=${{ secrets.DATABASE_URL }} >> .env
 
-      - name: Update counters
+      - name: Run script
         run: yarn scripts:generate:background:images
