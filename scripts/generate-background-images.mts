@@ -145,9 +145,9 @@ const generateImage = async (searchDate: string) => {
 };
 
 const today = now.format("YYYY-MM-DD");
-// const tomorrow = now.add(1, "day").format("YYYY-MM-DD");
-// const dayAfterTomorrow = now.add(2, "day").format("YYYY-MM-DD");
+const tomorrow = now.add(1, "day").format("YYYY-MM-DD");
+const dayAfterTomorrow = now.add(2, "day").format("YYYY-MM-DD");
 
 generateImage(today);
-// generateImage(tomorrow);
-// generateImage(dayAfterTomorrow);
+generateImage(tomorrow);
+generateImage(dayAfterTomorrow);
