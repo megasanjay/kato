@@ -22,7 +22,7 @@ jobs:
 
       - name: Create environment file
         run: |
-          touch .env.local
+          touch .env
           echo UNSPLASH_ACCESS_KEY=${{ secrets.UNSPLASH_ACCESS_KEY }} >> .env
           echo DATABASE_URL=${{ secrets.DATABASE_URL }} >> .env
 
