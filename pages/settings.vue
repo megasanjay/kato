@@ -22,6 +22,7 @@
         placement="left"
         size="large"
         @before-leave="handleBeforeLeave"
+        default-value="Advanced"
         @update:value="handleUpdateValue"
       >
         <n-tab-pane name="Clock" tab="Clock">

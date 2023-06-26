@@ -41,6 +41,7 @@ const themeConfig: ThemeConfig = {
       tabTextColorActiveBar: "#eff6ff",
       tabTextColorBar: "#fff",
       tabTextColorHoverBar: "#bae6fd",
+      tabPaneColor: "#ffffff",
     },
   }, // Common theme options
 };

@@ -8,7 +8,7 @@
     <UiHeader />
 
     <div
-      class="content relative z-10 flex h-full items-start justify-start p-4"
+      class="content relative z-10 flex h-full items-start justify-start p-8 lg:p-16"
     >
       <slot />
     </div>
