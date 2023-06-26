@@ -28,6 +28,11 @@ export const useBackgroundImageStore = defineStore(
       dailyImages.value = images;
     };
 
+    const setStoreValues = () => {
+      backgroundImage.value = dailyImages.value[index.value];
+      backgroundImageUrl.value = dailyImages.value[index.value].url;
+    };
+
     const setBackgroundImage = async () => {
       const date = dayjs().format("YYYY-MM-DD");
 
@@ -46,11 +51,10 @@ export const useBackgroundImageStore = defineStore(
         date !== backgroundImage.value.date
       ) {
         index.value = 0;
-        backgroundImage.value = dailyImages.value[index.value];
-        backgroundImageUrl.value = dailyImages.value[index.value].url;
+
+        setStoreValues();
       } else {
-        backgroundImage.value = dailyImages.value[index.value];
-        backgroundImageUrl.value = dailyImages.value[index.value].url;
+        setStoreValues();
       }
     };
 
@@ -58,8 +62,7 @@ export const useBackgroundImageStore = defineStore(
       setTimeout(() => {
         index.value = (index.value + 1) % dailyImages.value.length;
 
-        backgroundImage.value = dailyImages.value[index.value];
-        backgroundImageUrl.value = dailyImages.value[index.value].url;
+        setStoreValues();
       }, 200);
     };
 

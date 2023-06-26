@@ -25,15 +25,9 @@ backgroundCookie.value =
   backgroundCookie.value ||
   "data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=";
 
-console.log("backgroundCookie", backgroundCookie.value);
-
 imageSource.value = backgroundCookie.value;
 
-console.log("imageSource", imageSource.value);
-
 onMounted(() => {
-  console.log("mounted");
-
   setInterval(() => {
     checkForNewImage();
   }, 1000);
@@ -45,11 +39,12 @@ const checkForNewImage = () => {
   }
 
   backgroundCookie.value = backgroundStore.backgroundImageUrl;
+
+  isLoaded.value = false;
   imageSource.value = backgroundStore.backgroundImageUrl;
 };
 
 const onImgLoad = () => {
-  console.log("onImgLoad");
   isLoaded.value = true;
 };
 </script>

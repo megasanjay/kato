@@ -98,7 +98,7 @@
             </div>
           </template>
 
-          <div class="text-white">Advanced</div>
+          <SettingsAdvancedOptions />
         </n-tab-pane>
 
         <n-tab-pane v-if="isLoggedIn" name="Log Out" tab="Log Out">
