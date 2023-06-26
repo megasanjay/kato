@@ -1,20 +1,9 @@
 <template>
   <div
-    class="relative flex h-screen w-full flex-col justify-between overflow-hidden bg-cover bg-center bg-no-repeat p-4"
+    class="relative flex h-screen w-full flex-col justify-between overflow-hidden bg-slate-900"
     :class="{ 'debug-screenss': devMode }"
-    :style="{
-      backgroundImage:
-        'url(' + backgroundImageStore.previousBackgroundImage.url + ')',
-    }"
   >
-    <transition name="blur" appear mode="out-in">
-      <img
-        :key="backgroundImage"
-        :src="backgroundImage"
-        alt=""
-        class="fixed inset-0 z-0 h-full w-full object-cover"
-      />
-    </transition>
+    <BackgroundWallpaperImage />
 
     <UiHeader />
 
@@ -22,8 +11,6 @@
       class="content relative z-10 flex h-full items-start justify-start p-4"
     >
       <slot />
-      <!-- <span>{{ backgroundImage }}</span>
-      <n-button @click="changeImage"> change image </n-button> -->
     </div>
 
     <UiFooter />
@@ -31,21 +18,14 @@
 </template>
 
 <script setup>
-import { useBackgroundImageStore } from "~/stores/backgroundImage";
 const { auth } = useSupabaseAuthClient();
 
 const devMode = process.env.NODE_ENV === "development";
-
-const backgroundImageStore = useBackgroundImageStore();
 
 const logout = async () => {
   await auth.signOut();
   window.location.href = "/";
 };
-
-const backgroundImage = computed(
-  () => backgroundImageStore.backgroundImage.url
-);
 </script>
 
 <style scoped>

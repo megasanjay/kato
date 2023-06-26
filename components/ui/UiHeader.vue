@@ -1,6 +1,6 @@
 <template>
   <header
-    class="relative z-10 flex w-full items-center justify-between px-4 py-2"
+    class="relative z-10 flex w-full items-center justify-between px-8 pt-4"
   >
     <nuxt-link
       to="/"
