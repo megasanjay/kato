@@ -4,11 +4,11 @@ import { Background } from "@prisma/client";
 
 import { useLoaderStore } from "./loader";
 
-const loaderStore = useLoaderStore();
-
 export const useBackgroundImageStore = defineStore(
   "backgroundImage",
   () => {
+    const loaderStore = useLoaderStore();
+
     const dailyImages = ref<Background[]>([]);
 
     const backgroundImage = ref<BackgroundImage>({});

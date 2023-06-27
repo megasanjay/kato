@@ -4,10 +4,6 @@ import { nanoid } from "nanoid";
 export const useLoaderStore = defineStore("loader", () => {
   const loadingQueue = ref<string[]>([]);
 
-  const requestsInFlight = computed(() => {
-    return loadingQueue.value.length > 0;
-  });
-
   const generateId = () => {
     return nanoid();
   };
@@ -24,9 +20,9 @@ export const useLoaderStore = defineStore("loader", () => {
   };
 
   return {
+    loadingQueue,
     addToLoadingQueue,
     removeFromLoadingQueue,
-    requestsInFlight,
     generateId,
   };
 });

@@ -19,9 +19,7 @@
       </div>
     </nuxt-link>
 
-    <pre class="text-white">
-      {{ requestsInFlight }}
-    </pre>
+    <pre class="text-white"></pre>
 
     <transition name="fast-fade-blur" appear>
       <div v-show="showLoader" class="absolute -top-[60px] left-4">
@@ -36,5 +34,5 @@ import { useLoaderStore } from "@/stores/loader";
 
 const loaderStore = useLoaderStore();
 
-const showLoader = computed(() => loaderStore.requestsInFlight);
+const showLoader = computed(() => loaderStore.loadingQueue.length > 0);
 </script>
