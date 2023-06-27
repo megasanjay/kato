@@ -1,5 +1,5 @@
 <template>
-  <section class="h-full px-6">
+  <section class="px-6">
     <h1>Logout</h1>
     <n-divider />
 

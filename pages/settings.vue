@@ -2,9 +2,11 @@
   <main
     class="vignette relative flex h-full w-full flex-grow flex-col rounded-xl bg-slate-900/20 px-6 py-4 backdrop-blur-sm"
   >
-    <div class="mb-2 mt-8 flex items-center justify-start space-x-3 text-white">
+    <div
+      class="mb-2 mt-8 flex items-center justify-start space-x-3 text-white drop-shadow-lg"
+    >
       <Icon name="ic:twotone-settings" size="33" />
-      <h1 class="text-2xl font-bold drop-shadow-lg sm:text-4xl">Settings</h1>
+      <h1 class="text-2xl font-bold sm:text-4xl">Settings</h1>
     </div>
 
     <n-divider />
@@ -22,17 +24,18 @@
           @expand="collapsed = false"
         >
           <n-menu
+            class="!font-medium"
             :collapsed="collapsed"
             :collapsed-width="64"
-            :collapsed-icon-size="22"
+            :collapsed-icon-size="25"
             :options="menuOptions"
-            :render-label="renderMenuLabel"
-            :render-icon="renderMenuIcon"
-            :expand-icon="expandIcon"
+            @update:value="showSettingsPanel"
           />
         </n-layout-sider>
         <n-layout class="overflow-hidden overflow-y-auto">
-          <component :is="renderComponent" />
+          <Transition name="fast-fade-blur" mode="out-in" appear>
+            <component :is="renderComponent" />
+          </Transition>
         </n-layout>
       </n-layout>
     </div>
@@ -41,44 +44,98 @@
 
 <script setup lang="ts">
 import type { MenuOption } from "naive-ui";
-import { ConcreteComponent, render } from "nuxt/dist/app/compat/capi";
+import { Icon } from "#components";
+import { ConcreteComponent } from "nuxt/dist/app/compat/capi";
 const user = useSupabaseUser();
+const collapsed = ref(false);
 
 const isLoggedIn = computed(() => user.value);
 
 const SettingsWallpaperOptions = resolveComponent("SettingsWallpaperOptions");
+const SettingsClockOptions = resolveComponent("SettingsClockOptions");
+const SettingsMyProfile = resolveComponent("SettingsMyProfile");
+const SettingsAdvancedOptions = resolveComponent("SettingsAdvancedOptions");
 
 const renderComponent = shallowRef<string | ConcreteComponent | null>(null);
 
 renderComponent.value = SettingsWallpaperOptions;
 
+const renderMenuIcon = (name: string) => {
+  return h(Icon, {
+    name,
+    size: "25",
+  });
+};
+
 const menuOptions: MenuOption[] = [
   {
     key: "Wallpaper",
     label: "Wallpaper",
+    icon: () => renderMenuIcon("material-symbols:image-rounded"),
   },
   {
     key: "Clock",
     label: "Clock",
+    icon: () => renderMenuIcon("mdi:web-clock"),
   },
   {
     disabled: !isLoggedIn.value,
     key: "My Profile",
     label: "My Profile",
+    icon: () => renderMenuIcon("mdi:account-settings-variant"),
+  },
+  {
+    key: "Todo",
+    label: "Todo",
+    icon: () => renderMenuIcon("mdi:format-list-checkbox"),
   },
   {
     key: "About",
     label: "About",
+    icon: () => renderMenuIcon("material-symbols:info-outline-rounded"),
   },
   {
     key: "Help",
     label: "Help",
+    icon: () => renderMenuIcon("material-symbols:help-outline-rounded"),
+  },
+  {
+    key: "Changelog",
+    label: "Changelog",
+    icon: () => renderMenuIcon("simple-icons:keepachangelog"),
+  },
+  {
+    key: "Advanced",
+    label: "Advanced",
+    icon: () => renderMenuIcon("fluent:developer-board-16-regular"),
   },
   {
     key: "Login",
     label: "Login",
+    icon: () => renderMenuIcon("ion:log-out"),
   },
 ];
+
+const showSettingsPanel = (key: string) => {
+  console.log("Showing settings panel for", key);
+  switch (key) {
+    case "Wallpaper":
+      renderComponent.value = SettingsWallpaperOptions;
+      break;
+    case "Clock":
+      renderComponent.value = SettingsClockOptions;
+      break;
+    case "My Profile":
+      renderComponent.value = SettingsMyProfile;
+      break;
+    case "Advanced":
+      renderComponent.value = SettingsAdvancedOptions;
+      break;
+    default:
+      renderComponent.value = SettingsWallpaperOptions;
+      break;
+  }
+};
 </script>
 
 <style scoped>

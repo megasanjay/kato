@@ -43,6 +43,17 @@ const themeConfig: ThemeConfig = {
     },
     Menu: {
       itemTextColor: "#ffffff",
+      itemIconColor: "#ffffff",
+      itemIconColorCollapsed: "#ffffff",
+      itemColorHover: "#e0f2fe",
+      itemTextColorHover: "#0369a1",
+      itemTextColorActive: "#0284c7",
+      itemTextColorActiveHover: "#0c4a6e",
+      itemColorActive: "#e0f2fe",
+      itemIconColorActive: "#0284c7",
+      itemIconColorActiveHover: "#0c4a6e",
+      itemColorActiveHover: "#bae6fd",
+      itemIconColorHover: "#0369a1",
     },
     Tabs: {
       barColor: "#07518d",

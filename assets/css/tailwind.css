@@ -48,7 +48,7 @@ body {
   }
 
   p {
-    @apply font-primary text-lg font-medium text-white drop-shadow-md;
+    @apply font-primary text-lg  text-white drop-shadow-md;
   }
   /* #endregion  /**======== Typography =========== */
 
@@ -277,6 +277,10 @@ body {
 
 .vignette > * {
   @apply relative z-10;
+}
+
+.settings-option {
+  @apply flex flex-col;
 }
 
 .debug {

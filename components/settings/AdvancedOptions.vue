@@ -1,5 +1,5 @@
 <template>
-  <section class="h-full px-6">
+  <section class="px-6">
     <h1>Advanced Options</h1>
     <p class="pt-1">
       These options are not recommended to be changed unless you know what you
@@ -47,7 +47,7 @@
 
         <div class="flex flex-col space-y-2 pt-1">
           <p class="text-base">
-            Kato stores some data on your device using your browser's local
+            Kato stores some data on your device using your browsers local
             storage. This data is not synced with the cloud and is only stored
             on your device. Use this page to clear all data stored on your
             device.
@@ -104,10 +104,3 @@ const clearLocalStorage = () => {
   navigateTo("/");
 };
 </script>
-
-<style scoped>
-.settings-option {
-  @apply flex flex-col;
-}
-</style>
-```
