@@ -55,6 +55,7 @@ const SettingsWallpaperOptions = resolveComponent("SettingsWallpaperOptions");
 const SettingsClockOptions = resolveComponent("SettingsClockOptions");
 const SettingsMyProfile = resolveComponent("SettingsMyProfile");
 const SettingsAdvancedOptions = resolveComponent("SettingsAdvancedOptions");
+const SettingsAuthOptions = resolveComponent("SettingsAuthOptions");
 
 const renderComponent = shallowRef<string | ConcreteComponent | null>(null);
 
@@ -85,21 +86,25 @@ const menuOptions: MenuOption[] = [
     icon: () => renderMenuIcon("mdi:account-settings-variant"),
   },
   {
+    disabled: true,
     key: "Todo",
     label: "Todo",
     icon: () => renderMenuIcon("mdi:format-list-checkbox"),
   },
   {
+    disabled: true,
     key: "About",
     label: "About",
     icon: () => renderMenuIcon("material-symbols:info-outline-rounded"),
   },
   {
+    disabled: true,
     key: "Help",
     label: "Help",
     icon: () => renderMenuIcon("material-symbols:help-outline-rounded"),
   },
   {
+    disabled: true,
     key: "Changelog",
     label: "Changelog",
     icon: () => renderMenuIcon("simple-icons:keepachangelog"),
@@ -110,8 +115,8 @@ const menuOptions: MenuOption[] = [
     icon: () => renderMenuIcon("fluent:developer-board-16-regular"),
   },
   {
-    key: "Login",
-    label: "Login",
+    key: "Auth",
+    label: isLoggedIn.value ? "Logout" : "Login",
     icon: () => renderMenuIcon("ion:log-out"),
   },
 ];
@@ -130,6 +135,9 @@ const showSettingsPanel = (key: string) => {
       break;
     case "Advanced":
       renderComponent.value = SettingsAdvancedOptions;
+      break;
+    case "Auth":
+      renderComponent.value = SettingsAuthOptions;
       break;
     default:
       renderComponent.value = SettingsWallpaperOptions;
