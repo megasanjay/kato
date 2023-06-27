@@ -28,8 +28,13 @@ const nextImageSource = ref("");
 
 import { useBackgroundImageStore } from "~/stores/backgroundImage";
 
-const backgroundCookie = useCookie("background");
-const nextBackgroundCookie = useCookie("nextBackground");
+// cookies should be set to expire after 3 days
+const backgroundCookie = useCookie("background", {
+  maxAge: 60 * 60 * 24 * 3,
+});
+const nextBackgroundCookie = useCookie("nextBackground", {
+  maxAge: 60 * 60 * 24 * 3,
+});
 
 const backgroundStore = useBackgroundImageStore();
 
