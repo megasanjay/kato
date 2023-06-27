@@ -36,6 +36,14 @@ const themeConfig: ThemeConfig = {
       placeholderColor: "#bfbeba",
       textColor: "#ffffff",
     },
+    Layout: {
+      color: "#ffffff00",
+      textColor: "#ffffff",
+      siderColor: "#ffffff00",
+    },
+    Menu: {
+      itemTextColor: "#ffffff",
+    },
     Tabs: {
       barColor: "#07518d",
       tabTextColorActiveBar: "#eff6ff",
