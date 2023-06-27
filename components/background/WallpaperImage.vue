@@ -2,8 +2,12 @@
   <div class="relative bg-slate-800">
     <!-- Show the new image on the top and fade in after loading -->
     <nuxt-img
+      :src="foundation"
+      class="absolute left-0 top-0 h-screen w-screen object-cover"
+    />
+    <nuxt-img
       :src="imageSource"
-      class="absolute left-0 top-0 h-screen w-screen object-cover transition-opacity duration-500"
+      class="absolute left-0 top-0 h-screen w-screen object-cover transition-opacity duration-300"
       :class="isLoaded ? 'opacity-100' : 'opacity-0'"
       @load="onImgLoad"
     />
@@ -25,6 +29,7 @@ const transitionToNextImage = ref(false);
 
 const imageSource = ref("");
 const nextImageSource = ref("");
+const foundation = ref("");
 
 import { useBackgroundImageStore } from "~/stores/backgroundImage";
 
@@ -32,6 +37,11 @@ import { useBackgroundImageStore } from "~/stores/backgroundImage";
 const backgroundCookie = useCookie("background", {
   maxAge: 60 * 60 * 24 * 3,
 });
+
+const base64Image = useCookie("base64Image", {
+  maxAge: 60 * 60 * 24 * 2,
+});
+
 const nextBackgroundCookie = useCookie("nextBackground", {
   maxAge: 60 * 60 * 24 * 3,
 });
@@ -46,10 +56,15 @@ nextBackgroundCookie.value =
   nextBackgroundCookie.value ||
   "data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=";
 
+base64Image.value =
+  base64Image.value ||
+  "data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=";
+
 imageSource.value = backgroundCookie.value;
 nextImageSource.value = nextBackgroundCookie.value;
+foundation.value = base64Image.value;
 
-onMounted(() => {
+onMounted(async () => {
   backgroundStore.getDailyImages().then(() => {
     backgroundStore.setBackgroundImage();
 

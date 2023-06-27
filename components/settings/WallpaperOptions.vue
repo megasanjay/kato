@@ -1,5 +1,5 @@
 <template>
-  <section class="h-full px-6">
+  <section class="px-6">
     <h1>Wallpaper</h1>
     <p class="pt-1">
       Use this page to change the wallpaper of your dashboard. You can choose
@@ -33,7 +33,7 @@
               <template #icon>
                 <Icon name="uil:image-redo" />
               </template>
-              Skip to next wallpaper {{ loaderStore.requestsInFlight }}
+              Skip to next wallpaper
             </n-button>
           </div>
         </div>

@@ -1,175 +1,148 @@
 <template>
   <main
-    class="vignette h-full w-full rounded-xl bg-slate-900/20 px-4 py-3 backdrop-blur-sm"
+    class="vignette relative flex h-full w-full flex-grow flex-col rounded-xl bg-slate-900/20 px-6 py-4 backdrop-blur-sm"
   >
-    <div class="mb-2 mt-8 flex items-center justify-start space-x-3 text-white">
+    <div
+      class="mb-2 mt-8 flex items-center justify-start space-x-3 text-white drop-shadow-lg"
+    >
       <Icon name="ic:twotone-settings" size="33" />
-      <h1 class="text-2xl font-bold drop-shadow-lg sm:text-4xl">Settings</h1>
+      <h1 class="text-2xl font-bold sm:text-4xl">Settings</h1>
     </div>
 
     <n-divider />
 
-    <div class="mt-8">
-      <!-- <n-breadcrumb separator=">" class="my-4">
-        <n-breadcrumb-item class="text-white"> Home </n-breadcrumb-item>
-        <n-breadcrumb-item> Account </n-breadcrumb-item>
-        <n-breadcrumb-item> Category </n-breadcrumb-item>
-      </n-breadcrumb> -->
-
-      <n-tabs
-        type="bar"
-        animated
-        placement="left"
-        size="large"
-        @before-leave="handleBeforeLeave"
-        default-value="Wallpaper"
-        @update:value="handleUpdateValue"
-      >
-        <n-tab-pane name="Wallpaper" tab="Wallpaper">
-          <template #tab>
-            <div class="tab-pane-title">
-              <Icon name="material-symbols:image-rounded" size="25" />
-              <span class="text-base">Wallpaper</span>
-            </div>
-          </template>
-
-          <SettingsWallpaperOptions />
-        </n-tab-pane>
-
-        <n-tab-pane name="Clock" tab="Clock">
-          <template #tab>
-            <div class="tab-pane-title">
-              <Icon name="mdi:web-clock" size="25" />
-              <span class="text-base">Clock</span>
-            </div>
-          </template>
-
-          <SettingsClockOptions />
-        </n-tab-pane>
-
-        <n-tab-pane name="My Profile" tab="My Profile">
-          <template #tab>
-            <div class="tab-pane-title">
-              <Icon name="mdi:account-settings-variant" size="25" />
-              <span class="text-base">My Profile</span>
-            </div>
-          </template>
-
-          <SettingsMyProfile />
-        </n-tab-pane>
-
-        <n-tab-pane name="Todo" tab="Todo">
-          <template #tab>
-            <div class="tab-pane-title">
-              <Icon name="mdi:format-list-checkbox" size="25" />
-              <span class="text-base">Todo</span>
-            </div>
-          </template>
-
-          <div class="text-white">Todo</div>
-        </n-tab-pane>
-
-        <n-tab-pane name="Help" tab="Help">
-          <template #tab>
-            <div class="tab-pane-title">
-              <Icon name="material-symbols:help-outline-rounded" size="25" />
-              <span class="text-base">Help</span>
-            </div>
-          </template>
-
-          <div class="text-white">Help</div>
-        </n-tab-pane>
-
-        <n-tab-pane name="About" tab="About">
-          <template #tab>
-            <div class="tab-pane-title">
-              <Icon name="material-symbols:info-outline-rounded" size="25" />
-              <span class="text-base">About</span>
-            </div>
-          </template>
-
-          <div class="text-white">About</div>
-        </n-tab-pane>
-
-        <n-tab-pane name="Changelog" tab="Changelog">
-          <template #tab>
-            <div class="tab-pane-title">
-              <Icon name="simple-icons:keepachangelog" size="25" />
-              <span class="text-base">Changelog</span>
-            </div>
-          </template>
-
-          <div class="text-white">Changelog</div>
-        </n-tab-pane>
-
-        <n-tab-pane name="Advanced" tab="Advanced">
-          <template #tab>
-            <div class="tab-pane-title">
-              <Icon name="fluent:developer-board-16-regular" size="25" />
-              <span class="text-base">Advanced</span>
-            </div>
-          </template>
-
-          <SettingsAdvancedOptions />
-        </n-tab-pane>
-
-        <n-tab-pane v-if="isLoggedIn" name="Log Out" tab="Log Out">
-          <template #tab>
-            <div class="tab-pane-title">
-              <Icon name="ion:log-out" size="25" />
-              <span class="text-base">Log Out</span>
-            </div>
-          </template>
-
-          <SettingsUserLogout />
-        </n-tab-pane>
-
-        <n-tab-pane v-if="!isLoggedIn" name="Login" tab="Login">
-          <template #tab>
-            <div class="tab-pane-title">
-              <Icon name="ion:log-out" size="25" />
-              <span class="text-base">Login</span>
-            </div>
-          </template>
-
-          <div class="text-white">Redirecting to login page</div>
-        </n-tab-pane>
-      </n-tabs>
+    <div class="h-full overflow-hidden p-4">
+      <n-layout has-sider class="h-full">
+        <n-layout-sider
+          bordered
+          collapse-mode="width"
+          :collapsed-width="64"
+          :width="240"
+          :collapsed="collapsed"
+          show-trigger
+          @collapse="collapsed = true"
+          @expand="collapsed = false"
+        >
+          <n-menu
+            class="!font-medium"
+            :collapsed="collapsed"
+            :collapsed-width="64"
+            :collapsed-icon-size="25"
+            :options="menuOptions"
+            @update:value="showSettingsPanel"
+          />
+        </n-layout-sider>
+        <n-layout class="overflow-hidden overflow-y-auto">
+          <Transition name="fast-fade-blur" mode="out-in" appear>
+            <component :is="renderComponent" />
+          </Transition>
+        </n-layout>
+      </n-layout>
     </div>
   </main>
 </template>
 
 <script setup lang="ts">
-import { useMessage } from "naive-ui";
+import type { MenuOption } from "naive-ui";
+import { Icon } from "#components";
+import { ConcreteComponent } from "nuxt/dist/app/compat/capi";
 const user = useSupabaseUser();
-
-const message = useMessage();
+const collapsed = ref(false);
 
 const isLoggedIn = computed(() => user.value);
 
-const handleUpdateValue = (value: string) => {
-  if (value === "Login") {
-    navigateTo("/auth/login");
-  }
+const SettingsWallpaperOptions = resolveComponent("SettingsWallpaperOptions");
+const SettingsClockOptions = resolveComponent("SettingsClockOptions");
+const SettingsMyProfile = resolveComponent("SettingsMyProfile");
+const SettingsAdvancedOptions = resolveComponent("SettingsAdvancedOptions");
+const SettingsAuthOptions = resolveComponent("SettingsAuthOptions");
+
+const renderComponent = shallowRef<string | ConcreteComponent | null>(null);
+
+renderComponent.value = SettingsWallpaperOptions;
+
+const renderMenuIcon = (name: string) => {
+  return h(Icon, {
+    name,
+    size: "25",
+  });
 };
 
-const handleBeforeLeave = (tabName: string) => {
-  console.log(tabName);
-  if (!isLoggedIn.value) {
-    switch (tabName) {
-      case "My Profile":
-        message.error("You must be logged in to view this section");
-        return false;
-      case "Log Out":
-        message.error("You must be logged in to view this section");
-        return false;
+const menuOptions: MenuOption[] = [
+  {
+    key: "Wallpaper",
+    label: "Wallpaper",
+    icon: () => renderMenuIcon("material-symbols:image-rounded"),
+  },
+  {
+    key: "Clock",
+    label: "Clock",
+    icon: () => renderMenuIcon("mdi:web-clock"),
+  },
+  {
+    disabled: !isLoggedIn.value,
+    key: "My Profile",
+    label: "My Profile",
+    icon: () => renderMenuIcon("mdi:account-settings-variant"),
+  },
+  {
+    disabled: true,
+    key: "Todo",
+    label: "Todo",
+    icon: () => renderMenuIcon("mdi:format-list-checkbox"),
+  },
+  {
+    disabled: true,
+    key: "About",
+    label: "About",
+    icon: () => renderMenuIcon("material-symbols:info-outline-rounded"),
+  },
+  {
+    disabled: true,
+    key: "Help",
+    label: "Help",
+    icon: () => renderMenuIcon("material-symbols:help-outline-rounded"),
+  },
+  {
+    disabled: true,
+    key: "Changelog",
+    label: "Changelog",
+    icon: () => renderMenuIcon("simple-icons:keepachangelog"),
+  },
+  {
+    key: "Advanced",
+    label: "Advanced",
+    icon: () => renderMenuIcon("fluent:developer-board-16-regular"),
+  },
+  {
+    key: "Auth",
+    label: isLoggedIn.value ? "Logout" : "Login",
+    icon: () => renderMenuIcon("ion:log-out"),
+  },
+];
 
-      default:
-        return true;
-    }
+const showSettingsPanel = (key: string) => {
+  console.log("Showing settings panel for", key);
+  switch (key) {
+    case "Wallpaper":
+      renderComponent.value = SettingsWallpaperOptions;
+      break;
+    case "Clock":
+      renderComponent.value = SettingsClockOptions;
+      break;
+    case "My Profile":
+      renderComponent.value = SettingsMyProfile;
+      break;
+    case "Advanced":
+      renderComponent.value = SettingsAdvancedOptions;
+      break;
+    case "Auth":
+      renderComponent.value = SettingsAuthOptions;
+      break;
+    default:
+      renderComponent.value = SettingsWallpaperOptions;
+      break;
   }
-
-  return true;
 };
 </script>
 

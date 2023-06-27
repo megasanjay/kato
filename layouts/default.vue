@@ -1,19 +1,23 @@
 <template>
   <div
-    class="relative flex h-screen w-full flex-col justify-between overflow-hidden bg-slate-900"
+    class="relative flex h-screen w-screen flex-col justify-between overflow-hidden bg-slate-900"
     :class="{ 'debug-screenss': devMode }"
   >
     <BackgroundWallpaperImage />
 
-    <UiHeader />
+    <div class="grid-container h-full w-full">
+      <UiHeader />
 
-    <div
-      class="content relative z-10 flex h-full items-start justify-start p-8 lg:p-16"
-    >
-      <slot />
+      <div class="main-content-container">
+        <div
+          class="relative z-10 flex h-full items-start justify-start p-8 lg:px-16 lg:py-0"
+        >
+          <slot />
+        </div>
+      </div>
+
+      <UiFooter />
     </div>
-
-    <UiFooter />
   </div>
 </template>
 
