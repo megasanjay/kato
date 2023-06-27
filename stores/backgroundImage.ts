@@ -2,22 +2,17 @@ import { defineStore } from "pinia";
 import dayjs from "dayjs";
 import { Background } from "@prisma/client";
 
+import { useLoaderStore } from "./loader";
+
 export const useBackgroundImageStore = defineStore(
   "backgroundImage",
   () => {
+    const loaderStore = useLoaderStore();
+
     const dailyImages = ref<Background[]>([]);
 
-    const backgroundImage = ref<BackgroundImage>({
-      username: "thapapawan",
-      blurHash: "L12==ht700NG9_WC-ot6MIoJtlR*",
-      city: "Unknown",
-      country: "United States",
-      date: "2023-06-25",
-      description: "None provided",
-      index: 0,
-      url: "https://images.unsplash.com/photo-1687462339570-620acaa71eec?ixid=M3w0MzQ2NjN8MHwxfHNlYXJjaHwxfHxhc3Ryb3Bob3RvZ3JhcGh5fGVufDB8MHwyfHwxNjg3Njc5NTUzfDA&ixlib=rb-4.0.3&auto=format",
-    });
-    const previousBackgroundImage = ref(backgroundImage.value);
+    const backgroundImage = ref<BackgroundImage>({});
+    const backgroundImageUrl = ref("");
 
     const index = ref(0);
 
@@ -30,16 +25,34 @@ export const useBackgroundImageStore = defineStore(
         }
       }
 
+      const loaderID = loaderStore.generateId();
+      loaderStore.addToLoadingQueue(loaderID);
+
       const images = await fetch(`/api/backgroundImages/${date}`).then((res) =>
         res.json()
       );
 
+      loaderStore.removeFromLoadingQueue(loaderID);
+
       dailyImages.value = images;
     };
 
-    const setBackgroundImage = async () => {
-      previousBackgroundImage.value = backgroundImage.value;
+    const setStoreValues = () => {
+      backgroundImage.value = dailyImages.value[index.value];
+      backgroundImageUrl.value = dailyImages.value[index.value].url;
+    };
 
+    const getNextBackgroundImage = () => {
+      if (dailyImages.value.length > 0) {
+        const tempIndex = (index.value + 1) % dailyImages.value.length;
+
+        return dailyImages.value[tempIndex].url;
+      } else {
+        return "data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=";
+      }
+    };
+
+    const setBackgroundImage = async () => {
       const date = dayjs().format("YYYY-MM-DD");
 
       if (dailyImages.value.length === 0) {
@@ -52,29 +65,31 @@ export const useBackgroundImageStore = defineStore(
         index.value = 0;
       }
 
-      if (date !== backgroundImage.value.date) {
+      if (
+        "date" in backgroundImage.value &&
+        date !== backgroundImage.value.date
+      ) {
         index.value = 0;
-        backgroundImage.value = dailyImages.value[index.value];
       }
+
+      setStoreValues();
     };
 
     const updateBackgroundImage = () => {
-      previousBackgroundImage.value = backgroundImage.value;
+      index.value = (index.value + 1) % dailyImages.value.length;
 
-      setTimeout(() => {
-        index.value = (index.value + 1) % dailyImages.value.length;
-
-        backgroundImage.value = dailyImages.value[index.value];
-      }, 200);
+      setStoreValues();
     };
 
     return {
       backgroundImage,
       dailyImages,
+      index,
       getDailyImages,
-      previousBackgroundImage,
       setBackgroundImage,
+      backgroundImageUrl,
       updateBackgroundImage,
+      getNextBackgroundImage,
     };
   },
   {

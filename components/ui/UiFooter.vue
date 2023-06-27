@@ -1,6 +1,6 @@
 <template>
   <footer
-    class="relative z-10 flex w-full items-center justify-between px-4 py-2"
+    class="relative z-10 flex w-full items-center justify-between px-8 pb-4"
   >
     <nuxt-link
       to="/settings"
@@ -19,8 +19,10 @@
       </div>
     </nuxt-link>
 
+    <pre class="text-white"></pre>
+
     <transition name="fast-fade-blur" appear>
-      <div v-if="requestsInFlight" class="absolute -top-[50px] left-0">
+      <div v-show="showLoader" class="absolute -top-[60px] left-4">
         <LoadersSunLoader />
       </div>
     </transition>
@@ -30,5 +32,7 @@
 <script setup lang="ts">
 import { useLoaderStore } from "@/stores/loader";
 
-const { requestsInFlight } = useLoaderStore();
+const loaderStore = useLoaderStore();
+
+const showLoader = computed(() => loaderStore.loadingQueue.length > 0);
 </script>

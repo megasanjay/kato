@@ -33,6 +33,12 @@ export default defineNuxtConfig({
     "@nuxtjs/tailwindcss",
     "@pinia/nuxt",
     [
+      "@nuxt/image",
+      {
+        domains: ["nuxtjs.org", "unsplash.com"],
+      },
+    ],
+    [
       "nuxt-lodash",
       {
         prefix: "_",

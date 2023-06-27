@@ -1,11 +1,12 @@
 import { defineStore } from "pinia";
+import { nanoid } from "nanoid";
 
 export const useLoaderStore = defineStore("loader", () => {
   const loadingQueue = ref<string[]>([]);
 
-  const requestsInFlight = computed(() => {
-    return loadingQueue.value.length > 0;
-  });
+  const generateId = () => {
+    return nanoid();
+  };
 
   const addToLoadingQueue = (value: string) => {
     loadingQueue.value.push(value);
@@ -18,5 +19,10 @@ export const useLoaderStore = defineStore("loader", () => {
     }
   };
 
-  return { addToLoadingQueue, removeFromLoadingQueue, requestsInFlight };
+  return {
+    loadingQueue,
+    addToLoadingQueue,
+    removeFromLoadingQueue,
+    generateId,
+  };
 });

@@ -10,7 +10,7 @@ body {
   padding: 0px;
   overflow-x: hidden;
   background-color: darkslategrey;
-  @apply text-slate-700;
+  @apply font-primary;
 }
 
 @layer base {
@@ -28,32 +28,27 @@ body {
 
   /* #region  /**=========== Typography =========== */
   .h0 {
-    @apply font-primary text-3xl font-bold text-white md:text-5xl;
+    @apply font-primary text-3xl font-bold text-white drop-shadow-md md:text-5xl;
   }
 
-  h1,
-  .h1 {
-    @apply font-primary text-2xl font-bold text-white md:text-4xl;
+  h1 {
+    @apply font-primary text-2xl font-bold text-white drop-shadow-md md:text-4xl;
   }
 
-  h2,
-  .h2 {
-    @apply font-primary text-xl font-bold text-white md:text-3xl;
+  h2 {
+    @apply font-primary text-xl font-bold text-white drop-shadow-md md:text-3xl;
   }
 
-  h3,
-  .h3 {
-    @apply font-primary text-lg font-bold text-white md:text-2xl;
+  h3 {
+    @apply font-primary text-lg font-bold text-white drop-shadow-md md:text-2xl;
   }
 
-  h4,
-  .h4 {
-    @apply font-primary text-base font-bold text-white md:text-lg;
+  h4 {
+    @apply font-primary text-base font-bold text-white drop-shadow-md md:text-lg;
   }
 
-  body,
-  .p {
-    @apply font-primary text-base text-white md:text-base;
+  p {
+    @apply font-primary text-lg font-medium text-white drop-shadow-md;
   }
   /* #endregion  /**======== Typography =========== */
 
@@ -189,7 +184,8 @@ body {
   filter: blur(1rem);
 }
 
-/* Transitions between components */
+/* #region  /**=========== Transitions =========== */
+
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.3s ease-in-out;
@@ -214,6 +210,16 @@ body {
 .fast-fade-blur-leave-active {
   transition: all 0.3s ease-in;
 }
+
+.one-way-fade-enter-from,
+.one-way-fade-leave-to {
+  opacity: 0;
+}
+.one-way-fade-enter-active {
+  transition: all 0.5s ease-in;
+}
+
+/* #endregion  /**======== Transitions =========== */
 
 .glass-container {
   background: rgba(255, 255, 255, 0.35);

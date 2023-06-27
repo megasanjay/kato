@@ -22,8 +22,20 @@
         placement="left"
         size="large"
         @before-leave="handleBeforeLeave"
+        default-value="Wallpaper"
         @update:value="handleUpdateValue"
       >
+        <n-tab-pane name="Wallpaper" tab="Wallpaper">
+          <template #tab>
+            <div class="tab-pane-title">
+              <Icon name="material-symbols:image-rounded" size="25" />
+              <span class="text-base">Wallpaper</span>
+            </div>
+          </template>
+
+          <SettingsWallpaperOptions />
+        </n-tab-pane>
+
         <n-tab-pane name="Clock" tab="Clock">
           <template #tab>
             <div class="tab-pane-title">
@@ -45,7 +57,7 @@
 
           <SettingsMyProfile />
         </n-tab-pane>
-        s
+
         <n-tab-pane name="Todo" tab="Todo">
           <template #tab>
             <div class="tab-pane-title">
@@ -98,7 +110,7 @@
             </div>
           </template>
 
-          <div class="text-white">Advanced</div>
+          <SettingsAdvancedOptions />
         </n-tab-pane>
 
         <n-tab-pane v-if="isLoggedIn" name="Log Out" tab="Log Out">
