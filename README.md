@@ -14,12 +14,12 @@ As a work in progress, it strives to continually improve and refine its features
 
 ## Features
 
-- Daily inspirational quote (coming soon)
-- To-do list (coming soon)
-- Weather widget (coming soon)
-- Goal-setting and habit-tracking system (coming soon)
-- Focus mode (coming soon)
-- Beautiful background images (coming soon)
+- [x] Beautiful background images
+- [ ] Daily inspirational quote (coming soon)
+- [ ] To-do list (coming soon)
+- [ ] Weather widget (coming soon)
+- [ ] Goal-setting and habit-tracking system (coming soon)
+- [ ] Focus mode (coming soon)
 
 ## Technologies
 
@@ -73,8 +73,6 @@ Locally preview production build:
 npm run preview
 ```
 
-## Statistics
-
-Some information about the repository can be found below:
+## Repository Statistics
 
 ![Alt](https://repobeats.axiom.co/api/embed/4919cd9279a43bdf72ddcdeab8c96c28b34c5c82.svg "Repobeats analytics image")
