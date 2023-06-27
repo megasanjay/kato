@@ -33,7 +33,7 @@
               <template #icon>
                 <Icon name="uil:image-redo" />
               </template>
-              Skip to next wallpaper
+              Skip to next wallpaper {{ loaderStore.requestsInFlight }}
             </n-button>
           </div>
         </div>
@@ -45,18 +45,26 @@
 <script setup lang="ts">
 import { useMessage } from "naive-ui";
 import { useBackgroundImageStore } from "~/stores/backgroundImage";
+import { useLoaderStore } from "~/stores/loader";
 
 const loading = ref(false);
 const message = useMessage();
+
 const backgroundStore = useBackgroundImageStore();
+const loaderStore = useLoaderStore();
 
 const skipToNextWallpaper = () => {
+  loaderStore.addToLoadingQueue("background");
   loading.value = true;
+
   backgroundStore.updateBackgroundImage();
 
   setTimeout(() => {
+    loaderStore.removeFromLoadingQueue("background");
+
     loading.value = false;
-  }, 2000);
+    message.success("Wallpaper updated!");
+  }, 3000);
 };
 </script>
 

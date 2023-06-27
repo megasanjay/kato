@@ -16,8 +16,6 @@
         'opacity-100': transitionToNextImage,
       }"
     />
-
-    <n-button @click="transitionElements"> skip </n-button>
   </div>
 </template>
 
@@ -31,6 +29,7 @@ const nextImageSource = ref("");
 import { useBackgroundImageStore } from "~/stores/backgroundImage";
 
 const backgroundCookie = useCookie("background");
+const nextBackgroundCookie = useCookie("nextBackground");
 
 const backgroundStore = useBackgroundImageStore();
 
@@ -38,28 +37,25 @@ backgroundCookie.value =
   backgroundCookie.value ||
   "data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=";
 
-console.log(backgroundCookie.value);
+nextBackgroundCookie.value =
+  nextBackgroundCookie.value ||
+  "data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=";
 
 imageSource.value = backgroundCookie.value;
-nextImageSource.value = backgroundStore.getNextBackgroundImage();
+nextImageSource.value = nextBackgroundCookie.value;
 
 onMounted(() => {
   backgroundStore.getDailyImages().then(() => {
     backgroundStore.setBackgroundImage();
 
     nextImageSource.value = backgroundStore.getNextBackgroundImage();
-
-    console.log("updated daily images on mounted");
+    nextBackgroundCookie.value = nextImageSource.value;
   });
 
   setInterval(() => {
     checkForNewImage();
   }, 1500);
 });
-
-const transitionElements = () => {
-  transitionToNextImage.value = !transitionToNextImage.value;
-};
 
 const checkForNewImage = () => {
   if (
@@ -69,20 +65,20 @@ const checkForNewImage = () => {
     return;
   }
 
-  console.log("new image found");
-
   transitionToNextImage.value = true;
 
-  backgroundCookie.value = backgroundStore.backgroundImageUrl;
-  imageSource.value = backgroundStore.backgroundImageUrl;
-
   setTimeout(() => {
-    transitionToNextImage.value = false;
+    backgroundCookie.value = backgroundStore.backgroundImageUrl;
+    imageSource.value = backgroundStore.backgroundImageUrl;
 
     setTimeout(() => {
-      nextImageSource.value = backgroundStore.getNextBackgroundImage();
-    }, 500);
-  }, 1500);
+      transitionToNextImage.value = false;
+
+      setTimeout(() => {
+        nextImageSource.value = backgroundStore.getNextBackgroundImage();
+      }, 500);
+    }, 1500);
+  }, 500);
 };
 
 const onImgLoad = () => {
