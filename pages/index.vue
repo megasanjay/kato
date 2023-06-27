@@ -20,11 +20,5 @@ const backgroundStore = useBackgroundImageStore();
 
 onMounted(() => {
   mounted.value = true;
-
-  backgroundStore.getDailyImages().then(() => {
-    backgroundStore.setBackgroundImage();
-
-    console.log("updated daily images on mounted");
-  });
 });
 </script>
