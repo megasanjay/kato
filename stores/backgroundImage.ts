@@ -2,6 +2,10 @@ import { defineStore } from "pinia";
 import dayjs from "dayjs";
 import { Background } from "@prisma/client";
 
+import { useLoaderStore } from "./loader";
+
+const loaderStore = useLoaderStore();
+
 export const useBackgroundImageStore = defineStore(
   "backgroundImage",
   () => {
@@ -21,9 +25,14 @@ export const useBackgroundImageStore = defineStore(
         }
       }
 
+      const loaderID = loaderStore.generateId();
+      loaderStore.addToLoadingQueue(loaderID);
+
       const images = await fetch(`/api/backgroundImages/${date}`).then((res) =>
         res.json()
       );
+
+      loaderStore.removeFromLoadingQueue(loaderID);
 
       dailyImages.value = images;
     };
