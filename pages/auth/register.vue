@@ -21,7 +21,7 @@
 
         <n-divider />
 
-        <div class="w-full max-w-sm space-y-6 rounded-lg px-4 py-3 shadow-md">
+        <div class="w-full max-w-sm space-y-6 rounded-lg px-4 py-3">
           <n-form
             ref="registerFormRef"
             :model="registerFormValue"

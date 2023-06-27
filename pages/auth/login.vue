@@ -20,7 +20,7 @@
 
         <n-divider />
 
-        <div class="w-full max-w-sm space-y-6 rounded-lg px-4 py-3 shadow-md">
+        <div class="w-full max-w-sm space-y-6 rounded-lg px-4 py-3">
           <div class="flex flex-col">
             <span class="mb-1 text-left text-base text-white">
               Email Address
