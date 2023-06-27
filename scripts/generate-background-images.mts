@@ -8,6 +8,7 @@
 import dayjs from "dayjs";
 import axios from "axios";
 import { PrismaClient } from "@prisma/client";
+import { getPlaiceholder } from "plaiceholder";
 
 const prisma = new PrismaClient();
 
@@ -32,6 +33,22 @@ const imageThemes = [
   "scenery",
   "sculpture",
 ];
+
+const getImage = async (src: string) => {
+  const buffer = await fetch(src).then(async (res) =>
+    Buffer.from(await res.arrayBuffer())
+  );
+
+  const {
+    metadata: { height, width },
+    ...plaiceholder
+  } = await getPlaiceholder(buffer, { size: 10 });
+
+  return {
+    ...plaiceholder,
+    img: { src, height, width },
+  };
+};
 
 const generateImage = async (searchDate: string) => {
   const images = await prisma.background.findMany({
@@ -121,11 +138,15 @@ const generateImage = async (searchDate: string) => {
 
       console.log(`Image ${responseImage.id} is from ${city}, ${country}`);
 
+      const { base64 } = await getImage(
+        "https://images.unsplash.com/photo-1621961458348-f013d219b50c?auto=format&fit=crop&w=2850&q=80"
+      );
+
       // save image to database
       await prisma.background.create({
         data: {
           username: responseImage.user.username,
-          blurHash: responseImage.blur_hash,
+          blurHash: base64,
           city: city || "Unknown",
           country: country || "Unknown",
           date: searchDate,

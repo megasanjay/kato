@@ -92,15 +92,11 @@ const clearCookies = () => {
   }
 
   message.success("Cookies have been cleared.");
-
-  navigateTo("/");
 };
 
 const clearLocalStorage = () => {
   window.localStorage.clear();
 
   message.success("Local storage has been cleared.");
-
-  navigateTo("/");
 };
 </script>
