@@ -72,6 +72,14 @@ import { generateListOfTimezones } from "~/utils/listofTimezones";
 
 const clockStore = useClockStore();
 
+const twentyFourHour = useCookie("twentyFourHour", {
+  maxAge: 60 * 60 * 24 * 30,
+});
+
+const timeZone = useCookie("timeZone", {
+  maxAge: 60 * 60 * 24 * 30,
+});
+
 const display24Hours = computed(() => clockStore.display24Hours);
 const timezone = ref(
   clockStore.timeZone || Intl.DateTimeFormat().resolvedOptions().timeZone
@@ -79,10 +87,14 @@ const timezone = ref(
 
 const handle24hourChange = (value: boolean) => {
   clockStore.updateDisplay24Hours(value);
+
+  twentyFourHour.value = value ? "true" : "false";
 };
 
 const handleTimeZoneChange = (value: string) => {
   clockStore.updateTimeZone(value);
+
+  timeZone.value = value;
 };
 
 const options = generateListOfTimezones();

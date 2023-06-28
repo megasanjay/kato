@@ -76,6 +76,12 @@ const clockType = computed(() => clockStore.currentView);
 const changeClockType = (value: string) => {
   clockStore.updateCurrentView(value);
 };
+
+const mounted = ref(false);
+
+onMounted(() => {
+  mounted.value = true;
+});
 </script>
 
 <style scoped>

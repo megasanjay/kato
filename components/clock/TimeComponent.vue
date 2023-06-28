@@ -20,26 +20,45 @@ dayjs.extend(timezone);
 
 const clockStore = useClockStore();
 
+const localTimezone = ref("");
+const local24Hour = ref(false);
+
 const currentTime = ref("");
 const mounted = ref(true);
 
-const display24Hours = computed(() => clockStore.display24Hours);
-const timeZone = computed(
-  () => clockStore.timeZone || Intl.DateTimeFormat().resolvedOptions().timeZone
-);
+const twentyFourHour = useCookie("twentyFourHour", {
+  maxAge: 60 * 60 * 24 * 30,
+});
+
+const timeZone = useCookie("timeZone", {
+  maxAge: 60 * 60 * 24 * 30,
+});
 
 const getCurrentTime = () => {
-  const timeFormat = display24Hours.value ? "H:mm" : "h:mm";
+  timeZone.value =
+    timeZone.value ||
+    clockStore.timeZone ||
+    Intl.DateTimeFormat().resolvedOptions().timeZone ||
+    "America/New_York";
 
-  currentTime.value = dayjs().tz(timeZone.value).format(timeFormat);
+  const timeFormat = twentyFourHour.value ? "H:mm" : "h:mm";
 
-  if (mounted.value) {
-    setTimeout(getCurrentTime, 1000);
+  if (timeZone.value !== null) {
+    currentTime.value = dayjs().tz(timeZone.value).format(timeFormat);
+  } else {
+    currentTime.value = dayjs().format(timeFormat);
   }
 };
 
 onMounted(() => {
   mounted.value = true;
+
+  localTimezone.value =
+    clockStore.timeZone || Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+  local24Hour.value = twentyFourHour.value === "true";
+
+  setInterval(getCurrentTime, 100);
 });
 
 getCurrentTime();

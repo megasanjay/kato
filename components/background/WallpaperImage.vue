@@ -44,8 +44,6 @@ const nextBackgroundCookie = useCookie("nextBackground", {
     "data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=",
 });
 
-console.log("backgroundCookie", backgroundCookie.value);
-
 if (backgroundImage.value) {
   backgroundImage.value.src = backgroundCookie.value;
 
@@ -54,8 +52,6 @@ if (backgroundImage.value) {
     isLoaded.value = true;
   }
 }
-
-console.log("nextBackgroundCookie", nextBackgroundCookie.value);
 
 if (nextBackgroundImage.value) {
   nextBackgroundImage.value.src = nextBackgroundCookie.value;
@@ -118,7 +114,6 @@ const checkForNewImage = () => {
 };
 
 const onImgLoad = () => {
-  console.log("loaded");
   isLoaded.value = true;
 };
 </script>
