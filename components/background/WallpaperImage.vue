@@ -6,7 +6,7 @@
       class="absolute left-0 top-0 h-screen w-screen object-cover"
     />
 
-    <img
+    <nuxt-img
       ref="backgroundImage"
       class="absolute left-0 top-0 h-screen w-screen object-cover transition-opacity duration-300"
       :class="isLoaded ? 'opacity-100' : 'opacity-0'"
@@ -64,6 +64,8 @@ console.log("backgroundCookie", backgroundCookie.value);
 
 if (backgroundImage.value) {
   backgroundImage.value.src = backgroundCookie.value;
+
+  // if the image is already loaded, set the opacity to 100
 }
 
 console.log("nextBackgroundCookie", nextBackgroundCookie.value);
