@@ -1,5 +1,5 @@
 <template>
-  <div class="relative bg-slate-800">
+  <div class="background-image-container relative bg-slate-800">
     <!-- Show the new image on the top and fade in after loading -->
     <nuxt-img
       :src="foundation"
@@ -78,6 +78,14 @@ onMounted(async () => {
 });
 
 const checkForNewImage = () => {
+  if (
+    "blurHash" in backgroundStore.backgroundImage &&
+    backgroundStore.backgroundImage.blurHash !== ""
+  ) {
+    base64Image.value = backgroundStore.backgroundImage.blurHash;
+    foundation.value = base64Image.value;
+  }
+
   if (
     imageSource.value === backgroundStore.backgroundImageUrl ||
     backgroundStore.backgroundImageUrl === ""
