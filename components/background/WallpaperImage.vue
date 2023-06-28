@@ -6,7 +6,7 @@
       class="absolute left-0 top-0 h-screen w-screen object-cover"
     />
 
-    <nuxt-img
+    <img
       ref="backgroundImage"
       class="absolute left-0 top-0 h-screen w-screen object-cover transition-opacity duration-300"
       :class="isLoaded ? 'opacity-100' : 'opacity-0'"
@@ -66,6 +66,9 @@ if (backgroundImage.value) {
   backgroundImage.value.src = backgroundCookie.value;
 
   // if the image is already loaded, set the opacity to 100
+  if (backgroundImage.value.complete) {
+    isLoaded.value = true;
+  }
 }
 
 console.log("nextBackgroundCookie", nextBackgroundCookie.value);
@@ -77,6 +80,10 @@ if (nextBackgroundImage.value) {
 const backgroundStore = useBackgroundImageStore();
 
 onMounted(async () => {
+  if (backgroundImage.value && backgroundImage.value.complete) {
+    isLoaded.value = true;
+  }
+
   backgroundStore.getDailyImages().then(() => {
     backgroundStore.setBackgroundImage();
 
@@ -93,6 +100,10 @@ onMounted(async () => {
 });
 
 const checkForNewImage = () => {
+  if (backgroundImage.value && backgroundImage.value.complete) {
+    isLoaded.value = true;
+  }
+
   if (
     "blurHash" in backgroundStore.backgroundImage &&
     backgroundStore.backgroundImage.blurHash !== ""
