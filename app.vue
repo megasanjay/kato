@@ -61,6 +61,9 @@ const themeConfig: ThemeConfig = {
       tabTextColorBar: "#fff",
       tabTextColorHoverBar: "#bae6fd",
     },
+    Switch: {
+      railColor: "#e0f2fe",
+    },
   }, // Common theme options
 };
 

@@ -7,7 +7,7 @@
       <input
         v-model="inputTerm"
         type="text"
-        class="mx-2 w-[450px] border-transparent bg-transparent px-2 text-2xl focus:outline-none focus:ring-0"
+        class="mx-2 w-[450px] border-transparent bg-transparent px-2 text-2xl placeholder:text-white/70 focus:outline-none focus:ring-0"
         placeholder="Search"
         @keyup.enter="runSearch"
       />

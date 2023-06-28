@@ -28,26 +28,23 @@ const mounted = ref(true);
 
 const twentyFourHour = useCookie("twentyFourHour", {
   maxAge: 60 * 60 * 24 * 30,
+  default: () => "false",
 });
 
 const timeZone = useCookie("timeZone", {
   maxAge: 60 * 60 * 24 * 30,
+  default: () => "America/New_York",
 });
 
 const getCurrentTime = () => {
-  timeZone.value =
-    timeZone.value ||
-    clockStore.timeZone ||
-    Intl.DateTimeFormat().resolvedOptions().timeZone ||
-    "America/New_York";
-
   const timeFormat = twentyFourHour.value ? "H:mm" : "h:mm";
 
-  if (timeZone.value !== null) {
-    currentTime.value = dayjs().tz(timeZone.value).format(timeFormat);
-  } else {
-    currentTime.value = dayjs().format(timeFormat);
-  }
+  const timezone =
+    timeZone.value ||
+    clockStore.timeZone ||
+    Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+  currentTime.value = dayjs().tz(timezone).format(timeFormat);
 };
 
 onMounted(() => {
@@ -56,7 +53,13 @@ onMounted(() => {
   localTimezone.value =
     clockStore.timeZone || Intl.DateTimeFormat().resolvedOptions().timeZone;
 
+  if (timeZone.value !== localTimezone.value) {
+    timeZone.value = localTimezone.value;
+  }
+
   local24Hour.value = twentyFourHour.value === "true";
+
+  getCurrentTime();
 
   setInterval(getCurrentTime, 100);
 });

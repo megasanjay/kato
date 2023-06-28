@@ -1,12 +1,27 @@
 <template>
   <main
-    class="vignette relative flex h-full w-full flex-grow flex-col rounded-xl bg-slate-900/20 px-6 py-4 backdrop-blur-sm"
+    class="vignette relative flex h-full w-full flex-grow flex-col rounded-xl px-6 py-4 backdrop-blur-sm transition-colors"
+    :class="{
+      'bg-slate-900/20': !darkenBackground,
+      'bg-slate-900/80': darkenBackground,
+    }"
   >
-    <div
-      class="mb-2 mt-8 flex items-center justify-start space-x-3 text-white drop-shadow-lg"
-    >
-      <Icon name="ic:twotone-settings" size="33" />
-      <h1 class="text-2xl font-bold sm:text-4xl">Settings</h1>
+    <div class="mb-2 mt-8 flex items-center justify-between px-4">
+      <div
+        class="flex items-center justify-start space-x-3 text-white drop-shadow-lg"
+      >
+        <Icon name="ic:twotone-settings" size="33" />
+        <h1 class="text-2xl font-bold sm:text-4xl">Settings</h1>
+      </div>
+
+      <div class="flex flex-col items-end justify-center text-white">
+        <p class="text-base">Having trouble with reading the text?</p>
+        <div class="mt-2 flex items-center">
+          <span class="mr-2 text-sm">Darken background</span>
+
+          <n-switch v-model:value="darkenBackground" size="small" />
+        </div>
+      </div>
     </div>
 
     <n-divider />
@@ -32,7 +47,7 @@
             @update:value="showSettingsPanel"
           />
         </n-layout-sider>
-        <n-layout class="overflow-hidden overflow-y-auto">
+        <n-layout class="overflow-hidden overflow-y-auto px-4">
           <Transition name="fast-fade-blur" mode="out-in" appear>
             <component :is="renderComponent" />
           </Transition>
@@ -50,6 +65,8 @@ const user = useSupabaseUser();
 const collapsed = ref(false);
 
 const isLoggedIn = computed(() => user.value);
+
+const darkenBackground = ref(false);
 
 const SettingsWallpaperOptions = resolveComponent("SettingsWallpaperOptions");
 const SettingsClockOptions = resolveComponent("SettingsClockOptions");
