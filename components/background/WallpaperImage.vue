@@ -1,14 +1,10 @@
 <template>
   <div class="background-image-container relative bg-slate-800">
     <!-- Show the new image on the top and fade in after loading -->
-    <img
-      ref="backgroundPlaceholder"
-      class="absolute left-0 top-0 h-screen w-screen object-cover"
-    />
 
     <img
       ref="backgroundImage"
-      class="absolute left-0 top-0 h-screen w-screen object-cover transition-opacity duration-300"
+      class="absolute left-0 top-0 h-screen w-screen object-cover transition-all"
       :class="isLoaded ? 'opacity-100' : 'opacity-0'"
       @load="onImgLoad"
     />
@@ -25,7 +21,6 @@
 </template>
 
 <script setup lang="ts">
-const backgroundPlaceholder = ref<HTMLImageElement | null>(null);
 const backgroundImage = ref<HTMLImageElement | null>(null);
 const nextBackgroundImage = ref<HTMLImageElement | null>(null);
 
@@ -56,10 +51,6 @@ const nextBackgroundCookie = useCookie("nextBackground", {
     "data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=",
 });
 
-if (backgroundPlaceholder.value) {
-  backgroundPlaceholder.value.src = base64Image.value;
-}
-
 console.log("backgroundCookie", backgroundCookie.value);
 
 if (backgroundImage.value) {
@@ -80,12 +71,12 @@ if (nextBackgroundImage.value) {
 const backgroundStore = useBackgroundImageStore();
 
 onMounted(async () => {
-  if (backgroundImage.value && backgroundImage.value.complete) {
-    isLoaded.value = true;
-  }
-
   backgroundStore.getDailyImages().then(() => {
     backgroundStore.setBackgroundImage();
+
+    if (backgroundImage.value) {
+      backgroundImage.value.src = backgroundCookie.value;
+    }
 
     nextBackgroundCookie.value = backgroundStore.getNextBackgroundImage();
 
@@ -95,25 +86,23 @@ onMounted(async () => {
   });
 
   setInterval(() => {
+    // if the image is already loaded, set the opacity to 100
+    if (backgroundImage.value && backgroundImage.value.complete) {
+      isLoaded.value = true;
+    }
+  }, 100);
+
+  setInterval(() => {
     checkForNewImage();
   }, 1500);
 });
 
 const checkForNewImage = () => {
-  if (backgroundImage.value && backgroundImage.value.complete) {
-    isLoaded.value = true;
-  }
-
   if (
     "blurHash" in backgroundStore.backgroundImage &&
     backgroundStore.backgroundImage.blurHash !== ""
   ) {
     base64Image.value = backgroundStore.backgroundImage.blurHash;
-
-    if (backgroundPlaceholder.value) {
-      backgroundPlaceholder.value.src =
-        backgroundStore.backgroundImage.blurHash;
-    }
   }
 
   if (
@@ -137,10 +126,6 @@ const checkForNewImage = () => {
 
       setTimeout(() => {
         nextBackgroundCookie.value = backgroundStore.getNextBackgroundImage();
-
-        if (nextBackgroundImage.value) {
-          nextBackgroundImage.value.src = nextBackgroundCookie.value;
-        }
       }, 500);
     }, 1500);
   }, 500);
