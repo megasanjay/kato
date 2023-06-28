@@ -1,8 +1,5 @@
 <template>
-  <div
-    v-if="currentTime"
-    class="text-[160px] font-black text-white drop-shadow-lg"
-  >
+  <div class="text-[160px] font-black text-white drop-shadow-lg">
     {{ currentTime }}
   </div>
 </template>
@@ -39,10 +36,7 @@ const timeZone = useCookie("timeZone", {
 const getCurrentTime = () => {
   const timeFormat = twentyFourHour.value ? "H:mm" : "h:mm";
 
-  const timezone =
-    timeZone.value ||
-    clockStore.timeZone ||
-    Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const timezone = timeZone.value;
 
   currentTime.value = dayjs().tz(timezone).format(timeFormat);
 };
