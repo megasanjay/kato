@@ -1,19 +1,20 @@
 <template>
   <div class="background-image-container relative bg-slate-800">
     <!-- Show the new image on the top and fade in after loading -->
-    <nuxt-img
-      :src="base64Image"
+    <img
+      ref="backgroundPlaceholder"
       class="absolute left-0 top-0 h-screen w-screen object-cover"
     />
-    <nuxt-img
-      :src="backgroundCookie"
+
+    <img
+      ref="backgroundImage"
       class="absolute left-0 top-0 h-screen w-screen object-cover transition-opacity duration-300"
       :class="isLoaded ? 'opacity-100' : 'opacity-0'"
       @load="onImgLoad"
     />
 
     <img
-      :src="nextBackgroundCookie"
+      ref="nextBackgroundImage"
       class="absolute left-0 top-0 h-screen w-screen object-cover opacity-0 transition-opacity duration-500"
       :class="{
         'opacity-0': !transitionToNextImage,
@@ -24,11 +25,12 @@
 </template>
 
 <script setup lang="ts">
+const backgroundPlaceholder = ref<HTMLImageElement | null>(null);
+const backgroundImage = ref<HTMLImageElement | null>(null);
+const nextBackgroundImage = ref<HTMLImageElement | null>(null);
+
 const isLoaded = ref(false);
 const transitionToNextImage = ref(false);
-
-const imageSource = ref("");
-const nextImageSource = ref("");
 
 import { useBackgroundImageStore } from "~/stores/backgroundImage";
 
@@ -54,20 +56,33 @@ const nextBackgroundCookie = useCookie("nextBackground", {
     "data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=",
 });
 
+if (backgroundPlaceholder.value) {
+  backgroundPlaceholder.value.src = base64Image.value;
+}
+
 console.log("backgroundCookie", backgroundCookie.value);
+
+if (backgroundImage.value) {
+  backgroundImage.value.src = backgroundCookie.value;
+}
+
 console.log("nextBackgroundCookie", nextBackgroundCookie.value);
 
-const backgroundStore = useBackgroundImageStore();
+if (nextBackgroundImage.value) {
+  nextBackgroundImage.value.src = nextBackgroundCookie.value;
+}
 
-imageSource.value = backgroundCookie.value;
-nextImageSource.value = nextBackgroundCookie.value;
+const backgroundStore = useBackgroundImageStore();
 
 onMounted(async () => {
   backgroundStore.getDailyImages().then(() => {
     backgroundStore.setBackgroundImage();
 
-    nextImageSource.value = backgroundStore.getNextBackgroundImage();
-    nextBackgroundCookie.value = nextImageSource.value;
+    nextBackgroundCookie.value = backgroundStore.getNextBackgroundImage();
+
+    if (nextBackgroundImage.value) {
+      nextBackgroundImage.value.src = nextBackgroundCookie.value;
+    }
   });
 
   setInterval(() => {
@@ -81,10 +96,15 @@ const checkForNewImage = () => {
     backgroundStore.backgroundImage.blurHash !== ""
   ) {
     base64Image.value = backgroundStore.backgroundImage.blurHash;
+
+    if (backgroundPlaceholder.value) {
+      backgroundPlaceholder.value.src =
+        backgroundStore.backgroundImage.blurHash;
+    }
   }
 
   if (
-    imageSource.value === backgroundStore.backgroundImageUrl ||
+    backgroundCookie.value === backgroundStore.backgroundImageUrl ||
     backgroundStore.backgroundImageUrl === ""
   ) {
     return;
@@ -94,14 +114,20 @@ const checkForNewImage = () => {
 
   setTimeout(() => {
     backgroundCookie.value = backgroundStore.backgroundImageUrl;
-    imageSource.value = backgroundStore.backgroundImageUrl;
+
+    if (backgroundImage.value) {
+      backgroundImage.value.src = backgroundCookie.value;
+    }
 
     setTimeout(() => {
       transitionToNextImage.value = false;
 
       setTimeout(() => {
-        nextImageSource.value = backgroundStore.getNextBackgroundImage();
-        nextBackgroundCookie.value = nextImageSource.value;
+        nextBackgroundCookie.value = backgroundStore.getNextBackgroundImage();
+
+        if (nextBackgroundImage.value) {
+          nextBackgroundImage.value.src = nextBackgroundCookie.value;
+        }
       }, 500);
     }, 1500);
   }, 500);
