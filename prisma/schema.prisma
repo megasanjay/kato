@@ -16,9 +16,8 @@ model Background {
   date  String
   theme String
 
-  imageID  String @unique
-  url      String
-  blurHash String
+  imageID String @unique
+  url     String
 
   index Int
 

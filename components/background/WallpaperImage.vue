@@ -37,13 +37,6 @@ const backgroundCookie = useCookie("background", {
     "data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=",
 });
 
-const base64Image = useCookie("base64Image", {
-  maxAge: 60 * 60 * 24 * 2,
-  watch: true,
-  default: () =>
-    "data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=",
-});
-
 const nextBackgroundCookie = useCookie("nextBackground", {
   maxAge: 60 * 60 * 24 * 3,
   watch: true,
@@ -98,13 +91,6 @@ onMounted(async () => {
 });
 
 const checkForNewImage = () => {
-  if (
-    "blurHash" in backgroundStore.backgroundImage &&
-    backgroundStore.backgroundImage.blurHash !== ""
-  ) {
-    base64Image.value = backgroundStore.backgroundImage.blurHash;
-  }
-
   if (
     backgroundCookie.value === backgroundStore.backgroundImageUrl ||
     backgroundStore.backgroundImageUrl === ""

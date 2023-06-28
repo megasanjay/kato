@@ -1,7 +1,7 @@
 type BackgroundImage =
   | {
       username: string;
-      blurHash: string;
+
       city: string;
       country: string;
       date: string;

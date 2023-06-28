@@ -17,7 +17,6 @@ export default defineEventHandler(async (event) => {
 
     select: {
       username: true,
-      blurHash: true,
       city: true,
       country: true,
       date: true,
