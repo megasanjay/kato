@@ -54,6 +54,9 @@ const nextBackgroundCookie = useCookie("nextBackground", {
     "data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=",
 });
 
+console.log("backgroundCookie", backgroundCookie.value);
+console.log("nextBackgroundCookie", nextBackgroundCookie.value);
+
 const backgroundStore = useBackgroundImageStore();
 
 imageSource.value = backgroundCookie.value;
