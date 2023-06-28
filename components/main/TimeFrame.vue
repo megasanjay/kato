@@ -71,15 +71,10 @@ import { useClockStore } from "~/stores/clock";
 
 const clockStore = useClockStore();
 
-const clockType = useCookie("clockType", {
-  maxAge: 60 * 60 * 24 * 30,
-  default: () => "time",
-});
+const clockType = computed(() => clockStore.currentView);
 
 const changeClockType = (value: string) => {
   clockStore.updateCurrentView(value);
-
-  clockType.value = value;
 };
 
 const mounted = ref(false);
