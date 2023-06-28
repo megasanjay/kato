@@ -235,7 +235,7 @@ body {
 }
 
 .vignette::before {
-  @apply absolute inset-0 z-0 h-screen w-screen;
+  @apply absolute inset-0 z-0 h-screen w-screen scale-150;
   content: "";
   pointer-events: none;
 

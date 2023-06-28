@@ -2,19 +2,19 @@
   <div class="background-image-container relative bg-slate-800">
     <!-- Show the new image on the top and fade in after loading -->
     <nuxt-img
-      :src="foundation"
+      :src="base64Image"
       class="absolute left-0 top-0 h-screen w-screen object-cover"
     />
     <nuxt-img
-      :src="imageSource"
+      :src="backgroundCookie"
       class="absolute left-0 top-0 h-screen w-screen object-cover transition-opacity duration-300"
       :class="isLoaded ? 'opacity-100' : 'opacity-0'"
       @load="onImgLoad"
     />
 
     <img
-      :src="nextImageSource"
-      class="absolute left-0 top-0 h-screen w-screen object-cover transition-opacity duration-500"
+      :src="nextBackgroundCookie"
+      class="absolute left-0 top-0 h-screen w-screen object-cover opacity-0 transition-opacity duration-500"
       :class="{
         'opacity-0': !transitionToNextImage,
         'opacity-100': transitionToNextImage,
@@ -29,40 +29,35 @@ const transitionToNextImage = ref(false);
 
 const imageSource = ref("");
 const nextImageSource = ref("");
-const foundation = ref("");
 
 import { useBackgroundImageStore } from "~/stores/backgroundImage";
 
 // cookies should be set to expire after 3 days
 const backgroundCookie = useCookie("background", {
   maxAge: 60 * 60 * 24 * 3,
+  watch: true,
+  default: () =>
+    "data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=",
 });
 
 const base64Image = useCookie("base64Image", {
   maxAge: 60 * 60 * 24 * 2,
+  watch: true,
+  default: () =>
+    "data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=",
 });
 
 const nextBackgroundCookie = useCookie("nextBackground", {
   maxAge: 60 * 60 * 24 * 3,
+  watch: true,
+  default: () =>
+    "data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=",
 });
 
 const backgroundStore = useBackgroundImageStore();
 
-backgroundCookie.value =
-  backgroundCookie.value ||
-  "data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=";
-
-nextBackgroundCookie.value =
-  nextBackgroundCookie.value ||
-  "data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=";
-
-base64Image.value =
-  base64Image.value ||
-  "data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=";
-
 imageSource.value = backgroundCookie.value;
 nextImageSource.value = nextBackgroundCookie.value;
-foundation.value = base64Image.value;
 
 onMounted(async () => {
   backgroundStore.getDailyImages().then(() => {
@@ -83,7 +78,6 @@ const checkForNewImage = () => {
     backgroundStore.backgroundImage.blurHash !== ""
   ) {
     base64Image.value = backgroundStore.backgroundImage.blurHash;
-    foundation.value = base64Image.value;
   }
 
   if (
@@ -104,6 +98,7 @@ const checkForNewImage = () => {
 
       setTimeout(() => {
         nextImageSource.value = backgroundStore.getNextBackgroundImage();
+        nextBackgroundCookie.value = nextImageSource.value;
       }, 500);
     }, 1500);
   }, 500);
