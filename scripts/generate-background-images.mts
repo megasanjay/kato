@@ -121,10 +121,12 @@ const generateImage = async (searchDate: string) => {
 
       let description = responseImage.description;
 
-      if (!description && responseImage.alt_description) {
-        description = responseImage.alt_description;
-      } else {
-        description = "None provided";
+      if (!description) {
+        if (responseImage.alt_description) {
+          description = responseImage.alt_description;
+        } else {
+          description = "None provided";
+        }
       }
 
       const unsplashUrl = responseImage.links.html;

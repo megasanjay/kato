@@ -55,17 +55,15 @@
 
           <Transition name="fast-fade-blur" appear mode="out-in">
             <div class="flex flex-col space-y-2 py-3" v-if="!loading">
-              <div
-                class="flex items-center space-x-2 transition-all hover:text-sky-300"
-              >
+              <div class="flex items-center space-x-2">
                 <Icon name="icon-park-twotone:camera-three" size="20" />
                 <a
-                  class="text-base font-medium"
+                  class="text-base font-medium transition-all hover:text-sky-300"
                   :href="imageUsernameLink"
                   target="_blank"
                   rel="noopener"
                 >
-                  {{ imageUsername }}
+                  {{ imageAuthor }}
                 </a>
               </div>
 
@@ -102,6 +100,7 @@ const backgroundStore = useBackgroundImageStore();
 const loaderStore = useLoaderStore();
 
 const imageUsername = ref("");
+const imageAuthor = ref("");
 const imageUsernameLink = ref("https://unsplash.com");
 
 const city = ref("");
@@ -139,6 +138,7 @@ const skipToNextWallpaper = () => {
 
 const updateImageMetadata = () => {
   if ("username" in backgroundStore.backgroundImage) {
+    imageAuthor.value = backgroundStore.backgroundImage.authorName;
     imageUsername.value = backgroundStore.backgroundImage.username;
     imageUsernameLink.value = `https://unsplash.com/@${backgroundStore.backgroundImage.username}`;
   }

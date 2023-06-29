@@ -8,5 +8,8 @@ type BackgroundImage =
       description: string;
       index: number;
       url: string;
+      unsplashUrl: string;
+      authorName: string;
+      portfolioUrl: string;
     }
   | {};

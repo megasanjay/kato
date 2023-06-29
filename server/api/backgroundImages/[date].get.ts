@@ -23,6 +23,9 @@ export default defineEventHandler(async (event) => {
       description: true,
       index: true,
       url: true,
+      unsplashUrl: true,
+      authorName: true,
+      portfolioUrl: true,
     },
     where: {
       date,
