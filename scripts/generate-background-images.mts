@@ -150,3 +150,30 @@ const dayAfterTomorrow = now.add(2, "day").format("YYYY-MM-DD");
 await generateImage(today);
 await generateImage(tomorrow);
 await generateImage(dayAfterTomorrow);
+
+// Delete old images from database (older than 10 days)
+
+console.log("Deleting old images");
+
+const tenDaysAgo = now.subtract(10, "day").format("YYYY-MM-DD");
+
+const oldImages = await prisma.background.findMany({
+  where: {
+    date: tenDaysAgo,
+  },
+});
+
+console.log(`Found ${oldImages.length} old images`);
+
+for (const oldImage of oldImages) {
+  await prisma.background.delete({
+    where: {
+      id: oldImage.id,
+    },
+  });
+
+  console.log(`Deleted image ${oldImage.id}`);
+}
+
+// Exit the script
+process.exit(0);
