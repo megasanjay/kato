@@ -1,6 +1,6 @@
 <template>
   <section class="px-6">
-    <h1>Clock Options</h1>
+    <h1>Clock</h1>
     <p class="pt-1">
       This panel allows you to change the functionality of the clock on your
       dashboard.

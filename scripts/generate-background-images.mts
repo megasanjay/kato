@@ -119,20 +119,38 @@ const generateImage = async (searchDate: string) => {
       const city = imageLocation.city;
       const country = imageLocation.country;
 
+      let description = responseImage.description;
+
+      if (!description && responseImage.alt_description) {
+        description = responseImage.alt_description;
+      } else {
+        description = "None provided";
+      }
+
+      const unsplashUrl = responseImage.links.html;
+
+      const username = responseImage.user.username;
+      const authorName = responseImage.user.name;
+      const portfolioUrl =
+        responseImage.user.portfolio_url || "https://unsplash.com";
+
       console.log(`Image ${responseImage.id} is from ${city}, ${country}`);
 
       // save image to database
       await prisma.background.create({
         data: {
-          username: responseImage.user.username,
+          username,
+          authorName,
+          portfolioUrl,
           city: city || "Unknown",
           country: country || "Unknown",
           date: searchDate,
-          description: responseImage.description || "None provided",
+          description,
           imageID: responseImage.id,
           index,
           theme: randomTheme,
           url: `${responseImage.urls.raw}&auto=format`,
+          unsplashUrl,
         },
       });
 

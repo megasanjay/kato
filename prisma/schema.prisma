@@ -16,14 +16,17 @@ model Background {
   date  String
   theme String
 
-  imageID String @unique
-  url     String
+  imageID     String @unique
+  url         String
+  unsplashUrl String
 
   index Int
 
   description String
 
-  username String
+  username     String
+  authorName   String
+  portfolioUrl String
 
   city    String
   country String
