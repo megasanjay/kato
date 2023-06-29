@@ -1,5 +1,5 @@
 <template>
-  <main class="vignette mx-auto my-auto w-full">
+  <main class="mx-auto my-auto w-full">
     <Transition name="fast-fade-blur" appear mode="out-in">
       <div v-if="mounted">
         <MainTimeFrame />

@@ -108,17 +108,10 @@ const country = ref("");
 
 const description = ref("");
 
-// const imageUsername = computed(() =>
-//   "username" in backgroundStore.backgroundImage
-//     ? backgroundStore.backgroundImage.username
-//     : ""
-// );
-
-// const imageUsernameLink = computed(() =>
-//   "username" in backgroundStore.backgroundImage
-//     ? `https://unsplash.com/@${backgroundStore.backgroundImage.username}`
-//     : "https://unsplash.com"
-// );
+/**
+ * TODO: add user portfolio link
+ * TODO: add link back to unsplash
+ */
 
 const skipToNextWallpaper = () => {
   loaderStore.addToLoadingQueue("background");

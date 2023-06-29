@@ -108,7 +108,7 @@ const checkForNewImage = () => {
 
       setTimeout(() => {
         nextBackgroundCookie.value = backgroundStore.getNextBackgroundImage();
-      }, 500);
+      }, 150);
     }, 1500);
   }, 500);
 };

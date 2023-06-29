@@ -5,7 +5,7 @@
   >
     <BackgroundWallpaperImage />
 
-    <div class="grid-container h-full w-full">
+    <div class="grid-container vignette h-full w-full">
       <UiHeader />
 
       <div class="main-content-container">
@@ -22,14 +22,7 @@
 </template>
 
 <script setup>
-const { auth } = useSupabaseAuthClient();
-
 const devMode = process.env.NODE_ENV === "development";
-
-const logout = async () => {
-  await auth.signOut();
-  window.location.href = "/";
-};
 </script>
 
 <style scoped>
