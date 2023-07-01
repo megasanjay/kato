@@ -3,14 +3,14 @@
     <!-- Show the new image on the top and fade in after loading -->
 
     <img
-      ref="backgroundImage"
+      ref="backgroundImageRef"
       class="absolute left-0 top-0 h-screen w-screen object-cover transition-all"
       :class="isLoaded ? 'opacity-100' : 'opacity-0'"
       @load="onImgLoad"
     />
 
     <img
-      ref="nextBackgroundImage"
+      ref="nextBackgroundImageRef"
       class="absolute left-0 top-0 h-screen w-screen object-cover opacity-0 transition-opacity duration-500"
       :class="{
         'opacity-0': !transitionToNextImage,
@@ -21,8 +21,8 @@
 </template>
 
 <script setup lang="ts">
-const backgroundImage = ref<HTMLImageElement | null>(null);
-const nextBackgroundImage = ref<HTMLImageElement | null>(null);
+const backgroundImageRef = ref<HTMLImageElement | null>(null);
+const nextBackgroundImageRef = ref<HTMLImageElement | null>(null);
 
 const isLoaded = ref(false);
 const transitionToNextImage = ref(false);
@@ -44,17 +44,17 @@ const nextBackgroundCookie = useCookie("nextBackground", {
     "data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=",
 });
 
-if (backgroundImage.value) {
-  backgroundImage.value.src = backgroundCookie.value;
+if (backgroundImageRef.value) {
+  backgroundImageRef.value.src = backgroundCookie.value;
 
   // if the image is already loaded, set the opacity to 100
-  if (backgroundImage.value.complete) {
+  if (backgroundImageRef.value.complete) {
     isLoaded.value = true;
   }
 }
 
-if (nextBackgroundImage.value) {
-  nextBackgroundImage.value.src = nextBackgroundCookie.value;
+if (nextBackgroundImageRef.value) {
+  nextBackgroundImageRef.value.src = nextBackgroundCookie.value;
 }
 
 const backgroundStore = useBackgroundImageStore();
@@ -63,20 +63,20 @@ onMounted(async () => {
   backgroundStore.getDailyImages().then(() => {
     backgroundStore.setBackgroundImage();
 
-    if (backgroundImage.value) {
-      backgroundImage.value.src = backgroundCookie.value;
+    if (backgroundImageRef.value) {
+      backgroundImageRef.value.src = backgroundCookie.value;
     }
 
     nextBackgroundCookie.value = backgroundStore.getNextBackgroundImage();
 
-    if (nextBackgroundImage.value) {
-      nextBackgroundImage.value.src = nextBackgroundCookie.value;
+    if (nextBackgroundImageRef.value) {
+      nextBackgroundImageRef.value.src = nextBackgroundCookie.value;
     }
   });
 
   setInterval(() => {
     // if the image is already loaded, set the opacity to 100
-    if (backgroundImage.value && backgroundImage.value.complete) {
+    if (backgroundImageRef.value && backgroundImageRef.value.complete) {
       isLoaded.value = true;
     }
   }, 100);
@@ -99,8 +99,8 @@ const checkForNewImage = () => {
   setTimeout(() => {
     backgroundCookie.value = backgroundStore.backgroundImageUrl;
 
-    if (backgroundImage.value) {
-      backgroundImage.value.src = backgroundCookie.value;
+    if (backgroundImageRef.value) {
+      backgroundImageRef.value.src = backgroundCookie.value;
     }
 
     setTimeout(() => {
@@ -108,6 +108,10 @@ const checkForNewImage = () => {
 
       setTimeout(() => {
         nextBackgroundCookie.value = backgroundStore.getNextBackgroundImage();
+
+        if (nextBackgroundImageRef.value) {
+          nextBackgroundImageRef.value.src = nextBackgroundCookie.value;
+        }
       }, 150);
     }, 1500);
   }, 500);
