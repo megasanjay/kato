@@ -59,6 +59,24 @@ if (nextBackgroundImageRef.value) {
 
 const backgroundStore = useBackgroundImageStore();
 
+const setNextBackgroundImage = () => {
+  const nextBackgroundImage = backgroundStore.getNextBackgroundImage();
+
+  if (nextBackgroundImageRef.value) {
+    console.log(
+      nextBackgroundImageRef.value.src,
+      nextBackgroundImage,
+      nextBackgroundImageRef.value.src === nextBackgroundImage
+    );
+  }
+
+  nextBackgroundCookie.value = nextBackgroundImage;
+
+  if (nextBackgroundImageRef.value) {
+    nextBackgroundImageRef.value.src = nextBackgroundCookie.value;
+  }
+};
+
 onMounted(async () => {
   backgroundStore.getDailyImages().then(() => {
     backgroundStore.setBackgroundImage();
@@ -67,11 +85,7 @@ onMounted(async () => {
       backgroundImageRef.value.src = backgroundCookie.value;
     }
 
-    nextBackgroundCookie.value = backgroundStore.getNextBackgroundImage();
-
-    if (nextBackgroundImageRef.value) {
-      nextBackgroundImageRef.value.src = nextBackgroundCookie.value;
-    }
+    setNextBackgroundImage();
   });
 
   setInterval(() => {
@@ -100,19 +114,13 @@ const checkForNewImage = () => {
     backgroundCookie.value = backgroundStore.backgroundImageUrl;
 
     if (backgroundImageRef.value) {
-      backgroundImageRef.value.src = backgroundCookie.value;
+      backgroundImageRef.value.src = backgroundStore.backgroundImageUrl;
     }
 
     setTimeout(() => {
       transitionToNextImage.value = false;
 
-      setTimeout(() => {
-        nextBackgroundCookie.value = backgroundStore.getNextBackgroundImage();
-
-        if (nextBackgroundImageRef.value) {
-          nextBackgroundImageRef.value.src = nextBackgroundCookie.value;
-        }
-      }, 150);
+      setTimeout(() => setNextBackgroundImage, 150);
     }, 1500);
   }, 500);
 };
