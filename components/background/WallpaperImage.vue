@@ -62,14 +62,6 @@ const backgroundStore = useBackgroundImageStore();
 const setNextBackgroundImage = () => {
   const nextBackgroundImage = backgroundStore.getNextBackgroundImage();
 
-  if (nextBackgroundImageRef.value) {
-    console.log(
-      nextBackgroundImageRef.value.src,
-      nextBackgroundImage,
-      nextBackgroundImageRef.value.src === nextBackgroundImage
-    );
-  }
-
   nextBackgroundCookie.value = nextBackgroundImage;
 
   if (nextBackgroundImageRef.value) {
@@ -120,7 +112,7 @@ const checkForNewImage = () => {
     setTimeout(() => {
       transitionToNextImage.value = false;
 
-      setTimeout(() => setNextBackgroundImage, 150);
+      setTimeout(setNextBackgroundImage, 500);
     }, 1500);
   }, 500);
 };
