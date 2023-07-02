@@ -134,7 +134,7 @@ const generateImage = async (searchDate: string) => {
       const username = responseImage.user.username;
       const authorName = responseImage.user.name;
       const portfolioUrl =
-        responseImage.user.portfolio_url || "https://unsplash.com";
+        responseImage.user.portfolio_url || `https://unsplash.com/@${username}`;
 
       console.log(`Image ${responseImage.id} is from ${city}, ${country}`);
 
@@ -171,15 +171,15 @@ await generateImage(today);
 await generateImage(tomorrow);
 await generateImage(dayAfterTomorrow);
 
-// Delete old images from database (older than 10 days)
+// Delete old images from database (older than 30 days)
 
 console.log("Deleting old images");
 
-const tenDaysAgo = now.subtract(10, "day").format("YYYY-MM-DD");
+const thirtyDaysAgo = now.subtract(30, "day").format("YYYY-MM-DD");
 
 const oldImages = await prisma.background.findMany({
   where: {
-    date: tenDaysAgo,
+    date: thirtyDaysAgo,
   },
 });
 

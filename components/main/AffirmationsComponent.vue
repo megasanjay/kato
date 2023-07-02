@@ -52,7 +52,12 @@ const getGreeting = () => {
     showGreeting.value = false;
 
     affirmation.value = "You are awesome!";
-  }, 10000);
+
+    setTimeout(() => {
+      getGreeting();
+      showGreeting.value = true;
+    }, 16000);
+  }, 8000);
 };
 
 getGreeting();

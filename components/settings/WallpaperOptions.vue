@@ -80,6 +80,38 @@
                   {{ description }}
                 </span>
               </div>
+
+              <div class="flex items-center space-x-6 pt-4">
+                <a :href="imageLink" target="_blank" rel="noopener">
+                  <n-button
+                    color="#07518d"
+                    size="large"
+                    strong
+                    :loading="loading"
+                    round
+                  >
+                    <template #icon>
+                      <Icon name="tabler:brand-unsplash" />
+                    </template>
+                    View on Unsplash
+                  </n-button>
+                </a>
+
+                <a :href="portfolioLink" target="_blank" rel="noopener">
+                  <n-button
+                    color="#07518d"
+                    size="large"
+                    strong
+                    :loading="loading"
+                    round
+                  >
+                    <template #icon>
+                      <Icon name="solar:gallery-wide-bold" />
+                    </template>
+                    Portfolio
+                  </n-button>
+                </a>
+              </div>
             </div>
           </Transition>
         </div>
@@ -103,15 +135,13 @@ const imageUsername = ref("");
 const imageAuthor = ref("");
 const imageUsernameLink = ref("https://unsplash.com");
 
+const imageLink = ref("");
+const portfolioLink = ref("");
+
 const city = ref("");
 const country = ref("");
 
 const description = ref("");
-
-/**
- * TODO: add user portfolio link
- * TODO: add link back to unsplash
- */
 
 const skipToNextWallpaper = () => {
   loaderStore.addToLoadingQueue("background");
@@ -134,6 +164,9 @@ const updateImageMetadata = () => {
     imageAuthor.value = backgroundStore.backgroundImage.authorName;
     imageUsername.value = backgroundStore.backgroundImage.username;
     imageUsernameLink.value = `https://unsplash.com/@${backgroundStore.backgroundImage.username}`;
+
+    imageLink.value = backgroundStore.backgroundImage.unsplashUrl;
+    portfolioLink.value = backgroundStore.backgroundImage.portfolioUrl;
   }
 
   if ("city" in backgroundStore.backgroundImage) {
