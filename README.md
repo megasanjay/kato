@@ -6,7 +6,7 @@ Empowering Your Productivity Journey, One Step at a Time!
 
 Kato is a free and evolving alternative to the Momentum app. Kato is a productivity and habit-tracking application designed to help users stay focused, set goals, and manage their time effectively. Please note that Kato is still a work in progress, but it aims to provide a comparable experience to existing productivity apps.
 
-Kato replaces the default new tab page with a visually pleasing dashboard. It offers a clean and intuitive design, featuring a daily inspirational quote, a to-do list, and a weather widget.
+Kato replaces the default new tab page with a visually pleasing dashboard. It offers a clean and intuitive design, featuring a daily affirmations, a to-do list, and a weather widget.
 
 While Kato is under development, it focuses on providing a goal-setting and habit-tracking system. Users can set daily or weekly goals, monitor their progress, and receive reminders to stay on track. Additionally, Kato intends to incorporate a "Focus" mode in the future to create an optimal work environment.
 
@@ -15,7 +15,7 @@ As a work in progress, it strives to continually improve and refine its features
 ## Features
 
 - [x] Beautiful background images
-- [ ] Daily inspirational quote (coming soon)
+- [x] Daily affirmations
 - [ ] To-do list (coming soon)
 - [ ] Weather widget (coming soon)
 - [ ] Goal-setting and habit-tracking system (coming soon)

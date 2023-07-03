@@ -5,7 +5,6 @@ export const useUserStore = defineStore(
   () => {
     const displayName = ref("");
     const fullName = ref("");
-    const birthday = ref("");
 
     const updateDisplayName = (newDisplayName: string) => {
       displayName.value = newDisplayName;
@@ -15,15 +14,9 @@ export const useUserStore = defineStore(
       fullName.value = newFullName;
     };
 
-    const updateBirthday = (newBirthday: string) => {
-      birthday.value = newBirthday;
-    };
-
     return {
-      birthday,
       displayName,
       fullName,
-      updateBirthday,
       updateDisplayName,
       updateFullName,
     };
