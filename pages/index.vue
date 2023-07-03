@@ -14,6 +14,10 @@
 <script setup>
 const mounted = ref(false);
 
+/**
+ * TODO: Update this page to use a grid layout
+ */
+
 onMounted(() => {
   mounted.value = true;
 });
