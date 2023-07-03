@@ -11,7 +11,7 @@
         >
           <template #trigger>
             <div
-              class="cursor-pointer rounded-full bg-transparent p-2 text-white opacity-50 transition-all hover:bg-[#f5fefe] hover:text-blue-500 hover:opacity-90"
+              class="cursor-pointer rounded-full bg-transparent p-2 text-white opacity-30 transition-all hover:bg-[#f5fefe] hover:text-blue-500 hover:opacity-90"
             >
               <Icon name="material-symbols:swap-horiz-rounded" size="40" />
             </div>

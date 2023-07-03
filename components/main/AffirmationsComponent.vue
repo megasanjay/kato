@@ -1,10 +1,17 @@
 <template>
-  <div>
+  <div class="transition-all">
     <transition name="fast-fade-blur" appear mode="out-in">
       <p v-if="showGreeting" class="text-center text-5xl font-bold text-white">
         {{ greeting }}<span v-if="name !== ''">, {{ name }}. </span>
       </p>
-      <p v-else class="text-center text-5xl font-bold text-white">
+      <p
+        v-else
+        class="mx-auto max-w-screen-md text-center font-bold text-white"
+        :class="{
+          'text-4xl': affirmation.length > 50,
+          'text-5xl': affirmation.length <= 50,
+        }"
+      >
         {{ affirmation }}
       </p>
     </transition>
@@ -16,6 +23,7 @@ import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
 import { useClockStore } from "~/stores/clock";
+import { useAffirmationStore } from "~/stores/affirmation";
 import { useUserStore } from "~/stores/user";
 
 // eslint-disable-next-line import/no-named-as-default-member
@@ -25,6 +33,7 @@ dayjs.extend(timezone);
 
 const clockStore = useClockStore();
 const userStore = useUserStore();
+const affirmationStore = useAffirmationStore();
 
 const name = computed(() => userStore.displayName);
 
@@ -49,16 +58,19 @@ const getGreeting = () => {
   }
 
   setTimeout(() => {
+    affirmation.value = affirmationStore.dailyAffirmation.affirmation;
     showGreeting.value = false;
-
-    affirmation.value = "You are awesome!";
 
     setTimeout(() => {
       getGreeting();
       showGreeting.value = true;
-    }, 16000);
-  }, 8000);
+    }, 24000);
+  }, 10000);
 };
 
-getGreeting();
+onMounted(async () => {
+  affirmationStore.getDailyAffirmation();
+
+  getGreeting();
+});
 </script>

@@ -48,10 +48,10 @@ onMounted(() => {
 });
 
 const updateDisplayName = () => {
-  userStore.updateDisplayName(displayName.value);
+  userStore.updateDisplayName(displayName.value.trim());
 };
 
 const updateFullName = () => {
-  userStore.updateFullName(fullName.value);
+  userStore.updateFullName(fullName.value.trim());
 };
 </script>

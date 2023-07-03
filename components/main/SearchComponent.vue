@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-[8%] flex justify-center">
+  <div class="mt-[6%] flex justify-center">
     <div
       class="flex h-[60px] items-center justify-start rounded-[30px] bg-white/20 px-3 py-2 text-white shadow-md backdrop-blur-sm transition-all"
     >

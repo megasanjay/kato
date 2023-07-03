@@ -31,3 +31,11 @@ model Background {
   city    String
   country String
 }
+
+model Affirmation {
+  id String @id @default(cuid())
+
+  date String
+
+  affirmation String
+}
