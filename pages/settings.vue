@@ -79,7 +79,7 @@ const SettingsChangelogComponent = resolveComponent(
 
 const renderComponent = shallowRef<string | ConcreteComponent | null>(null);
 
-renderComponent.value = SettingsChangelogComponent;
+renderComponent.value = SettingsWallpaperOptions;
 
 const renderMenuIcon = (name: string) => {
   return h(Icon, {

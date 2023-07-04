@@ -17,8 +17,8 @@
 
         <div class="flex flex-col space-y-2 pt-1">
           <p class="text-base">
-            By default, the clock uses a 12-hour clock. You can change this to a
-            24-hour clock by toggling the switch below.
+            By default, a 12-hour clock is used to show time. You can change
+            this to a 24-hour clock by toggling the switch below.
           </p>
 
           <div class="flex items-center space-x-4 pt-3">
