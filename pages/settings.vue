@@ -73,10 +73,13 @@ const SettingsClockOptions = resolveComponent("SettingsClockOptions");
 const SettingsMyProfile = resolveComponent("SettingsMyProfile");
 const SettingsAdvancedOptions = resolveComponent("SettingsAdvancedOptions");
 const SettingsAuthOptions = resolveComponent("SettingsAuthOptions");
+const SettingsChangelogComponent = resolveComponent(
+  "SettingsChangelogComponent"
+);
 
 const renderComponent = shallowRef<string | ConcreteComponent | null>(null);
 
-renderComponent.value = SettingsWallpaperOptions;
+renderComponent.value = SettingsChangelogComponent;
 
 const renderMenuIcon = (name: string) => {
   return h(Icon, {
@@ -121,7 +124,6 @@ const menuOptions: MenuOption[] = [
     icon: () => renderMenuIcon("material-symbols:help-outline-rounded"),
   },
   {
-    disabled: true,
     key: "Changelog",
     label: "Changelog",
     icon: () => renderMenuIcon("simple-icons:keepachangelog"),
@@ -155,6 +157,9 @@ const showSettingsPanel = (key: string) => {
       break;
     case "Auth":
       renderComponent.value = SettingsAuthOptions;
+      break;
+    case "Changelog":
+      renderComponent.value = SettingsChangelogComponent;
       break;
     default:
       renderComponent.value = SettingsWallpaperOptions;

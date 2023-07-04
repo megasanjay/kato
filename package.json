@@ -23,6 +23,7 @@
   "devDependencies": {
     "@bg-dev/nuxt-naiveui": "^1.1.1",
     "@faker-js/faker": "^8.0.2",
+    "@nuxt/content": "^2.7.0",
     "@nuxt/devtools": "^0.5.5",
     "@nuxt/image": "^1.0.0-rc.1",
     "@nuxtjs/eslint-config-typescript": "^12.0.0",
