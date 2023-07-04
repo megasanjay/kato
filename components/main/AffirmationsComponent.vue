@@ -1,5 +1,5 @@
 <template>
-  <div class="transition-all">
+  <div class="main-affirmation-container">
     <transition name="fast-fade-blur" appear mode="out-in">
       <p v-if="showGreeting" class="text-center text-5xl font-bold text-white">
         {{ greeting }}<span v-if="name !== ''">, {{ name }}. </span>

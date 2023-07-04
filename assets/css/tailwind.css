@@ -299,6 +299,23 @@ body {
 .main-content-container {
   grid-area: 3 / 1 / 6 / 8;
 }
+
+.main-home-container {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr repeat(3, 0.8fr) 1.3fr 1fr;
+  grid-template-rows: 1.5fr 1.2fr 0.8fr 0.5fr 0.6fr 1.4fr;
+  gap: 0px 0px;
+}
+
+.main-search-container {
+  grid-area: 5 / 3 / 6 / 6;
+}
+.main-affirmation-container {
+  grid-area: 3 / 3 / 4 / 6;
+}
+.main-clock-container {
+  grid-area: 2 / 3 / 3 / 6;
+}
 .footer-container {
   grid-area: 7 / 1 / 8 / 8;
 }

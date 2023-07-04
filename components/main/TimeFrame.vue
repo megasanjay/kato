@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-center">
+  <div class="main-clock-container flex justify-center">
     <div class="relative mx-auto flex items-center space-x-4 rounded-xl p-4">
       <div class="absolute -left-14">
         <n-popover
