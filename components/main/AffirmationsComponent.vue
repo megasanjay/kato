@@ -6,7 +6,7 @@
       </p>
       <p
         v-else
-        class="mx-auto max-w-screen-md text-center font-bold text-white"
+        class="mx-auto text-center font-bold text-white drop-shadow-xl"
         :class="{
           'text-4xl': affirmation.length > 50,
           'text-5xl': affirmation.length <= 50,

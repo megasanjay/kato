@@ -311,7 +311,7 @@ body {
   grid-area: 5 / 3 / 6 / 6;
 }
 .main-affirmation-container {
-  grid-area: 3 / 3 / 4 / 6;
+  grid-area: 3 / 2 / 4 / 7;
 }
 .main-clock-container {
   grid-area: 2 / 3 / 3 / 6;
