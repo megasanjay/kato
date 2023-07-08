@@ -61,10 +61,7 @@
 import type { MenuOption } from "naive-ui";
 import { Icon } from "#components";
 import { ConcreteComponent } from "nuxt/dist/app/compat/capi";
-const user = useSupabaseUser();
 const collapsed = ref(false);
-
-const isLoggedIn = computed(() => user.value);
 
 const darkenBackground = ref(false);
 
@@ -72,7 +69,6 @@ const SettingsWallpaperOptions = resolveComponent("SettingsWallpaperOptions");
 const SettingsClockOptions = resolveComponent("SettingsClockOptions");
 const SettingsMyProfile = resolveComponent("SettingsMyProfile");
 const SettingsAdvancedOptions = resolveComponent("SettingsAdvancedOptions");
-const SettingsAuthOptions = resolveComponent("SettingsAuthOptions");
 const SettingsChangelogComponent = resolveComponent(
   "SettingsChangelogComponent"
 );
@@ -81,10 +77,11 @@ const renderComponent = shallowRef<string | ConcreteComponent | null>(null);
 
 renderComponent.value = SettingsWallpaperOptions;
 
-const renderMenuIcon = (name: string) => {
+const renderMenuIcon = (name: string, id: string) => {
   return h(Icon, {
     name,
     size: "25",
+    id,
   });
 };
 
@@ -92,56 +89,52 @@ const menuOptions: MenuOption[] = [
   {
     key: "Wallpaper",
     label: "Wallpaper",
-    icon: () => renderMenuIcon("material-symbols:image-rounded"),
+    icon: () => renderMenuIcon("material-symbols:image-rounded", "Wallpaper"),
   },
   {
     key: "Clock",
     label: "Clock",
-    icon: () => renderMenuIcon("mdi:web-clock"),
+    icon: () => renderMenuIcon("mdi:web-clock", "Clock"),
   },
   {
-    disabled: !isLoggedIn.value,
     key: "My Profile",
     label: "My Profile",
-    icon: () => renderMenuIcon("mdi:account-settings-variant"),
+    icon: () => renderMenuIcon("mdi:account-settings-variant", "My Profile"),
   },
   {
     disabled: true,
     key: "Todo",
     label: "Todo",
-    icon: () => renderMenuIcon("mdi:format-list-checkbox"),
+    icon: () => renderMenuIcon("mdi:format-list-checkbox", "Todo"),
   },
   {
     disabled: true,
     key: "About",
     label: "About",
-    icon: () => renderMenuIcon("material-symbols:info-outline-rounded"),
+    icon: () =>
+      renderMenuIcon("material-symbols:info-outline-rounded", "About"),
   },
   {
     disabled: true,
     key: "Help",
     label: "Help",
-    icon: () => renderMenuIcon("material-symbols:help-outline-rounded"),
+    icon: () => renderMenuIcon("material-symbols:help-outline-rounded", "Help"),
   },
   {
     key: "Changelog",
     label: "Changelog",
-    icon: () => renderMenuIcon("simple-icons:keepachangelog"),
+    icon: () => renderMenuIcon("simple-icons:keepachangelog", "Changelog"),
   },
   {
     key: "Advanced",
     label: "Advanced",
-    icon: () => renderMenuIcon("fluent:developer-board-16-regular"),
-  },
-  {
-    key: "Auth",
-    label: isLoggedIn.value ? "Logout" : "Login",
-    icon: () => renderMenuIcon("ion:log-out"),
+    icon: () => renderMenuIcon("fluent:developer-board-16-regular", "Advanced"),
   },
 ];
 
 const showSettingsPanel = (key: string) => {
-  console.log("Showing settings panel for", key);
+  navigateTo(`#${key}`);
+
   switch (key) {
     case "Wallpaper":
       renderComponent.value = SettingsWallpaperOptions;
@@ -154,9 +147,6 @@ const showSettingsPanel = (key: string) => {
       break;
     case "Advanced":
       renderComponent.value = SettingsAdvancedOptions;
-      break;
-    case "Auth":
-      renderComponent.value = SettingsAuthOptions;
       break;
     case "Changelog":
       renderComponent.value = SettingsChangelogComponent;

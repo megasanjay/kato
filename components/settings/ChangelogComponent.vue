@@ -15,13 +15,7 @@
 
           <div class="flex items-center space-x-4 py-3">
             <a href="https://changelog.kato.day" target="_blank" rel="noopener">
-              <n-button
-                color="#07518d"
-                size="large"
-                strong
-                :loading="loading"
-                round
-              >
+              <n-button color="#07518d" size="large" strong round>
                 <template #icon>
                   <Icon name="simple-icons:keepachangelog" />
                 </template>
