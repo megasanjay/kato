@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "private": true,
   "packageManager": "yarn@1.22.19",
-  "description": "[description]",
+  "description": "A new tab page extension for Chrome and Firefox",
   "scripts": {
     "dev": "npm run clear && cross-env NODE_ENV=development run-p dev:*",
     "dev-firefox": "npm run clear && cross-env NODE_ENV=development EXTENSION=firefox run-p dev:*",
