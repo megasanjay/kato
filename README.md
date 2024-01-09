@@ -17,6 +17,7 @@ As a work in progress, it strives to continually improve and refine its features
 - [ ] Goal-setting and habit-tracking system (coming soon)
 - [ ] Focus mode (coming soon)
 
+
 ## Technologies
 
 This app is built with the following technologies:
