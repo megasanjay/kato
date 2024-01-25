@@ -116,10 +116,9 @@ const generateImage = async (searchDate: string) => {
 
       const imageLocation = imageDetails.data.location;
 
-      const city = imageLocation.city;
-      const country = imageLocation.country;
+      const {city, country} = imageLocation;
 
-      let description = responseImage.description;
+      let {description} = responseImage;
 
       if (!description) {
         if (responseImage.alt_description) {
@@ -131,7 +130,7 @@ const generateImage = async (searchDate: string) => {
 
       const unsplashUrl = responseImage.links.html;
 
-      const username = responseImage.user.username;
+      const {username} = responseImage.user;
       const authorName = responseImage.user.name;
       const portfolioUrl =
         responseImage.user.portfolio_url || `https://unsplash.com/@${username}`;
