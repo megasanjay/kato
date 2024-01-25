@@ -162,6 +162,7 @@ const generateImage = async (searchDate: string) => {
   }
 };
 
+const main = async () => {
 const today = now.format("YYYY-MM-DD");
 const tomorrow = now.add(1, "day").format("YYYY-MM-DD");
 const dayAfterTomorrow = now.add(2, "day").format("YYYY-MM-DD");
@@ -196,3 +197,9 @@ for (const oldImage of oldImages) {
 
 // Exit the script
 process.exit(0);
+}
+
+main().catch((e) => {
+  console.error(e);
+  process.exit(1);
+})
