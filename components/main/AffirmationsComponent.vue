@@ -1,12 +1,12 @@
 <template>
-  <div class="main-affirmation-container">
+  <div class="flex justify-start pl-2">
     <transition name="fast-fade-blur" appear mode="out-in">
-      <p v-if="showGreeting" class="text-center text-5xl font-bold text-white">
+      <p v-if="showGreeting" class="text-center text-2xl md:text-5xl font-bold text-slate-100">
         {{ greeting }}<span v-if="name !== ''">, {{ name }}. </span>
       </p>
       <p
         v-else
-        class="mx-auto text-center font-bold text-white drop-shadow-xl"
+        class="mx-auto text-center font-bold text-slate-100 drop-shadow-xl"
         :class="{
           'text-4xl': affirmation.length > 50,
           'text-5xl': affirmation.length <= 50,

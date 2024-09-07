@@ -5,12 +5,12 @@
   >
     <BackgroundWallpaperImage />
 
-    <div class="grid-container vignette h-full w-full">
+    <div class="flex flex-col justify-between vignette h-full w-full">
       <UiHeader />
 
-      <div class="main-content-container">
+      <div class="flex-1 py-10">
         <div
-          class="relative z-10 flex h-full items-start justify-start p-8 lg:px-16 lg:py-0"
+          class="relative z-10 flex h-full items-end justify-start p-8 lg:px-16 lg:py-0 w-full"
         >
           <slot />
         </div>

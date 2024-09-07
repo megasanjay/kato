@@ -1,5 +1,5 @@
 <template>
-  <div class="text-[160px] font-black text-white drop-shadow-lg">
+  <div class="text-[120px] md:text-[160px] font-black text-slate-100 drop-shadow-lg">
     {{ currentTime }}
   </div>
 </template>

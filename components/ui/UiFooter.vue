@@ -1,6 +1,6 @@
 <template>
   <footer
-    class="footer-container relative z-10 flex w-full items-center justify-between px-8 pb-4"
+    class="footer-container relative z-10 flex w-full items-center justify-end px-8 pb-4"
   >
     <nuxt-link
       to="/settings"
@@ -22,7 +22,7 @@
     <pre class="text-white"></pre>
 
     <transition name="fast-fade-blur" appear>
-      <div v-show="showLoader" class="absolute -top-[60px] left-4">
+      <div v-show="showLoader" class="absolute -top-[60px] right-6">
         <LoadersSunLoader />
       </div>
     </transition>

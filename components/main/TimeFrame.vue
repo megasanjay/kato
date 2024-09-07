@@ -1,11 +1,25 @@
 <template>
-  <div class="main-clock-container flex justify-center">
-    <div class="relative mx-auto flex items-center space-x-4 rounded-xl p-4">
-      <div class="absolute -left-14">
+  <div class="flex justify-start">
+    <div class="relative justify-start flex items-center space-x-4 rounded-xl pr-4">
+      
+
+      <Transition name="fast-fade-blur" appear mode="out-in">
+        <div v-if="clockType === 'pomodoro'">
+          <ClockTimeComponent />
+        </div>
+        <div v-else-if="clockType === 'percent'">
+          <ClockPercentComponent />
+        </div>
+        <div v-else>
+          <ClockTimeComponent />
+        </div>
+      </Transition>
+
+      <div class="absolute -right-20">
         <n-popover
           trigger="hover"
           content-style=" border-radius: 5px; background-color: transparent; border: 1px solid white"
-          placement="bottom-end"
+          placement="bottom-start"
           raw
           class=""
         >
@@ -37,7 +51,7 @@
               <Icon name="mdi:clock-digital" size="20" />
               <span> Percent </span>
             </div>
-            <div
+            <!-- <div
               class="popover-item"
               :class="{
                 'bg-sky-200': clockType === 'pomodoro',
@@ -46,22 +60,10 @@
             >
               <Icon name="emojione-monotone:timer-clock" size="20" />
               <span> Pomodoro </span>
-            </div>
+            </div> -->
           </div>
         </n-popover>
       </div>
-
-      <Transition name="fast-fade-blur" appear mode="out-in">
-        <div v-if="clockType === 'pomodoro'">
-          <ClockTimeComponent />
-        </div>
-        <div v-else-if="clockType === 'percent'">
-          <ClockPercentComponent />
-        </div>
-        <div v-else>
-          <ClockTimeComponent />
-        </div>
-      </Transition>
     </div>
   </div>
 </template>

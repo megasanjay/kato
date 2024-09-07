@@ -1,5 +1,5 @@
 <template>
-  <div v-if="currentTime" class="font-black text-white drop-shadow-lg">
+  <div v-if="currentTime" class="font-black text-slate-100 drop-shadow-lg">
     <span class="text-[160px]">
       {{ currentTime }}
     </span>

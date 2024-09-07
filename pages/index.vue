@@ -1,11 +1,11 @@
 <template>
-  <main class="mx-auto my-auto w-full">
+  <main class="w-full">
     <Transition name="fast-fade-blur" appear mode="out-in">
       <div v-if="mounted" class="main-home-container">
         <MainTimeFrame />
         <MainAffirmationsComponent />
 
-        <MainSearchComponent />
+        <!-- <MainSearchComponent /> -->
       </div>
     </Transition>
   </main>
