@@ -16,7 +16,7 @@ export const useAffirmationStore = defineStore(
     const getDailyAffirmation = async () => {
       const date = dayjs().format("YYYY-MM-DD");
 
-      if (date === dailyAffirmation.value.date) {
+      if (dailyAffirmation.value && date === dailyAffirmation.value.date) {
         return;
       }
 

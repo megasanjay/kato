@@ -6,10 +6,10 @@
       </p>
       <p
         v-else
-        class="mx-auto text-center font-bold text-slate-100 drop-shadow-xl"
+        class="text-left font-bold text-slate-100 drop-shadow-xl"
         :class="{
-          'text-4xl': affirmation.length > 50,
-          'text-5xl': affirmation.length <= 50,
+          'text-2xl md:text-4xl': affirmation.length > 50,
+          'text-2xl md:text-5xl': affirmation.length <= 50,
         }"
       >
         {{ affirmation }}

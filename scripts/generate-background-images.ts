@@ -179,7 +179,7 @@ const thirtyDaysAgo = now.subtract(30, "day").format("YYYY-MM-DD");
 
 const oldImages = await prisma.background.findMany({
   where: {
-    date: thirtyDaysAgo,
+    date: { lt: thirtyDaysAgo },
   },
 });
 

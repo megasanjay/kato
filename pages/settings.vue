@@ -72,6 +72,7 @@ const SettingsAdvancedOptions = resolveComponent("SettingsAdvancedOptions");
 const SettingsChangelogComponent = resolveComponent(
   "SettingsChangelogComponent"
 );
+const SettingsAboutComponent = resolveComponent("SettingsAboutComponent");
 
 const renderComponent = shallowRef<string | ConcreteComponent | null>(null);
 
@@ -108,7 +109,6 @@ const menuOptions: MenuOption[] = [
     icon: () => renderMenuIcon("mdi:format-list-checkbox", "Todo"),
   },
   {
-    disabled: true,
     key: "About",
     label: "About",
     icon: () =>
@@ -150,6 +150,9 @@ const showSettingsPanel = (key: string) => {
       break;
     case "Changelog":
       renderComponent.value = SettingsChangelogComponent;
+      break;
+    case "About":
+      renderComponent.value = SettingsAboutComponent;
       break;
     default:
       renderComponent.value = SettingsWallpaperOptions;
