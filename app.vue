@@ -1,30 +1,24 @@
 <template>
-  <NaiveConfig :theme-config="themeConfig">
+ <n-config-provider :theme-overrides="themeOverrides">
     <n-message-provider>
       <NuxtLayout>
-        <SeoKit />
         <NuxtLoadingIndicator color="#be185d" :height="5" />
         <NuxtPage />
       </NuxtLayout>
     </n-message-provider>
-  </NaiveConfig>
+  </n-config-provider>
 </template>
 
 <script setup lang="ts">
 import "vue3-lottie/dist/style.css";
-
-import { ThemeConfig } from "@bg-dev/nuxt-naiveui";
+import { NConfigProvider, type GlobalThemeOverrides } from "naive-ui";
 
 /**
  * Theme: https://realtimecolors.com/?colors=021d1c-f5fefe-07518d-ffffff-02042c
  */
 
-const themeConfig: ThemeConfig = {
-  dark: {}, // Theme options applied on dark mode
-  light: {}, // Theme options applied on light mode
-  mobile: {}, // Theme options applied on mobile only
-  mobileOrTablet: {}, // Theme options applied on mobile and tablet
-  shared: {
+const themeOverrides: GlobalThemeOverrides = {
+  
     Form: {
       labelFontSizeTopLarge: "16px",
       labelTextColor: "#ffffff",
@@ -64,7 +58,7 @@ const themeConfig: ThemeConfig = {
     Switch: {
       railColor: "#e0f2fe",
     },
-  }, // Common theme options
+ 
 };
 
 useHead({

@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 /** @type {import('tailwindcss').Config} */
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+const defaultTheme = require("tailwindcss/defaultTheme");
 const { fontFamily } = require("tailwindcss/defaultTheme");
 
 module.exports = {
@@ -10,70 +11,43 @@ module.exports = {
     "./pages/**/*.vue",
     "./plugins/**/*.{js,ts}",
   ],
-
-  corePlugins: {
-    backgroundOpacity: false,
-    borderOpacity: false,
-    divideOpacity: false,
-    placeholderOpacity: false,
-    ringOpacity: false,
-    textOpacity: false,
-  },
-
-  plugins: [require("tailwindcss-debug-screens")],
-
+  plugins: [
+    require("tailwindcss-debug-screens"),
+    require("@tailwindcss/typography"),
+  ],
   theme: {
     extend: {
       animation: {
-        appear: "appear 300ms ease-out 150ms both",
-        flicker: "flicker 3s linear infinite",
-        shimmer: "shimmer 1.3s linear infinite",
-        zoomIn: "appear 300ms ease-out 150ms both",
+        "float-item": "float 5s ease-in-out infinite",
+        "float-opposite": "float-diff 4s ease-in-out infinite",
       },
-
-      container: {
-        center: true,
-        screens: {
-          "2xl": "1124px",
-          lg: "1124px",
-          xl: "1124px",
-        },
-      },
-
       fontFamily: {
+        inter: ['Inter', ...defaultTheme.fontFamily.sans],
+        onest: ["Onest", ...defaultTheme.fontFamily.sans],
         primary: ["Inter", ...fontFamily.sans],
       },
-
       keyframes: {
-        appear: {
-          "0%": { opacity: 0 },
-          "100%": { opacity: 1 },
-        },
-
-        flicker: {
-          "0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100%": {
-            filter:
-              "drop-shadow(0 0 1px rgba(252, 211, 77)) drop-shadow(0 0 15px rgba(245, 158, 11)) drop-shadow(0 0 1px rgba(252, 211, 77))",
-            opacity: 0.99,
-          },
-          "20%, 21.999%, 63%, 63.999%, 65%, 69.999%": {
-            filter: "none",
-            opacity: 0.4,
-          },
-        },
-
-        shimmer: {
+        float: {
           "0%": {
-            backgroundPosition: "-700px 0",
+            transform: "translatey(0px)",
           },
           "100%": {
-            backgroundPosition: "700px 0",
+            transform: "translatey(0px)",
+          },
+          "50%": {
+            transform: "translatey(-20px)",
           },
         },
-
-        zoomIn: {
-          "0%": { opacity: 0, transform: "scale(.5)" },
-          "100%": { opacity: 1, transform: "scale(1)" },
+        "float-diff": {
+          "0%": {
+            transform: "translatey(0px)",
+          },
+          "100%": {
+            transform: "translatey(0px)",
+          },
+          "50%": {
+            transform: "translatey(-17px)",
+          },
         },
       },
     },

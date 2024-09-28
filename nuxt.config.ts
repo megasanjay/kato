@@ -1,5 +1,8 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
+import { NaiveUiResolver } from "unplugin-vue-components/resolvers";
+import Components from "unplugin-vue-components/vite";
+import AutoImport from "unplugin-auto-import/vite";
 
+// https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   alias: {},
 
@@ -17,42 +20,36 @@ export default defineNuxtConfig({
     pageTransition: { name: "page", mode: "out-in" },
   },
 
+  build: {
+    transpile:
+      process.env.NODE_ENV === "production"
+        ? [
+            "naive-ui",
+            "vueuc",
+            "@css-render/vue3-ssr",
+            "@juggle/resize-observer",
+          ]
+        : ["@juggle/resize-observer"],
+  },
+
   css: ["@/assets/css/tailwind.css"],
 
   devtools: { enabled: true },
-
-  extends: ["nuxt-seo-kit"],
 
   imports: {
     dirs: ["stores"],
   },
 
-  modules: [
-    "@nuxt/devtools",
-    "@nuxtjs/tailwindcss",
-    "@pinia/nuxt",
-    [
-      "@nuxt/image",
-      {
-        domains: ["nuxtjs.org", "unsplash.com"],
-      },
-    ],
-    [
-      "nuxt-lodash",
-      {
-        prefix: "_",
-      },
-    ],
-    "@pinia-plugin-persistedstate/nuxt",
-    "@bg-dev/nuxt-naiveui",
-    "nuxt-icon", // icons are found here: https://icones.js.org/
-  ],
+  modules: ["@nuxtjs/tailwindcss", "@pinia/nuxt", [
+    "@nuxt/image",
+    {
+      domains: ["nuxtjs.org", "unsplash.com"],
+    },
+  ], "@pinia-plugin-persistedstate/nuxt", // icons are found here: https://icones.js.org/
+  "@nuxt/icon",
+   "nuxtjs-naive-ui"],
 
-  naiveui: {
-    colorModePreference: "light",
-    iconSize: 18,
-    themeConfig: {},
-  },
+ 
 
   nitro: {},
 
@@ -64,6 +61,35 @@ export default defineNuxtConfig({
       siteName: "Kato",
       siteUrl: process.env.NUXT_PUBLIC_SITE_URL || "https://kato.day",
       titleSeparator: "|",
+    },
+  },
+
+  vite: {
+    optimizeDeps: {
+      include:
+        process.env.NODE_ENV === "development" ? ["naive-ui", "vueuc"] : [],
+    },
+    plugins: [
+      AutoImport({
+        imports: [
+          {
+            "naive-ui": [
+              "useDialog",
+              "useMessage",
+              "useNotification",
+              "useLoadingBar",
+            ],
+          },
+        ],
+      }),
+      Components({
+        resolvers: [NaiveUiResolver()],
+      }),
+    ],
+    server: {
+      hmr: {
+        clientPort: 3000,
+      },
     },
   },
 });
