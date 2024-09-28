@@ -5,6 +5,7 @@
   "scripts": {
     "build": "prisma generate && nuxt build",
     "dev": "nuxt dev",
+    "start": "node .output/server/index.mjs",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "lint:js": "eslint --ext \".ts,.vue\" --ignore-path .gitignore .",
