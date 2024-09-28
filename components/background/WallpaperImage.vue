@@ -1,5 +1,5 @@
 <template>
-  <div class="background-image-container relative bg-slate-800">
+  <div class="background-image-container relative z-0 bg-slate-800">
     <!-- Show the new image on the top and fade in after loading -->
 
     <img

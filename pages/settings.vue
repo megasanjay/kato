@@ -6,7 +6,7 @@
       'bg-slate-900/80': darkenBackground,
     }"
   >
-    <div class="mb-2 mt-8 flex items-center justify-between px-4">
+    <div class="mt-3 flex items-center justify-between px-4">
       <div
         class="flex items-center justify-start space-x-3 text-white drop-shadow-lg"
       >
@@ -16,7 +16,7 @@
 
       <div class="flex flex-col items-end justify-center text-white">
         <p class="text-base">Having trouble with reading the text?</p>
-        <div class="mt-2 flex items-center">
+        <div class="flex items-center">
           <span class="mr-2 text-sm">Darken background</span>
 
           <n-switch v-model:value="darkenBackground" size="small" />
@@ -60,7 +60,7 @@
 <script setup lang="ts">
 import type { MenuOption } from "naive-ui";
 import { Icon } from "#components";
-import { ConcreteComponent } from "nuxt/dist/app/compat/capi";
+
 const collapsed = ref(false);
 
 const darkenBackground = ref(false);
@@ -70,11 +70,13 @@ const SettingsClockOptions = resolveComponent("SettingsClockOptions");
 const SettingsMyProfile = resolveComponent("SettingsMyProfile");
 const SettingsAdvancedOptions = resolveComponent("SettingsAdvancedOptions");
 const SettingsChangelogComponent = resolveComponent(
-  "SettingsChangelogComponent"
+  "SettingsChangelogComponent",
 );
 const SettingsAboutComponent = resolveComponent("SettingsAboutComponent");
 
-const renderComponent = shallowRef<string | ConcreteComponent | null>(null);
+const renderComponent = shallowRef<typeof SettingsWallpaperOptions | null>(
+  null,
+);
 
 renderComponent.value = SettingsWallpaperOptions;
 

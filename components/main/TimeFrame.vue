@@ -1,57 +1,52 @@
 <template>
-  <div class="flex justify-start">
-    <div class="relative justify-start flex items-center space-x-4 rounded-xl pr-4">
-      
+  <div
+    class="relative flex w-max items-center justify-start space-x-4 rounded-xl pr-4"
+  >
+    <Transition name="fast-fade-blur" appear mode="out-in">
+      <ClockTimeComponent v-if="clockType === 'pomodoro'" />
 
-      <Transition name="fast-fade-blur" appear mode="out-in">
-        <div v-if="clockType === 'pomodoro'">
-          <ClockTimeComponent />
-        </div>
-        <div v-else-if="clockType === 'percent'">
-          <ClockPercentComponent />
-        </div>
-        <div v-else>
-          <ClockTimeComponent />
-        </div>
-      </Transition>
+      <ClockPercentComponent v-else-if="clockType === 'percent'" />
 
-      <div class="absolute -right-20">
-        <n-popover
-          trigger="hover"
-          content-style=" border-radius: 5px; background-color: transparent; border: 1px solid white"
-          placement="bottom-start"
-          raw
-          class=""
-        >
-          <template #trigger>
-            <div
-              class="cursor-pointer rounded-full bg-transparent p-2 text-white opacity-30 transition-all hover:bg-[#f5fefe] hover:text-blue-500 hover:opacity-90"
-            >
-              <Icon name="material-symbols:swap-horiz-rounded" size="40" />
-            </div>
-          </template>
-          <div class="flex flex-row bg-slate-50">
-            <div
-              class="popover-item"
-              :class="{
-                'bg-sky-200': clockType === 'time',
-              }"
-              @click="changeClockType('time')"
-            >
-              <Icon name="uil:clock-seven" size="20" />
-              <span> Clock </span>
-            </div>
-            <div
-              class="popover-item"
-              :class="{
-                'bg-sky-200': clockType === 'percent',
-              }"
-              @click="changeClockType('percent')"
-            >
-              <Icon name="mdi:clock-digital" size="20" />
-              <span> Percent </span>
-            </div>
-            <!-- <div
+      <ClockTimeComponent v-else />
+    </Transition>
+
+    <div class="absolute -right-20">
+      <n-popover
+        trigger="hover"
+        content-style=" border-radius: 5px; background-color: transparent; border: 1px solid white"
+        placement="bottom-start"
+        raw
+        class=""
+      >
+        <template #trigger>
+          <div
+            class="cursor-pointer rounded-full bg-transparent p-2 text-white opacity-30 transition-all hover:bg-[#f5fefe] hover:text-blue-500 hover:opacity-90"
+          >
+            <Icon name="material-symbols:swap-horiz-rounded" size="40" />
+          </div>
+        </template>
+        <div class="flex flex-row bg-slate-50">
+          <div
+            class="popover-item"
+            :class="{
+              'bg-sky-200': clockType === 'time',
+            }"
+            @click="changeClockType('time')"
+          >
+            <Icon name="uil:clock-seven" size="20" />
+            <span> Clock </span>
+          </div>
+          <div
+            class="popover-item"
+            :class="{
+              'bg-sky-200': clockType === 'percent',
+            }"
+            @click="changeClockType('percent')"
+          >
+            <Icon name="mdi:clock-digital" size="20" />
+            <span> Percent </span>
+          </div>
+          <!-- <div
               class="popover-item"
               :class="{
                 'bg-sky-200': clockType === 'pomodoro',
@@ -61,9 +56,8 @@
               <Icon name="emojione-monotone:timer-clock" size="20" />
               <span> Pomodoro </span>
             </div> -->
-          </div>
-        </n-popover>
-      </div>
+        </div>
+      </n-popover>
     </div>
   </div>
 </template>
@@ -88,6 +82,6 @@ onMounted(() => {
 
 <style scoped>
 .popover-item {
-  @apply flex cursor-pointer items-center space-x-1  p-2 text-[#07518d] transition-all hover:bg-sky-300;
+  @apply flex cursor-pointer items-center space-x-1 p-2 text-[#07518d] transition-all hover:bg-sky-300;
 }
 </style>

@@ -1,6 +1,8 @@
 <template>
   <div v-if="currentTime" class="font-black text-slate-100 drop-shadow-lg">
-    <span class="text-[160px]">
+    <span
+      class="text-[120px] font-black leading-[150px] text-slate-100 drop-shadow-lg md:text-[140px]"
+    >
       {{ currentTime }}
     </span>
     <span class="text-[50px]"> % </span>
@@ -25,7 +27,7 @@ const currentTime = ref("");
 const mounted = ref(true);
 
 const timeZone = computed(
-  () => clockStore.timeZone || Intl.DateTimeFormat().resolvedOptions().timeZone
+  () => clockStore.timeZone || Intl.DateTimeFormat().resolvedOptions().timeZone,
 );
 
 const getCurrentTime = () => {

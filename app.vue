@@ -92,8 +92,7 @@ useHead({
   meta: [
     {
       name: "description",
-      content:
-        "Scholar Stack is an application to help you manage your dependencies with ease",
+      content: "Kato is your new tab dashboard for productivity and happiness",
     },
     {
       name: "msapplication-TileColor",

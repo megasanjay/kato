@@ -14,7 +14,7 @@ export default defineNuxtConfig({
           content: "width=device-width, initial-scale=1",
         },
       ],
-      titleTemplate: "%pageTitle %titleSeparator %siteName",
+      title: "Kato",
     },
     layoutTransition: { name: "layout", mode: "out-in" },
     pageTransition: { name: "page", mode: "out-in" },
@@ -40,16 +40,19 @@ export default defineNuxtConfig({
     dirs: ["stores"],
   },
 
-  modules: ["@nuxtjs/tailwindcss", "@pinia/nuxt", [
-    "@nuxt/image",
-    {
-      domains: ["nuxtjs.org", "unsplash.com"],
-    },
-  ], "@pinia-plugin-persistedstate/nuxt", // icons are found here: https://icones.js.org/
-  "@nuxt/icon",
-   "nuxtjs-naive-ui"],
-
- 
+  modules: [
+    "@nuxtjs/tailwindcss",
+    "@pinia/nuxt",
+    [
+      "@nuxt/image",
+      {
+        domains: ["nuxtjs.org", "unsplash.com"],
+      },
+    ],
+    "@pinia-plugin-persistedstate/nuxt", // icons are found here: https://icones.js.org/
+    "@nuxt/icon",
+    "nuxtjs-naive-ui",
+  ],
 
   nitro: {},
 

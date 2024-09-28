@@ -1,22 +1,13 @@
 <template>
   <div
-    class="relative flex h-screen w-screen flex-col justify-between overflow-hidden bg-slate-900"
+    class="relative flex h-screen w-screen flex-col justify-start overflow-hidden bg-slate-900"
     :class="{ 'debug-screenss': devMode }"
   >
     <BackgroundWallpaperImage />
+    <UiHeader />
 
-    <div class="flex flex-col justify-between vignette h-full w-full">
-      <UiHeader />
-
-      <div class="flex-1 py-10">
-        <div
-          class="relative z-10 flex h-full items-end justify-start p-8 lg:px-16 lg:py-0 w-full"
-        >
-          <slot />
-        </div>
-      </div>
-
-      <UiFooter />
+    <div class="vignette h-full px-8 pb-16 pt-8 lg:px-16">
+      <slot />
     </div>
   </div>
 </template>

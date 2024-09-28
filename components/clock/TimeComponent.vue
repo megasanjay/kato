@@ -1,7 +1,9 @@
 <template>
-  <div class="text-[120px] md:text-[160px] font-black text-slate-100 drop-shadow-lg">
+  <time
+    class="text-[120px] font-black leading-[150px] text-slate-100 drop-shadow-lg md:text-[140px]"
+  >
     {{ currentTime }}
-  </div>
+  </time>
 </template>
 
 <script setup lang="ts">
@@ -24,7 +26,7 @@ const timerInterval = ref<NodeJS.Timeout | null>(null);
 
 const display24Hours = computed(() => clockStore.display24Hours);
 const timeZone = computed(
-  () => clockStore.timeZone || Intl.DateTimeFormat().resolvedOptions().timeZone
+  () => clockStore.timeZone || Intl.DateTimeFormat().resolvedOptions().timeZone,
 );
 
 const getCurrentTime = () => {
