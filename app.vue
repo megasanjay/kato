@@ -1,5 +1,5 @@
 <template>
- <n-config-provider :theme-overrides="themeOverrides">
+  <n-config-provider :theme-overrides="themeOverrides">
     <n-message-provider>
       <NuxtLayout>
         <NuxtLoadingIndicator color="#be185d" :height="5" />
@@ -10,7 +10,6 @@
 </template>
 
 <script setup lang="ts">
-import "vue3-lottie/dist/style.css";
 import { NConfigProvider, type GlobalThemeOverrides } from "naive-ui";
 
 /**
@@ -18,47 +17,45 @@ import { NConfigProvider, type GlobalThemeOverrides } from "naive-ui";
  */
 
 const themeOverrides: GlobalThemeOverrides = {
-  
-    Form: {
-      labelFontSizeTopLarge: "16px",
-      labelTextColor: "#ffffff",
-    },
-    Input: {
-      color: "#ffffff00",
-      colorFocus: "#ffffff00",
-      iconColor: "#ffffff",
-      placeholderColor: "#bfbeba",
-      textColor: "#ffffff",
-    },
-    Layout: {
-      color: "#ffffff00",
-      textColor: "#ffffff",
-      siderColor: "#ffffff00",
-    },
-    Menu: {
-      itemTextColor: "#ffffff",
-      itemIconColor: "#ffffff",
-      itemIconColorCollapsed: "#ffffff",
-      itemColorHover: "#e0f2fe",
-      itemTextColorHover: "#0369a1",
-      itemTextColorActive: "#0284c7",
-      itemTextColorActiveHover: "#0c4a6e",
-      itemColorActive: "#e0f2fe",
-      itemIconColorActive: "#0284c7",
-      itemIconColorActiveHover: "#0c4a6e",
-      itemColorActiveHover: "#bae6fd",
-      itemIconColorHover: "#0369a1",
-    },
-    Tabs: {
-      barColor: "#07518d",
-      tabTextColorActiveBar: "#eff6ff",
-      tabTextColorBar: "#fff",
-      tabTextColorHoverBar: "#bae6fd",
-    },
-    Switch: {
-      railColor: "#e0f2fe",
-    },
- 
+  Form: {
+    labelFontSizeTopLarge: "16px",
+    labelTextColor: "#ffffff",
+  },
+  Input: {
+    color: "#ffffff00",
+    colorFocus: "#ffffff00",
+    iconColor: "#ffffff",
+    placeholderColor: "#bfbeba",
+    textColor: "#ffffff",
+  },
+  Layout: {
+    color: "#ffffff00",
+    textColor: "#ffffff",
+    siderColor: "#ffffff00",
+  },
+  Menu: {
+    itemTextColor: "#ffffff",
+    itemIconColor: "#ffffff",
+    itemIconColorCollapsed: "#ffffff",
+    itemColorHover: "#e0f2fe",
+    itemTextColorHover: "#0369a1",
+    itemTextColorActive: "#0284c7",
+    itemTextColorActiveHover: "#0c4a6e",
+    itemColorActive: "#e0f2fe",
+    itemIconColorActive: "#0284c7",
+    itemIconColorActiveHover: "#0c4a6e",
+    itemColorActiveHover: "#bae6fd",
+    itemIconColorHover: "#0369a1",
+  },
+  Tabs: {
+    barColor: "#07518d",
+    tabTextColorActiveBar: "#eff6ff",
+    tabTextColorBar: "#fff",
+    tabTextColorHoverBar: "#bae6fd",
+  },
+  Switch: {
+    railColor: "#e0f2fe",
+  },
 };
 
 useHead({
