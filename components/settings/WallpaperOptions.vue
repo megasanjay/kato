@@ -1,6 +1,7 @@
 <template>
   <section class="px-6">
     <h1>Wallpaper</h1>
+
     <p class="pt-1">
       Use this page to change the wallpaper of your dashboard. You can choose
       from a variety of different wallpapers.
@@ -21,7 +22,7 @@
             can cycle through them by clicking the button below.
           </p>
 
-          <div class="py-3">
+          <div class="pt-3">
             <n-button
               color="#07518d"
               size="large"

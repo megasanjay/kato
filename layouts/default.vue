@@ -6,7 +6,7 @@
     <BackgroundWallpaperImage />
     <UiHeader />
 
-    <div class="vignette h-full px-8 pb-16 pt-8 lg:px-16">
+    <div class="vignette h-full p-20 pt-2">
       <slot />
     </div>
   </div>
