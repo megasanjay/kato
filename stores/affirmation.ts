@@ -24,7 +24,7 @@ export const useAffirmationStore = defineStore(
 
       try {
         const data = await fetch(`/api/affirmation/${date}`).then((res) =>
-          res.json()
+          res.json(),
         );
 
         console.log(data);
@@ -42,9 +42,9 @@ export const useAffirmationStore = defineStore(
       getDailyAffirmation,
     };
   },
-  {
-    persist: {
-      storage: persistedState.localStorage,
-    },
-  }
+  // {
+  //   persist: {
+  //     storage: persistedState.localStorage,
+  //   },
+  // }
 );

@@ -32,5 +32,12 @@ export default defineEventHandler(async (event) => {
     },
   });
 
+  if (!images.length) {
+    throw createError({
+      message: "No images found for the specified date",
+      statusCode: 404,
+    });
+  }
+
   return JSON.stringify(images);
 });

@@ -10,6 +10,8 @@ export default defineEventHandler(async (event) => {
     });
   }
 
+  console.log(`Fetching affirmation for ${date}`);
+
   const affirmation = await prisma.affirmation.findFirst({
     select: {
       affirmation: true,
@@ -19,6 +21,15 @@ export default defineEventHandler(async (event) => {
       date,
     },
   });
+
+  console.log(affirmation);
+
+  if (!affirmation) {
+    throw createError({
+      message: "No affirmation found for the specified date",
+      statusCode: 404,
+    });
+  }
 
   return JSON.stringify(affirmation);
 });

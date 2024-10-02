@@ -20,14 +20,14 @@ export const useBackgroundImageStore = defineStore(
       const date = dayjs().format("YYYY-MM-DD");
 
       if (dailyImages.value.length > 0 && date === dailyImages.value[0].date) {
-            return;
+        return;
       }
 
       const loaderID = loaderStore.generateId();
       loaderStore.addToLoadingQueue(loaderID);
 
       const images = await fetch(`/api/backgroundImages/${date}`).then((res) =>
-        res.json()
+        res.json(),
       );
 
       console.log(images);
@@ -92,9 +92,9 @@ export const useBackgroundImageStore = defineStore(
       getNextBackgroundImage,
     };
   },
-  {
-    persist: {
-      storage: persistedState.localStorage,
-    },
-  }
+  // {
+  //   persist: {
+  //     storage: persistedState.localStorage,
+  //   },
+  // }
 );
