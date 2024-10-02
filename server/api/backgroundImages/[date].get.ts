@@ -14,7 +14,6 @@ export default defineEventHandler(async (event) => {
     orderBy: {
       index: "asc",
     },
-
     select: {
       username: true,
       city: true,
