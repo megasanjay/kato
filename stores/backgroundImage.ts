@@ -30,8 +30,6 @@ export const useBackgroundImageStore = defineStore(
         res.json(),
       );
 
-      console.log(images);
-
       loaderStore.removeFromLoadingQueue(loaderID);
 
       dailyImages.value = images;

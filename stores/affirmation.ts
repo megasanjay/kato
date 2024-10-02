@@ -27,8 +27,6 @@ export const useAffirmationStore = defineStore(
           res.json(),
         );
 
-        console.log(data);
-
         loaderStore.removeFromLoadingQueue("affirmation");
 
         dailyAffirmation.value = data;
