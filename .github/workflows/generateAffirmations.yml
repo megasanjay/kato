@@ -7,7 +7,7 @@ on:
     - cron: "0 */6 * * *"
 
 jobs:
-  update-counters:
+  generate-affirmations:
     runs-on: ubuntu-latest
 
     steps:

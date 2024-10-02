@@ -7,7 +7,7 @@ on:
     - cron: "0 */1 * * *"
 
 jobs:
-  update-counters:
+  gemerate-background-images:
     runs-on: ubuntu-latest
 
     steps:
