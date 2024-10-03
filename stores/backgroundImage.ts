@@ -90,9 +90,9 @@ export const useBackgroundImageStore = defineStore(
       getNextBackgroundImage,
     };
   },
-  // {
-  //   persist: {
-  //     storage: persistedState.localStorage,
-  //   },
-  // }
+  {
+    persist: {
+      storage: persistedState.localStorage,
+    },
+  }
 );
