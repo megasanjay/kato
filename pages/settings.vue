@@ -116,17 +116,17 @@ const menuOptions: MenuOption[] = [
     icon: () =>
       renderMenuIcon("material-symbols:info-outline-rounded", "About"),
   },
-  {
-    disabled: true,
-    key: "Help",
-    label: "Help",
-    icon: () => renderMenuIcon("material-symbols:help-outline-rounded", "Help"),
-  },
-  {
-    key: "Changelog",
-    label: "Changelog",
-    icon: () => renderMenuIcon("simple-icons:keepachangelog", "Changelog"),
-  },
+  // {
+  //   disabled: true,
+  //   key: "Help",
+  //   label: "Help",
+  //   icon: () => renderMenuIcon("material-symbols:help-outline-rounded", "Help"),
+  // },
+  // {
+  //   key: "Changelog",
+  //   label: "Changelog",
+  //   icon: () => renderMenuIcon("simple-icons:keepachangelog", "Changelog"),
+  // },
   {
     key: "Advanced",
     label: "Advanced",
