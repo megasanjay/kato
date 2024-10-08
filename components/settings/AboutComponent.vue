@@ -64,7 +64,10 @@
         <div class="flex flex-col space-y-2 pt-1">
           <p class="text-base">
             This website is built with ❤️ by
-            <NuxtLink to="https://sanjaysoundarajan.dev" target="_blank"
+            <NuxtLink
+              to="https://sanjaysoundarajan.dev"
+              target="_blank"
+              class="cursor-pointer"
               >Sanjay Soundararajan</NuxtLink
             >. You can find the source code on GitHub.
           </p>
