@@ -33,26 +33,19 @@ export default defineNuxtConfig({
   },
 
   css: ["@/assets/css/tailwind.css"],
-
   devtools: { enabled: true },
 
   imports: {
     dirs: ["stores"],
   },
 
-  modules: [
-    "@nuxtjs/tailwindcss",
-    "@pinia/nuxt",
-    [
-      "@nuxt/image",
-      {
-        domains: ["nuxtjs.org", "unsplash.com"],
-      },
-    ],
-    "@pinia-plugin-persistedstate/nuxt", // icons are found here: https://icones.js.org/
-    "@nuxt/icon",
-    "nuxtjs-naive-ui",
-  ],
+  modules: ["@nuxtjs/tailwindcss", "@pinia/nuxt", [
+    "@nuxt/image",
+    {
+      domains: ["nuxtjs.org", "unsplash.com"],
+    },
+  ], // icons are found here: https://icones.js.org/
+  "@pinia-plugin-persistedstate/nuxt", "@nuxt/icon", "nuxtjs-naive-ui", "nuxt-auth-utils"],
 
   nitro: {},
 
@@ -95,4 +88,6 @@ export default defineNuxtConfig({
       },
     },
   },
+
+  compatibilityDate: "2024-10-16",
 });
