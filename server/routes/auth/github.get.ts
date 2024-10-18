@@ -3,8 +3,39 @@ export default defineOAuthGitHubEventHandler({
     emailRequired: true,
   },
   async onSuccess(event, { user, tokens }) {
+    const githubUserId = user.id;
+    const name = user.name.split(" ")[0] || "";
+    let userId = "";
+
+    const userExists = await prisma.user.findFirst({
+      where: {
+        oauthProvider: "github",
+        oauthId: githubUserId.toString(),
+        name,
+      },
+    });
+
+    if (!userExists) {
+      const u = await prisma.user.create({
+        data: {
+          oauthProvider: "github",
+          oauthId: githubUserId.toString(),
+          name,
+        },
+      });
+
+      userId = u.id;
+    } else {
+      userId = userExists.id;
+    }
+
+    const userSession = {
+      id: userId,
+      name: user.name.split(" ")[0] || "",
+    };
+
     await setUserSession(event, {
-      user,
+      user: userSession,
     });
     return sendRedirect(event, "/profile");
   },

@@ -3,7 +3,7 @@ const { loggedIn, user, session, fetch, clear } = useUserSession();
 </script>
 
 <template>
-  <div v-if="loggedIn" class="h-full overflow-auto">
+  <div v-if="loggedIn" class="h-full overflow-auto bg-white">
     <pre>
       {{ user }}
     </pre>
