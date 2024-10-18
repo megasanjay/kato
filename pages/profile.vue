@@ -1,5 +1,9 @@
 <script setup>
 const { loggedIn, user, session, fetch, clear } = useUserSession();
+
+const name = user.value.name;
+
+console.log(user.value.name);
 </script>
 
 <template>

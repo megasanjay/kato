@@ -1,3 +1,15 @@
+<script setup>
+const mounted = ref(false);
+
+definePageMeta({
+  layout: "home",
+});
+
+onMounted(() => {
+  mounted.value = true;
+});
+</script>
+
 <template>
   <main class="main-page-container relative h-full w-full">
     <div class="absolute bottom-0 left-0 w-full">
@@ -10,15 +22,3 @@
     </div>
   </main>
 </template>
-
-<script setup>
-const mounted = ref(false);
-
-/**
- * TODO: Update this page to use a grid layout
- */
-
-onMounted(() => {
-  mounted.value = true;
-});
-</script>
