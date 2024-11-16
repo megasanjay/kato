@@ -38,7 +38,7 @@
             </a>
 
             <a
-              href="https://addons.mozilla.org/en-US/firefox/addon/new-tab-override/"
+              href="https://addons.mozilla.org/en-US/firefox/addon/custom-new-tab-page/"
               target="_blank"
               rel="noopener"
             >
@@ -46,7 +46,7 @@
                 <template #icon>
                   <Icon name="ri:firefox-fill" />
                 </template>
-                New Tab Override for Firefox based browsers
+                Custom New Tab Page for Firefox based browsers
               </n-button>
             </a>
           </div>
