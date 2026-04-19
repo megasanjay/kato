@@ -49,11 +49,8 @@ watch(wallpaperUrl, () => {
       @error="isImageLoaded = false"
     />
 
-    <Transition name="fast-fade-blur" appear mode="out-in">
-      <div
-        v-if="isImageLoaded"
-        class="pointer-events-none absolute inset-0 z-10 bg-[radial-gradient(circle,transparent_30%,rgba(0,0,0,0.38)_62%,rgba(0,0,0,0.84)_100%)] transition-opacity duration-700"
-      />
-    </Transition>
+    <div
+      class="pointer-events-none absolute inset-0 z-10 bg-[radial-gradient(circle,transparent_30%,rgba(0,0,0,0.38)_62%,rgba(0,0,0,0.84)_100%)] transition-opacity duration-700"
+    />
   </div>
 </template>

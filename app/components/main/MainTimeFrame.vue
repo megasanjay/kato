@@ -24,12 +24,12 @@ onBeforeUnmount(() => {
 <template>
   <div class="flex flex-col items-center justify-center">
     <h1
-      class="mt-6 text-6xl font-semibold tracking-tight text-white sm:text-7xl md:text-8xl lg:text-9xl"
+      class="text-outline-stone-500 mt-6 text-9xl font-semibold tracking-tight text-white"
     >
       {{ formattedTime }}
     </h1>
 
-    <p class="mt-6 text-lg text-slate-200 sm:text-xl md:text-2xl">
+    <p class="text-outline-stone-500 mt-6 text-2xl text-slate-200">
       {{ formattedDate }}
     </p>
   </div>

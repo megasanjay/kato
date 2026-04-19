@@ -134,6 +134,16 @@ pre {
   -webkit-text-stroke: 4px black;
 }
 
+.text-outline-black {
+  -webkit-text-stroke: 2px black;
+  paint-order: stroke fill;
+  text-shadow:
+    -1px -1px 0 black,
+    1px -1px 0 black,
+    -1px 1px 0 black,
+    1px 1px 0 black;
+}
+
 .animated-underline {
   background-image:
     linear-gradient(#33333300, #33333300),
