@@ -6,7 +6,22 @@ useHead({
   htmlAttrs: {
     lang: "en",
   },
-  link: [{ href: "/favicon.ico", rel: "icon" }],
+  link: [
+    {
+      href: "/favicon-96x96.png",
+      rel: "icon",
+      sizes: "96x96",
+      type: "image/png",
+    },
+    { href: "/favicon.svg", rel: "icon", type: "image/svg+xml" },
+    { href: "/favicon.ico", rel: "shortcut icon" },
+    {
+      href: "/apple-touch-icon.png",
+      rel: "apple-touch-icon",
+      sizes: "180x180",
+    },
+    { href: "/site.webmanifest", rel: "manifest" },
+  ],
   meta: [
     { charset: "utf-8" },
     { name: "viewport", content: "width=device-width, initial-scale=1" },
@@ -19,12 +34,8 @@ useHead({
 });
 
 useSeoMeta({
-  ogImage:
-    "https://kalai.fairdataihub.org/api/generate?title=Hello&description=This%20is%20a%20Nuxt%20starter%20template&app=fairdataihub&org=fairdataihub",
   titleTemplate: "%s",
   twitterCard: "summary_large_image",
-  twitterImage:
-    "https://kalai.fairdataihub.org/api/generate?title=Hello&description=This%20is%20a%20Nuxt%20starter%20template&app=fairdataihub&org=fairdataihub",
 });
 </script>
 
