@@ -29,8 +29,8 @@ RUN pnpm run build
 FROM node:22-alpine
 
 
-LABEL maintainer="FAIR Data Innovations Hub <contact@fairdataihub.org>" \
-  description="This is a Nuxt 3 starter template for the FAIR Data Innovations Hub."
+LABEL maintainer="Sanjay Soundarajan <hello@sjy.so>" \
+  description="Kato is a productivity app focused on a calm landing experience."
 
 # Busybox is used netcat for waiting for Postgres to be ready
 RUN apk add --no-cache openssl busybox-extras
