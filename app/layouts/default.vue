@@ -7,9 +7,9 @@ const devMode = process.env.NODE_ENV === "development";
     class="relative flex h-screen w-screen flex-col justify-start overflow-hidden bg-slate-900"
     :class="{ 'debug-screenss': devMode }"
   >
-    <BackgroundWallpaperImage />
+    <WallpaperImage />
 
-    <div class="vignette h-full p-20 pt-2">
+    <div class="z-10 h-full">
       <slot />
     </div>
   </div>

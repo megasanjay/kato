@@ -255,55 +255,6 @@ pre {
   border: 0px solid rgba(255, 255, 255, 0.18);
 }
 
-.vignette {
-  position: relative;
-}
-
-.vignette::before {
-  @apply absolute inset-0 z-0 h-screen w-screen scale-150;
-  content: "";
-  pointer-events: none;
-
-  /* ff 3.6+ */
-  background: -moz-radial-gradient(
-    circle at 50% 50%,
-    rgba(0, 0, 0, 0.3) 0%,
-    rgba(255, 255, 255, 0) 52%
-  );
-
-  /* safari 5.1+,chrome 10+ */
-  background: -webkit-radial-gradient(
-    circle at 50% 50%,
-    rgba(0, 0, 0, 0.3) 0%,
-    rgba(255, 255, 255, 0) 52%
-  );
-
-  /* opera 11.10+ */
-  background: -o-radial-gradient(
-    circle at 50% 50%,
-    rgba(0, 0, 0, 0.3) 0%,
-    rgba(255, 255, 255, 0) 52%
-  );
-
-  /* ie 10+ */
-  background: -ms-radial-gradient(
-    circle at 50% 50%,
-    rgba(0, 0, 0, 0.3) 0%,
-    rgba(255, 255, 255, 0) 52%
-  );
-
-  /* global 92%+ browsers support */
-  background: radial-gradient(
-    circle at 50% 50%,
-    rgba(0, 0, 0, 0.3) 0%,
-    rgba(255, 255, 255, 0) 52%
-  );
-}
-
-.vignette > * {
-  @apply relative z-10;
-}
-
 .settings-option {
   @apply flex flex-col;
 }
