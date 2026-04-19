@@ -18,13 +18,13 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: 20
+          node-version: 22
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
 
       - name: Run script
         env:
           UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
-        run: yarn scripts:generate:background:images
+        run: pnpm scripts:generate:background:images
