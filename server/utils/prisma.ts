@@ -1,3 +1,4 @@
+// Shared Prisma client with adapter-based PostgreSQL access and dev-time reuse.
 import { PrismaClient } from "#shared/generated/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// Generic title-and-content presenter with a slot fallback for custom rendering.
 const props = defineProps({
   title: {
     default: "",

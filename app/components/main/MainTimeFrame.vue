@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// Live clock component that refreshes the displayed time once per second.
 const dayjs = useDayjs();
 
 const now = ref(dayjs());

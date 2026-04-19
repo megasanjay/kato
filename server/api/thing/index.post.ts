@@ -1,3 +1,4 @@
+// Prisma-backed endpoint that validates and creates a new thing for the user.
 import { z } from "zod";
 
 const thingSchema = z.object({

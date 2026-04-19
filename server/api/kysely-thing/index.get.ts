@@ -1,3 +1,4 @@
+// Kysely-backed endpoint that returns the current user's saved things.
 export default defineEventHandler(async (event) => {
   const session = await requireUserSession(event);
 

@@ -1,11 +1,8 @@
 /**
- * This script is used to generate affirmations for the next 3 days.
- * It uses a list of affirmations present in the affirmations.json file.
- * It then saves the affirmations to the database for the specified date.
- * It also deletes affirmations older than 60 days.
+ * Generates short-term affirmation records and prunes stale entries.
  */
 
-// Import the required modules
+// Import the required modules.
 import dayjs from "dayjs";
 import { PrismaClient } from "../shared/generated/client";
 import { PrismaPg } from "@prisma/adapter-pg";
@@ -15,7 +12,7 @@ import AFFIRMATIONJSON from "../assets/data/affirmations.json" assert { type: "j
 const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
 const prisma = new PrismaClient({ adapter });
 
-// Get the current date
+// Capture the current date once so generation stays consistent within a run.
 const now = dayjs();
 
 const generateAffirmation = async (searchDate: string) => {

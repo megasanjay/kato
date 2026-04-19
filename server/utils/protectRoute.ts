@@ -1,4 +1,4 @@
-// If the user does not exist on the request, throw a 401 error
+// Server middleware that rejects requests without an authenticated session user.
 export default defineEventHandler(async (event) => {
   const session = await getUserSession(event);
 

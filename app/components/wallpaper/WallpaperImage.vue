@@ -1,6 +1,5 @@
 <script setup lang="ts">
-// This component is responsible for rendering the wallpaper image in the background of the app.
-// It is used in the DefaultLayout component to provide a consistent background across all pages.
+// Wallpaper loader that fetches the current day's image and renders the backdrop.
 
 const dayjs = useDayjs();
 const toast = useToast();

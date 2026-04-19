@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// Landing page that fades in the time-focused home experience.
 useSeoMeta({
   title: "Kato",
 });

@@ -1,3 +1,4 @@
+// Kysely-backed endpoint that validates and inserts a new thing for the user.
 import { z } from "zod";
 import { faker } from "@faker-js/faker";
 

@@ -1,4 +1,5 @@
 {
+  // Shared editor settings for formatting, linting, and Tailwind authoring.
   "files.associations": {
     "*.css": "tailwindcss"
   },

@@ -1,5 +1,6 @@
 <!-- eslint-disable vue/no-v-html -->
 <script setup lang="ts">
+// Markdown renderer that converts input to sanitized HTML before display.
 import sanitizeHtml from "sanitize-html";
 import { parse } from "marked";
 

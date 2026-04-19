@@ -1,3 +1,4 @@
+// Application data model plus Prisma and Kysely client generation targets.
 generator client {
     provider        = "prisma-client"
     previewFeatures = ["strictUndefinedChecks"]

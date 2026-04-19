@@ -1,3 +1,4 @@
+// Nuxt UI theme defaults shared across the application.
 export default defineAppConfig({
   ui: {
     button: {

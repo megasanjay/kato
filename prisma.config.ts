@@ -1,3 +1,4 @@
+// Prisma CLI configuration for the schema, migrations, and database URL.
 import "dotenv/config";
 import { defineConfig, env } from "prisma/config";
 

@@ -1,3 +1,4 @@
+# Multi-stage container image for building and serving the Nuxt application.
 # Build stage
 FROM node:22-alpine AS builder
 

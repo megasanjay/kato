@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+// Small wrapper around UCollapsible for slot-driven expandable content.
 defineProps<{
   title: string;
   collapse: boolean;

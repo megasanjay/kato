@@ -1,3 +1,4 @@
+/* Global styles, theme tokens, and shared utility classes for the app shell. */
 @import "@nuxt/ui";
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";

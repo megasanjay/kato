@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// Signup page that creates a user account and surfaces verification guidance.
 import { z } from "zod";
 import type { FormSubmitEvent } from "#ui/types";
 

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// Login page with client-side validation and redirect-aware sign-in flow.
 import { z } from "zod";
 import type { FormSubmitEvent } from "#ui/types";
 

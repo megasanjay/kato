@@ -1,3 +1,4 @@
+// Factory for Kysely database connections derived from the DATABASE_URL setting.
 import { Kysely } from "kysely";
 import { PostgresJSDialect } from "kysely-postgres-js";
 import postgres from "postgres";

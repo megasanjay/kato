@@ -1,3 +1,4 @@
+// Kysely-backed endpoint that deletes a single thing by route parameter.
 export default defineEventHandler(async (event) => {
   const { id } = event.context.params as { id: string };
 

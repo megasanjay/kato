@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// Primary layout that renders the wallpaper backdrop behind routed content.
 const devMode = process.env.NODE_ENV === "development";
 </script>
 

@@ -1,3 +1,4 @@
+// Auth endpoint that verifies a pending email token and marks the user as verified.
 import { z } from "zod";
 
 const verifySchema = z.object({

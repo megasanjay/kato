@@ -1,3 +1,4 @@
+<!-- Auth-focused layout with a branded background and home navigation shortcut. -->
 <template>
   <div class="overlay relative flex h-screen items-center justify-center">
     <div class="gradient" />

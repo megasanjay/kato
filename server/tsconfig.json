@@ -1,3 +1,4 @@
 {
+  // Extend Nuxt's generated server-side TypeScript configuration.
   "extends": "../.nuxt/tsconfig.server.json"
 }

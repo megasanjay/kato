@@ -1,10 +1,8 @@
 /**
- * This script is used to get new background images form the Unsplash API.
- * The images are then stored in the database.
- * 5 images are generated for the day.
+ * Fetches fresh wallpaper candidates from Unsplash and stores them by date.
  */
 
-// Import the required modules
+// Import the required modules.
 import dayjs from "dayjs";
 import { PrismaClient } from "../shared/generated/client";
 import { PrismaPg } from "@prisma/adapter-pg";
@@ -12,10 +10,10 @@ import { PrismaPg } from "@prisma/adapter-pg";
 const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
 const prisma = new PrismaClient({ adapter });
 
-// Get the keys from the environment variables
+// Read the API key from the environment.
 const ACCESS_KEY = process.env.UNSPLASH_ACCESS_KEY;
 
-// Get the current date
+// Capture the current date once so generation stays consistent within a run.
 const now = dayjs();
 
 const imageThemes = [

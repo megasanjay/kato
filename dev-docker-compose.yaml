@@ -1,3 +1,4 @@
+# Local development services used by the app during development.
 services:
   postgres:
     image: postgres:18

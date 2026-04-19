@@ -1,3 +1,4 @@
+# Fetches and stores fresh wallpaper options on a schedule or manual trigger.
 name: Generate new background images
 
 on:

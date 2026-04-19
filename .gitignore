@@ -1,3 +1,4 @@
+# Ignore local build outputs, dependency directories, and private environment files.
 node_modules
 *.log*
 .nuxt

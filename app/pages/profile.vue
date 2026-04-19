@@ -1,4 +1,5 @@
 <script setup>
+// Protected profile page that displays the authenticated user's account details.
 definePageMeta({
   middleware: ["auth"],
 });

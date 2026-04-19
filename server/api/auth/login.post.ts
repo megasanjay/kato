@@ -1,3 +1,4 @@
+// Auth endpoint that validates credentials and creates a logged-in user session.
 import { z } from "zod";
 import { compare } from "bcrypt";
 

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// Root app shell responsible for global document metadata and page rendering.
 const colorMode = useColorMode();
 
 useHead({

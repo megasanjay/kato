@@ -1,3 +1,4 @@
+// Auth endpoint that registers a user and prepares optional email verification state.
 import { z } from "zod";
 import { hash } from "bcrypt";
 import { nanoid } from "nanoid";

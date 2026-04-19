@@ -1,3 +1,4 @@
+// Redirect unauthenticated users to the login page and preserve the original path.
 export default defineNuxtRouteMiddleware((to, _from) => {
   const { loggedIn } = useUserSession();
 

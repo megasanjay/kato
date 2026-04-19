@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// Expandable card wrapper with local collapse state and animated body visibility.
 import { computed, ref } from "vue";
 
 const props = defineProps({

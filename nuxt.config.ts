@@ -1,3 +1,4 @@
+// Central Nuxt configuration for modules, runtime settings, and Vite tuning.
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: "2025-01-16",

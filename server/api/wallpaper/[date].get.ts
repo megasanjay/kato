@@ -1,3 +1,4 @@
+// Wallpaper endpoint that returns the saved wallpaper set for a requested date.
 import prisma from "../../utils/prisma";
 
 export default defineEventHandler(async (event) => {
