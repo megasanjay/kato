@@ -1,18 +1,23 @@
-import { PrismaClient } from "@prisma/client";
+// Shared Prisma client with adapter-based PostgreSQL access and dev-time reuse.
+import { PrismaClient } from "#shared/generated/client";
+import { PrismaPg } from "@prisma/adapter-pg";
 
-// eslint-disable-next-line import/no-mutable-exports
-let prisma: PrismaClient;
+const adapter = new PrismaPg({
+  connectionString: process.env.DATABASE_URL,
+});
 
-if (process.env.NODE_ENV === "production") {
-  prisma = new PrismaClient();
-} else {
-  const globalWithPrisma = global as typeof globalThis & {
-    prisma: PrismaClient;
-  };
-  if (!globalWithPrisma.prisma) {
-    globalWithPrisma.prisma = new PrismaClient();
-  }
-  prisma = globalWithPrisma.prisma;
-}
+const prismaClientSingleton = () => {
+  return new PrismaClient({ adapter });
+};
+
+declare const globalThis: {
+  prismaGlobal: ReturnType<typeof prismaClientSingleton>;
+} & typeof global;
+
+const prisma = globalThis.prismaGlobal ?? prismaClientSingleton();
 
 export default prisma;
+
+if (process.env.NODE_ENV !== "production") {
+  globalThis.prismaGlobal = prisma;
+}

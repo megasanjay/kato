@@ -1,20 +1,18 @@
 /**
- * This script is used to generate affirmations for the next 3 days.
- * It uses a list of affirmations present in the affirmations.json file.
- * It then saves the affirmations to the database for the specified date.
- * It also deletes affirmations older than 60 days.
+ * Generates short-term affirmation records and prunes stale entries.
  */
 
-// Import the required modules
+// Import the required modules.
 import dayjs from "dayjs";
-import axios from "axios";
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "../shared/generated/client";
+import { PrismaPg } from "@prisma/adapter-pg";
 
 import AFFIRMATIONJSON from "../assets/data/affirmations.json" assert { type: "json" };
 
-const prisma = new PrismaClient();
+const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
+const prisma = new PrismaClient({ adapter });
 
-// Get the current date
+// Capture the current date once so generation stays consistent within a run.
 const now = dayjs();
 
 const generateAffirmation = async (searchDate: string) => {
@@ -39,7 +37,7 @@ const generateAffirmation = async (searchDate: string) => {
     (affirmation: string) =>
       !allAffirmations
         .map((affirmation) => affirmation.affirmation)
-        .includes(affirmation)
+        .includes(affirmation),
   );
 
   const randomAffirmation =
@@ -56,35 +54,35 @@ const generateAffirmation = async (searchDate: string) => {
 };
 
 const main = async () => {
-const today = now.format("YYYY-MM-DD");
-const tomorrow = now.add(1, "day").format("YYYY-MM-DD");
-const dayAfterTomorrow = now.add(2, "day").format("YYYY-MM-DD");
+  const today = now.format("YYYY-MM-DD");
+  const tomorrow = now.add(1, "day").format("YYYY-MM-DD");
+  const dayAfterTomorrow = now.add(2, "day").format("YYYY-MM-DD");
 
-await generateAffirmation(today);
-await generateAffirmation(tomorrow);
-await generateAffirmation(dayAfterTomorrow);
+  await generateAffirmation(today);
+  await generateAffirmation(tomorrow);
+  await generateAffirmation(dayAfterTomorrow);
 
-// Delete old affirmations from database (older than 60 days)
+  // Delete old affirmations from database (older than 60 days)
 
-console.log("Deleting old affirmations...");
+  console.log("Deleting old affirmations...");
 
-const sixtyDaysAgo = now.subtract(60, "day").format("YYYY-MM-DD");
+  const sixtyDaysAgo = now.subtract(60, "day").format("YYYY-MM-DD");
 
-const oldAffirmations = await prisma.affirmation.deleteMany({
-  where: {
-    date: {
-      lt: sixtyDaysAgo,
+  const oldAffirmations = await prisma.affirmation.deleteMany({
+    where: {
+      date: {
+        lt: sixtyDaysAgo,
+      },
     },
-  },
-});
+  });
 
-console.log(`Deleted ${oldAffirmations.count} affirmations`);
+  console.log(`Deleted ${oldAffirmations.count} affirmations`);
 
-// Exit the script
-process.exit(0);
-}
+  // Exit the script
+  process.exit(0);
+};
 
 main().catch((e) => {
   console.error(e);
   process.exit(1);
-})
+});

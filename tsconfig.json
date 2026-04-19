@@ -1,4 +1,5 @@
 {
+  // Extend Nuxt's generated TypeScript configuration for the app workspace.
   // https://nuxt.com/docs/guide/concepts/typescript
-  "extends": ["./.nuxt/tsconfig.json"]
+  "extends": "./.nuxt/tsconfig.json"
 }

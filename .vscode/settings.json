@@ -1,4 +1,5 @@
 {
+  // Shared editor settings for formatting, linting, and Tailwind authoring.
   "files.associations": {
     "*.css": "tailwindcss"
   },
@@ -8,6 +9,12 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
   },
+  "eslint.useFlatConfig": true,
   "vue.codeActions.enabled": false,
-  "editor.hover.enabled": true
+  "editor.hover.enabled": "on",
+  "editor.quickSuggestions": {
+    "strings": "on"
+  },
+  "tailwindCSS.classAttributes": ["active-class", "inactive-class"],
+  "postman.settings.dotenv-detection-notification-visibility": false
 }

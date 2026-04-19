@@ -1,0 +1,4 @@
+# Toolchain versions used for local development.
+[tools]
+node = "22"
+pnpm = "10"

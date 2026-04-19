@@ -1,3 +1,4 @@
+# Regenerates near-term affirmation records on a schedule or manual trigger.
 name: Generate Affirmations
 
 on:

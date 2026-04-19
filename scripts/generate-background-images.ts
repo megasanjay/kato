@@ -1,20 +1,19 @@
 /**
- * This script is used to get new background images form the Unsplash API.
- * The images are then stored in the database.
- * 5 images are generated for the day.
+ * Fetches fresh wallpaper candidates from Unsplash and stores them by date.
  */
 
-// Import the required modules
+// Import the required modules.
 import dayjs from "dayjs";
-import axios from "axios";
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "../shared/generated/client";
+import { PrismaPg } from "@prisma/adapter-pg";
 
-const prisma = new PrismaClient();
+const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
+const prisma = new PrismaClient({ adapter });
 
-// Get the keys from the environment variables
+// Read the API key from the environment.
 const ACCESS_KEY = process.env.UNSPLASH_ACCESS_KEY;
 
-// Get the current date
+// Capture the current date once so generation stays consistent within a run.
 const now = dayjs();
 
 const imageThemes = [
@@ -54,7 +53,7 @@ const generateImage = async (searchDate: string) => {
   console.log(`Used themes: ${usedThemes.map((theme) => theme).join(", ")}`);
 
   const unusedThemes = imageThemes.filter(
-    (theme) => !usedThemes.includes(theme)
+    (theme) => !usedThemes.includes(theme),
   );
 
   const randomTheme =
@@ -63,24 +62,24 @@ const generateImage = async (searchDate: string) => {
   console.log(`Using theme ${randomTheme}`);
 
   // Get the images from the Unsplash API
-  const response = await axios.get(
+  const response = await fetch(
     `https://api.unsplash.com/search/photos?query=${randomTheme}&orientation=landscape&order_by=latest&per_page=30`,
     {
       headers: {
         Authorization: `Client-ID ${ACCESS_KEY}`,
       },
-    }
+    },
   );
 
   // check for errors
-  if (response.status !== 200) {
+  if (!response.ok) {
     console.error(
-      `Error while fetching images from Unsplash API: ${response.status} ${response.statusText}`
+      `Error while fetching images from Unsplash API: ${response.status} ${response.statusText}`,
     );
     return;
   }
 
-  const responseImagesData = response.data.results;
+  const responseImagesData = (await response.json()).results;
 
   for (const responseImage of responseImagesData) {
     // check if image already exists
@@ -97,28 +96,29 @@ const generateImage = async (searchDate: string) => {
       continue;
     } else {
       // get location of image
-      const imageDetails = await axios.get(
+      const imageDetailsResponse = await fetch(
         `https://api.unsplash.com/photos/${responseImage.id}`,
         {
           headers: {
             Authorization: `Client-ID ${ACCESS_KEY}`,
           },
-        }
+        },
       );
 
       // check for errors
-      if (imageDetails.status !== 200) {
+      if (!imageDetailsResponse.ok) {
         console.error(
-          `Error while fetching image details from Unsplash API: ${imageDetails.status} ${imageDetails.statusText}`
+          `Error while fetching image details from Unsplash API: ${imageDetailsResponse.status} ${imageDetailsResponse.statusText}`,
         );
         return;
       }
 
-      const imageLocation = imageDetails.data.location;
+      const imageDetails = await imageDetailsResponse.json();
+      const imageLocation = imageDetails.location;
 
-      const {city, country} = imageLocation;
+      const { city, country } = imageLocation;
 
-      let {description} = responseImage;
+      let { description } = responseImage;
 
       if (!description) {
         if (responseImage.alt_description) {
@@ -130,7 +130,7 @@ const generateImage = async (searchDate: string) => {
 
       const unsplashUrl = responseImage.links.html;
 
-      const {username} = responseImage.user;
+      const { username } = responseImage.user;
       const authorName = responseImage.user.name;
       const portfolioUrl =
         responseImage.user.portfolio_url || `https://unsplash.com/@${username}`;
@@ -163,43 +163,43 @@ const generateImage = async (searchDate: string) => {
 };
 
 const main = async () => {
-const today = now.format("YYYY-MM-DD");
-const tomorrow = now.add(1, "day").format("YYYY-MM-DD");
-const dayAfterTomorrow = now.add(2, "day").format("YYYY-MM-DD");
+  const today = now.format("YYYY-MM-DD");
+  const tomorrow = now.add(1, "day").format("YYYY-MM-DD");
+  const dayAfterTomorrow = now.add(2, "day").format("YYYY-MM-DD");
 
-await generateImage(today);
-await generateImage(tomorrow);
-await generateImage(dayAfterTomorrow);
+  await generateImage(today);
+  await generateImage(tomorrow);
+  await generateImage(dayAfterTomorrow);
 
-// Delete old images from database (older than 30 days)
+  // Delete old images from database (older than 30 days)
 
-console.log("Deleting old images");
+  console.log("Deleting old images");
 
-const thirtyDaysAgo = now.subtract(30, "day").format("YYYY-MM-DD");
+  const thirtyDaysAgo = now.subtract(30, "day").format("YYYY-MM-DD");
 
-const oldImages = await prisma.background.findMany({
-  where: {
-    date: { lt: thirtyDaysAgo },
-  },
-});
-
-console.log(`Found ${oldImages.length} old images`);
-
-for (const oldImage of oldImages) {
-  await prisma.background.delete({
+  const oldImages = await prisma.background.findMany({
     where: {
-      id: oldImage.id,
+      date: { lt: thirtyDaysAgo },
     },
   });
 
-  console.log(`Deleted image ${oldImage.id}`);
-}
+  console.log(`Found ${oldImages.length} old images`);
 
-// Exit the script
-process.exit(0);
-}
+  for (const oldImage of oldImages) {
+    await prisma.background.delete({
+      where: {
+        id: oldImage.id,
+      },
+    });
+
+    console.log(`Deleted image ${oldImage.id}`);
+  }
+
+  // Exit the script
+  process.exit(0);
+};
 
 main().catch((e) => {
   console.error(e);
   process.exit(1);
-})
+});

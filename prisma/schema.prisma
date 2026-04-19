@@ -1,59 +1,66 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
+// Application data model plus Prisma and Kysely client generation targets.
 generator client {
-  provider = "prisma-client-js"
+    provider        = "prisma-client"
+    previewFeatures = ["strictUndefinedChecks"]
+    output          = "../shared/generated/"
+    engineType      = "client"
+}
+
+generator kysely {
+    provider = "prisma-kysely"
+
+    output   = "../shared/generated/"
+    fileName = "kysely.ts"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+    provider = "postgresql"
 }
 
 model Background {
-  id String @id @default(cuid())
+    id String @id @default(cuid())
 
-  date  String
-  theme String
+    date  String
+    theme String
 
-  imageID     String @unique
-  url         String
-  unsplashUrl String
+    imageID     String @unique
+    url         String
+    unsplashUrl String
 
-  index Int
+    index Int
 
-  description String
+    description String
 
-  username     String
-  authorName   String
-  portfolioUrl String
+    username     String
+    authorName   String
+    portfolioUrl String
 
-  city    String
-  country String
+    city    String
+    country String
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }
 
 model Affirmation {
-  id String @id @default(cuid())
+    id String @id @default(cuid())
 
-  date String
+    date String
 
-  affirmation String
+    affirmation String
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }
 
 model User {
-  id String @id @default(cuid())
+    id String @id @default(cuid())
 
-  oauthProvider String // github, google, etc
-  oauthId       String // identifier for the OAuth provider
+    oauthProvider String // github, google, etc
+    oauthId       String // identifier for the OAuth provider
 
-  name String @default("")
+    name String @default("")
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }
