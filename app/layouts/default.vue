@@ -6,7 +6,7 @@ const devMode = process.env.NODE_ENV === "development";
 <template>
   <div
     class="relative flex h-screen w-screen flex-col justify-start overflow-hidden bg-slate-900"
-    :class="{ 'debug-screenss': devMode }"
+    :class="{ 'debug-screens': devMode }"
   >
     <WallpaperImage />
 
