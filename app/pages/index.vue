@@ -28,6 +28,12 @@ onBeforeUnmount(() => {
         <MainAffirmations />
       </div>
     </Transition>
+
+    <Transition name="fast-fade-blur" appear mode="out-in">
+      <div class="bottom-right">
+        <MainNavigationButtons />
+      </div>
+    </Transition>
   </div>
 </template>
 

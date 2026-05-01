@@ -87,14 +87,16 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
       class="absolute top-4"
     />
 
-    <UCard class="w-full max-w-sm bg-white/55 backdrop-blur dark:bg-white/5">
+    <UCard
+      class="w-full max-w-sm bg-white/55 backdrop-blur dark:bg-neutral-900/60"
+    >
       <div class="w-full max-w-sm px-4 py-5 sm:p-6">
         <div class="flex flex-col items-center justify-center">
           <Icon name="line-md:account-add" :size="40" />
 
           <h2 class="my-1 text-2xl font-bold">Create an account</h2>
 
-          <p class="font-medium text-slate-600">
+          <p class="font-medium text-slate-600 dark:text-slate-400">
             Already have an account?
             <NuxtLink to="/login" class="text-primary-500 font-medium">
               Login
@@ -129,7 +131,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
                 <Icon
                   name="solar:eye-linear"
                   size="16"
-                  class="cursor-pointer text-slate-400 transition-colors hover:text-slate-600"
+                  class="cursor-pointer text-slate-400 transition-colors hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300"
                   @mousedown="showPassword = true"
                   @mouseup="showPassword = false"
                 />
