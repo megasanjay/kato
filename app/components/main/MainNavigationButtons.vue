@@ -37,9 +37,7 @@ const handleLogout = async () => {
 
               <template #content>
                 <div class="w-56 p-3">
-                  <p class="text-sm text-neutral-200">
-                    Log out of your Kato account?
-                  </p>
+                  <p class="text-sm">Log out of your Kato account?</p>
 
                   <div class="mt-3 flex justify-end gap-2">
                     <UButton
