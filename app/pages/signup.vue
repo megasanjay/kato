@@ -58,6 +58,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
           : "You can now log in to your account.",
         icon: "material-symbols:mail-outline",
       });
+      window.location.href = "/login";
     })
     .catch((error) => {
       console.error(error.data);

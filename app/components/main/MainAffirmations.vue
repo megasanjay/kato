@@ -3,6 +3,8 @@ import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
 
+const { loggedIn, user } = useUserSession();
+
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
@@ -37,12 +39,22 @@ const parsedAffirmation = computed(() => {
 const getGreeting = () => {
   const currentTime = dayjs().tz(timeZone.value).hour();
 
+  if (loggedIn.value && user.value) {
+    name.value = user.value.firstName || user.value.username;
+  }
+
   if (currentTime < 12) {
-    greeting.value = "Good morning";
+    greeting.value = name.value
+      ? `Good morning, ${name.value}`
+      : "Good morning";
   } else if (currentTime < 18) {
-    greeting.value = "Good afternoon";
+    greeting.value = name.value
+      ? `Good afternoon, ${name.value}`
+      : "Good afternoon";
   } else {
-    greeting.value = "Good evening";
+    greeting.value = name.value
+      ? `Good evening, ${name.value}`
+      : "Good evening";
   }
 
   switchToAffirmationTimeout = setTimeout(() => {
@@ -77,7 +89,7 @@ onBeforeUnmount(() => {
       v-if="showGreeting"
       class="text-left text-2xl font-bold text-slate-100 md:text-5xl"
     >
-      {{ greeting }}<span v-if="name !== ''">, {{ name }}. </span>
+      {{ greeting }}
     </p>
 
     <p
