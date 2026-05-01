@@ -1,6 +1,5 @@
 // @ts-check
-// Shared lint rules for Nuxt, TypeScript, import hygiene, and formatting.
-import withNuxt from ".nuxt/eslint.config.mjs";
+import withNuxt from "./.nuxt/eslint.config.mjs";
 import stylistic from "@stylistic/eslint-plugin";
 import prettierPlugin from "eslint-plugin-prettier";
 import perfectionist from "eslint-plugin-perfectionist";
@@ -57,6 +56,16 @@ export default withNuxt({
     "vue/padding-line-between-tags": [
       "error",
       [{ blankLine: "always", next: "*", prev: "*" }],
+    ],
+    "vue/html-self-closing": [
+      "error",
+      {
+        html: {
+          void: "always",
+          normal: "always",
+          component: "always",
+        },
+      },
     ],
   },
 });

@@ -12,10 +12,6 @@ if (loggedIn.value) {
   await navigateTo("/app/dashboard");
 }
 
-definePageMeta({
-  layout: "auth",
-});
-
 useSeoMeta({
   title: "Login",
 });
@@ -26,20 +22,20 @@ const loading = ref(false);
 const showPassword = ref(false);
 
 const schema = z.object({
-  emailAddress: z.email(),
+  username: z.string().min(1, "Username is required"),
   password: z.string().min(8, "Must be at least 8 characters"),
 });
 
 type Schema = z.output<typeof schema>;
 
 const state = reactive({
-  emailAddress: "rick@example.com",
+  username: "pickle_rick",
   password: "12345678",
 });
 
 async function onSubmit(event: FormSubmitEvent<Schema>) {
   const body = {
-    emailAddress: event.data.emailAddress,
+    username: event.data.username,
     password: event.data.password,
   };
 
@@ -81,77 +77,91 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 </script>
 
 <template>
-  <UCard class="w-full max-w-sm bg-white/75 backdrop-blur dark:bg-white/5">
-    <div class="w-full max-w-sm px-4 py-5 sm:p-6">
-      <div class="flex flex-col items-center justify-center">
-        <Icon name="iconoir:lock" :size="40" />
+  <div
+    class="relative flex min-h-screen items-center justify-center overflow-hidden"
+  >
+    <UButton
+      icon="i-heroicons-home"
+      label="Home"
+      to="/"
+      color="neutral"
+      variant="ghost"
+      class="absolute top-4"
+    />
 
-        <h2 class="my-1 text-2xl font-bold">Welcome back</h2>
+    <UCard class="w-full max-w-sm bg-white/55 backdrop-blur dark:bg-white/5">
+      <div class="w-full max-w-sm px-4 py-5 sm:p-6">
+        <div class="flex flex-col items-center justify-center">
+          <Icon name="line-md:log-in" :size="40" />
 
-        <p class="font-medium text-slate-600">
-          Don't have an account?
-          <NuxtLink to="/signup" class="text-primary-500 font-medium">
-            Sign up
-          </NuxtLink>
-        </p>
-      </div>
+          <h2 class="my-1 text-2xl font-bold">Welcome back</h2>
 
-      <UForm
-        :schema="schema"
-        :state="state"
-        class="mt-6 space-y-4"
-        @submit="onSubmit"
-      >
-        <UFormField label="Email Address" name="emailAddress">
-          <UInput v-model="state.emailAddress" type="email" />
-        </UFormField>
-
-        <UFormField label="Password" name="password">
-          <template #hint>
-            <NuxtLink
-              to="/forgot-password"
-              class="font-medium text-sky-500 hover:underline"
-            >
-              Forgot your password?
+          <p class="font-medium text-slate-600">
+            Don't have an account?
+            <NuxtLink to="/signup" class="text-primary-500 font-medium">
+              Sign up
             </NuxtLink>
-          </template>
+          </p>
+        </div>
 
-          <UInput
-            v-model="state.password"
-            :type="showPassword ? 'text' : 'password'"
+        <UForm
+          :schema="schema"
+          :state="state"
+          class="mt-6 space-y-4"
+          @submit="onSubmit"
+        >
+          <UFormField label="Username" name="username">
+            <UInput v-model="state.username" type="text" />
+          </UFormField>
+
+          <UFormField label="Password" name="password">
+            <template #hint>
+              <NuxtLink
+                to="/forgot-password"
+                class="font-medium text-sky-500 hover:underline"
+              >
+                Forgot your password?
+              </NuxtLink>
+            </template>
+
+            <UInput
+              v-model="state.password"
+              :type="showPassword ? 'text' : 'password'"
+            >
+              <template #trailing>
+                <Icon
+                  name="solar:eye-linear"
+                  size="16"
+                  class="cursor-pointer text-slate-400 transition-colors hover:text-slate-600"
+                  @mousedown="showPassword = true"
+                  @mouseup="showPassword = false"
+                />
+              </template>
+            </UInput>
+          </UFormField>
+
+          <UButton
+            type="submit"
+            class="flex w-full justify-center"
+            :loading="loading"
           >
             <template #trailing>
-              <Icon
-                name="solar:eye-linear"
-                size="16"
-                class="cursor-pointer text-slate-400 transition-colors hover:text-slate-600"
-                @mousedown="showPassword = true"
-                @mouseup="showPassword = false"
-              />
+              <Icon name="i-heroicons-arrow-right-20-solid" size="20" />
             </template>
-          </UInput>
-        </UFormField>
+            Continue
+          </UButton>
+        </UForm>
+      </div>
 
-        <UButton
-          type="submit"
-          class="flex w-full justify-center"
-          :loading="loading"
-        >
-          <template #trailing>
-            <Icon name="i-heroicons-arrow-right-20-solid" size="20" />
-          </template>
-          Continue
-        </UButton>
-      </UForm>
-    </div>
-
-    <template #footer>
-      <p class="text-center text-sm">
-        By signing in, you agree to our
-        <NuxtLink to="/signup" class="text-primary-500 text-sm font-medium">
-          Terms of Service</NuxtLink
-        >.
-      </p>
-    </template>
-  </UCard>
+      <template #footer>
+        <p class="text-center text-sm">
+          By signing in, you agree to our
+          <NuxtLink to="/terms" class="text-primary-500 text-sm font-medium">
+            Terms of Service
+          </NuxtLink>
+          .
+        </p>
+      </template>
+    </UCard>
+  </div>
 </template>

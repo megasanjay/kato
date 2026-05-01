@@ -3,7 +3,7 @@ import { z } from "zod";
 import { compare } from "bcrypt";
 
 const loginSchema = z.object({
-  emailAddress: z.string().email(),
+  username: z.string(),
   password: z.string().min(8),
 });
 
@@ -26,23 +26,14 @@ export default defineEventHandler(async (event) => {
   // Get the user from the database
   const user = await prisma.user.findUnique({
     where: {
-      emailAddress: body.data.emailAddress,
+      username: body.data.username,
     },
   });
 
   if (!user) {
     throw createError({
       statusCode: 401,
-      statusMessage: "Invalid email address or password",
-    });
-  }
-
-  // Check if the user has verified their email
-  if (!user.emailVerified) {
-    throw createError({
-      statusCode: 403,
-      statusMessage:
-        "Email not verified. Please check your email for the verification link.",
+      statusMessage: "Invalid username or password",
     });
   }
 
@@ -50,17 +41,16 @@ export default defineEventHandler(async (event) => {
   if (!(await compare(body.data.password, user.password))) {
     throw createError({
       statusCode: 401,
-      statusMessage: "Invalid email address or password",
+      statusMessage: "Invalid username or password",
     });
   }
 
   // Create a new session for the user
   const userData = {
     id: user.id,
-    emailAddress: user.emailAddress,
-    emailVerified: user.emailVerified,
-    familyName: user.familyName,
-    givenName: user.givenName,
+    username: user.username,
+    firstName: user.firstName,
+    lastName: user.lastName,
   };
 
   await setUserSession(event, {

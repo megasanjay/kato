@@ -43,7 +43,7 @@ model Background {
 }
 
 model Affirmation {
-    id String @id @default(cuid())
+    id String @id @default(cuid(2))
 
     date String
 
@@ -54,12 +54,20 @@ model Affirmation {
 }
 
 model User {
-    id String @id @default(cuid())
+    id String @id @default(cuid(2))
 
-    oauthProvider String // github, google, etc
-    oauthId       String // identifier for the OAuth provider
+    username String @unique
+    password String
 
-    name String @default("")
+    emailAddress String? // not required for signup, but can be added later for password reset and email verification
+
+    emailVerified                 Boolean   @default(false)
+    emailVerifiedAt               DateTime?
+    emailVerificationToken        String?   @unique
+    emailVerificationTokenExpires DateTime?
+
+    firstName String @default("")
+    lastName  String @default("")
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt

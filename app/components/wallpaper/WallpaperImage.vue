@@ -24,6 +24,7 @@ if (error.value) {
 
 const images = computed(() => {
   if (!data.value) return [];
+
   return typeof data.value === "string" ? JSON.parse(data.value) : data.value;
 });
 

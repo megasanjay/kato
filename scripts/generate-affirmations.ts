@@ -3,11 +3,12 @@
  */
 
 // Import the required modules.
+import "dotenv/config";
 import dayjs from "dayjs";
 import { PrismaClient } from "../shared/generated/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 
-import AFFIRMATIONJSON from "../assets/data/affirmations.json" assert { type: "json" };
+import AFFIRMATIONJSON from "../assets/data/affirmations.json";
 
 const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
 const prisma = new PrismaClient({ adapter });
@@ -24,6 +25,7 @@ const generateAffirmation = async (searchDate: string) => {
 
   if (affirmation) {
     console.log(`Already have affirmation for ${searchDate}`);
+
     return;
   }
 

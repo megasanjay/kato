@@ -22,6 +22,12 @@ onBeforeUnmount(() => {
         <MainTimeFrame />
       </div>
     </Transition>
+
+    <Transition name="fast-fade-blur" appear mode="out-in">
+      <div v-if="mounted" class="bottom-left">
+        <MainAffirmations />
+      </div>
+    </Transition>
   </div>
 </template>
 
@@ -35,30 +41,21 @@ onBeforeUnmount(() => {
 }
 
 .top-left {
-  grid-area: 2 / 2 / 4 / 4;
-}
-.top-center {
-  grid-area: 2 / 5 / 4 / 7;
+  grid-area: 2 / 2 / 4 / 6;
 }
 .top-right {
-  grid-area: 2 / 8 / 4 / 10;
-}
-.middle-left {
-  grid-area: 5 / 2 / 7 / 4;
+  grid-area: 2 / 8 / 4 / 12;
 }
 .middle-center {
-  grid-area: 5 / 5 / 7 / 7;
-}
-.middle-right {
-  grid-area: 5 / 8 / 7 / 10;
+  grid-area: 5 / 5 / 9 / 9;
 }
 .bottom-left {
-  grid-area: 8 / 2 / 10 / 4;
-}
-.bottom-center {
-  grid-area: 8 / 5 / 10 / 7;
+  grid-area: 10 / 2 / 12 / 7;
 }
 .bottom-right {
-  grid-area: 8 / 8 / 10 / 10;
+  grid-area: 10 / 9 / 12 / 12;
+}
+.top-left-extended {
+  grid-area: 2 / 2 / 4 / 7;
 }
 </style>

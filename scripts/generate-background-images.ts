@@ -3,6 +3,7 @@
  */
 
 // Import the required modules.
+import "dotenv/config";
 import dayjs from "dayjs";
 import { PrismaClient } from "../shared/generated/client";
 import { PrismaPg } from "@prisma/adapter-pg";
@@ -43,6 +44,7 @@ const generateImage = async (searchDate: string) => {
 
   if (images.length >= imageThemes.length) {
     console.log(`Already have images for ${searchDate}`);
+
     return;
   }
 
@@ -76,6 +78,7 @@ const generateImage = async (searchDate: string) => {
     console.error(
       `Error while fetching images from Unsplash API: ${response.status} ${response.statusText}`,
     );
+
     return;
   }
 
@@ -110,6 +113,7 @@ const generateImage = async (searchDate: string) => {
         console.error(
           `Error while fetching image details from Unsplash API: ${imageDetailsResponse.status} ${imageDetailsResponse.statusText}`,
         );
+
         return;
       }
 
