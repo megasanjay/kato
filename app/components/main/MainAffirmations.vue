@@ -84,7 +84,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="flex h-full items-end">
+  <div class="flex h-full flex-col justify-end">
     <Transition name="fast-fade-blur" appear mode="out-in">
       <p
         v-if="showGreeting"
@@ -104,6 +104,23 @@ onBeforeUnmount(() => {
         }"
       >
         {{ affirmation }}
+      </p>
+    </Transition>
+
+    <Transition name="fast-fade-blur" appear>
+      <p v-if="!loggedIn" class="mt-2 ml-1 text-sm text-white/50">
+        <NuxtLink
+          to="/login"
+          class="underline underline-offset-2 transition-colors hover:text-white/80"
+          >Log in</NuxtLink
+        >
+        or
+        <NuxtLink
+          to="/signup"
+          class="underline underline-offset-2 transition-colors hover:text-white/80"
+          >sign up</NuxtLink
+        >
+        for a more personalized experience.
       </p>
     </Transition>
   </div>
