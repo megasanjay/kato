@@ -7,7 +7,7 @@ const config = useRuntimeConfig();
 const { loggedIn } = useUserSession();
 
 if (loggedIn.value) {
-  await navigateTo("/app/dashboard");
+  await navigateTo("/");
 }
 
 useSeoMeta({

@@ -85,22 +85,26 @@ onBeforeUnmount(() => {
 
 <template>
   <div class="flex h-full items-end">
-    <p
-      v-if="showGreeting"
-      class="text-left text-2xl font-bold text-slate-100 md:text-5xl"
-    >
-      {{ greeting }}
-    </p>
+    <Transition name="fast-fade-blur" appear mode="out-in">
+      <p
+        v-if="showGreeting"
+        key="greeting"
+        class="text-left text-2xl font-bold text-slate-100 md:text-5xl"
+      >
+        {{ greeting }}
+      </p>
 
-    <p
-      v-else
-      class="text-left font-bold text-slate-100 drop-shadow-xl"
-      :class="{
-        'text-2xl md:text-4xl': affirmation.length > 50,
-        'text-2xl md:text-5xl': affirmation.length <= 50,
-      }"
-    >
-      {{ affirmation }}
-    </p>
+      <p
+        v-else
+        key="affirmation"
+        class="text-left font-bold text-slate-100 drop-shadow-xl"
+        :class="{
+          'text-2xl md:text-4xl': affirmation.length > 50,
+          'text-2xl md:text-5xl': affirmation.length <= 50,
+        }"
+      >
+        {{ affirmation }}
+      </p>
+    </Transition>
   </div>
 </template>
