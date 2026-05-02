@@ -69,6 +69,14 @@ model User {
     firstName String @default("")
     lastName  String @default("")
 
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+    createdAt    DateTime      @default(now())
+    updatedAt    DateTime      @updatedAt
+    currentViews CurrentView[]
+}
+
+model CurrentView {
+    userId String @id
+    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    tabName String @default("todo")
 }

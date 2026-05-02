@@ -24,6 +24,12 @@ onBeforeUnmount(() => {
     </Transition>
 
     <Transition name="fast-fade-blur" appear mode="out-in">
+      <div v-if="mounted" class="top-right">
+        <MainTabs />
+      </div>
+    </Transition>
+
+    <Transition name="fast-fade-blur" appear mode="out-in">
       <div v-if="mounted" class="bottom-left">
         <MainAffirmations />
       </div>
