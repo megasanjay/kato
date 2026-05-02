@@ -84,7 +84,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="flex h-full flex-col justify-end">
+  <div class="mt-6 flex flex-col justify-end">
     <Transition name="fast-fade-blur" appear mode="out-in">
       <p
         v-if="showGreeting"

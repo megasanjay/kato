@@ -22,17 +22,16 @@ if (error.value) {
   });
 }
 
-const images = computed(() => {
-  if (!data.value) return [];
+const image = computed(() => {
+  if (!data.value) return null;
 
   return typeof data.value === "string" ? JSON.parse(data.value) : data.value;
 });
 
-const wallpaperUrl = computed(() => images.value[0]?.url ?? null);
+const wallpaperUrl = computed(() => image.value?.url ?? null);
 
 watch(wallpaperUrl, () => {
   isImageLoaded.value = false;
-  console.log("Wallpaper URL changed, resetting image loaded state.");
 });
 </script>
 

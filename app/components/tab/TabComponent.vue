@@ -33,7 +33,7 @@ const activeTab = computed({
       >
         <button
           type="button"
-          class="-mb-px border-b-2 px-3 py-2.5 transition-colors"
+          class="-mb-px cursor-pointer border-b-2 px-3 py-2.5 transition-colors"
           :class="
             activeTab === item.value
               ? 'border-white/40 text-white/60'

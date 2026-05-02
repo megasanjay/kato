@@ -18,20 +18,19 @@ onBeforeUnmount(() => {
 <template>
   <div class="parent flex h-full w-full">
     <Transition name="fast-fade-blur" appear mode="out-in">
-      <div v-if="mounted" class="top-left">
+      <div
+        v-if="mounted"
+        class="top-center flex flex-col items-center justify-center"
+      >
         <MainTimeFrame />
-      </div>
-    </Transition>
 
-    <Transition name="fast-fade-blur" appear mode="out-in">
-      <div v-if="mounted" class="top-right">
-        <MainTabs />
+        <!-- <MainAffirmations /> -->
       </div>
     </Transition>
 
     <Transition name="fast-fade-blur" appear mode="out-in">
       <div v-if="mounted" class="bottom-left">
-        <MainAffirmations />
+        <MainTabs />
       </div>
     </Transition>
 
@@ -52,22 +51,13 @@ onBeforeUnmount(() => {
   grid-row-gap: 0px;
 }
 
-.top-left {
-  grid-area: 2 / 2 / 4 / 6;
-}
-.top-right {
-  grid-area: 2 / 8 / 4 / 12;
-}
-.middle-center {
-  grid-area: 5 / 5 / 9 / 9;
-}
 .bottom-left {
-  grid-area: 10 / 2 / 12 / 7;
+  grid-area: 7 / 2 / 12 / 7;
 }
 .bottom-right {
-  grid-area: 10 / 9 / 12 / 12;
+  grid-area: 7 / 8 / 12 / 12;
 }
-.top-left-extended {
-  grid-area: 2 / 2 / 4 / 7;
+.top-center {
+  grid-area: 2 / 3 / 5 / 11;
 }
 </style>

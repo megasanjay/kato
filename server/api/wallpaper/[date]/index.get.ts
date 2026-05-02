@@ -1,6 +1,3 @@
-// Wallpaper endpoint that returns the saved wallpaper set for a requested date.
-import prisma from "../../utils/prisma";
-
 export default defineEventHandler(async (event) => {
   const { date } = event.context.params as { date: string };
 
@@ -11,17 +8,13 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  const images = await prisma.background.findMany({
-    orderBy: {
-      index: "asc",
-    },
+  const image = await prisma.background.findFirst({
     select: {
       username: true,
       city: true,
       country: true,
       date: true,
       description: true,
-      index: true,
       url: true,
       unsplashUrl: true,
       authorName: true,
@@ -32,12 +25,12 @@ export default defineEventHandler(async (event) => {
     },
   });
 
-  if (!images.length) {
+  if (!image) {
     throw createError({
-      message: "No images found for the specified date",
+      message: "No image found for the specified date",
       statusCode: 404,
     });
   }
 
-  return JSON.stringify(images);
+  return JSON.stringify(image);
 });

@@ -1,5 +1,3 @@
-import prisma from "../../utils/prisma";
-
 export default defineEventHandler(async (event) => {
   const { date } = event.context.params as { date: string };
 

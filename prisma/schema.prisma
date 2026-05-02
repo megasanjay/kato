@@ -23,6 +23,8 @@ model Background {
     date  String
     theme String
 
+    addTextStroke Boolean @default(false)
+
     imageID     String @unique
     url         String
     unsplashUrl String
