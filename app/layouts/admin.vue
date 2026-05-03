@@ -42,8 +42,8 @@ const items = computed<NavigationMenuItem[][]>(() => [
     <WallpaperImage />
 
     <main class="z-10 h-full overflow-y-auto px-4 py-4 md:px-7 md:py-6">
-      <div class="mx-auto w-full max-w-7xl">
-        <div class="pb-4">
+      <div class="mx-auto w-full">
+        <div class="flex items-center justify-center pb-4">
           <UNavigationMenu :items="items" />
         </div>
 

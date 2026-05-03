@@ -8,7 +8,7 @@ definePageMeta({
 });
 
 useSeoMeta({
-  title: "Admin Users",
+  title: "Users | Admin",
 });
 
 type ItemLimit = {

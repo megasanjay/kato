@@ -5,7 +5,7 @@ definePageMeta({
 });
 
 useSeoMeta({
-  title: "Admin Metrics",
+  title: "Metrics | Admin",
 });
 
 type MetricsResponse = {

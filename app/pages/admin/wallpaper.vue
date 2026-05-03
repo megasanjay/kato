@@ -5,7 +5,7 @@ definePageMeta({
 });
 
 useSeoMeta({
-  title: "Admin Wallpapers",
+  title: "Wallpapers | Admin",
 });
 
 type AdminWallpaper = {
@@ -54,6 +54,7 @@ if (error.value) {
 
 const deletingId = ref<string | null>(null);
 const updatingId = ref<string | null>(null);
+const ultrawide = ref(false);
 
 const today = computed(() => dayjs().format("YYYY-MM-DD"));
 
@@ -150,7 +151,26 @@ const deleteWallpaper = async (wallpaper: AdminWallpaper) => {
 
 <template>
   <div class="relative h-full overflow-y-auto">
-    <div class="mx-auto w-full max-w-7xl">
+    <div
+      class="mx-auto w-full px-5 py-6 md:px-8 md:py-8"
+      :class="ultrawide ? '' : 'max-w-7xl'"
+    >
+      <div class="mb-5 flex justify-end">
+        <UButton
+          size="sm"
+          color="neutral"
+          variant="soft"
+          :icon="
+            ultrawide
+              ? 'material-symbols:fullscreen-exit'
+              : 'material-symbols:fullscreen'
+          "
+          @click="ultrawide = !ultrawide"
+        >
+          {{ ultrawide ? "Normal Width" : "Ultrawide" }}
+        </UButton>
+      </div>
+
       <div
         v-if="status === 'pending' && !wallpapers?.length"
         class="rounded-2xl border border-white/15 bg-black/40 p-8 text-center text-white/75 backdrop-blur-sm"
