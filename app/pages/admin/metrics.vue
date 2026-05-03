@@ -23,6 +23,16 @@ type MetricsResponse = {
     upcoming: number;
     outlined: number;
   };
+  rss: {
+    feeds: number;
+    subscriptions: number;
+    items: number;
+    staleFeeds: number;
+    feedsWithNoItems: number;
+    perUserFeedLimit: number;
+    perFeedItemLimit: number;
+    staleAfterHours: number;
+  };
   limits: {
     itemLimit: number;
     usersAtOrOverLimit: {
@@ -142,6 +152,44 @@ const generatedAtLabel = computed(() => {
             <DataDisplay
               title="With Text Outline"
               :content="metrics.wallpapers.outlined"
+            />
+          </div>
+        </UCard>
+
+        <UCard title="RSS Metrics">
+          <div class="flex flex-wrap items-center justify-between gap-4">
+            <DataDisplay title="Feeds" :content="metrics.rss.feeds" />
+
+            <DataDisplay
+              title="Subscriptions"
+              :content="metrics.rss.subscriptions"
+            />
+
+            <DataDisplay title="Items" :content="metrics.rss.items" />
+
+            <DataDisplay
+              title="Stale Feeds"
+              :content="metrics.rss.staleFeeds"
+            />
+
+            <DataDisplay
+              title="Feeds With No Items"
+              :content="metrics.rss.feedsWithNoItems"
+            />
+
+            <DataDisplay
+              title="Per-user Feed Limit"
+              :content="metrics.rss.perUserFeedLimit"
+            />
+
+            <DataDisplay
+              title="Per-feed Item Limit"
+              :content="metrics.rss.perFeedItemLimit"
+            />
+
+            <DataDisplay
+              title="Stale After (Hours)"
+              :content="metrics.rss.staleAfterHours"
             />
           </div>
         </UCard>

@@ -1,9 +1,13 @@
 const ITEM_LIMIT = 100;
+const RSS_FEED_LIMIT = 10;
+const RSS_ITEM_LIMIT = 20;
+const RSS_STALE_HOURS = 6;
 
 export default defineEventHandler(async (event) => {
   await isAdmin(event);
 
   const today = new Date().toISOString().slice(0, 10);
+  const staleBefore = new Date(Date.now() - RSS_STALE_HOURS * 60 * 60 * 1000);
 
   const [
     usersCount,
@@ -15,6 +19,11 @@ export default defineEventHandler(async (event) => {
     upcomingWallpapersCount,
     todayWallpapersCount,
     outlinedWallpapersCount,
+    rssFeedsCount,
+    rssSubscriptionsCount,
+    rssItemsCount,
+    staleRssFeedsCount,
+    rssFeedsWithNoItemsCount,
     users,
   ] = await prisma.$transaction([
     prisma.user.count(),
@@ -26,6 +35,21 @@ export default defineEventHandler(async (event) => {
     prisma.background.count({ where: { date: { gt: today } } }),
     prisma.background.count({ where: { date: today } }),
     prisma.background.count({ where: { addTextStroke: true } }),
+    prisma.rssFeed.count(),
+    prisma.userRssFeed.count(),
+    prisma.rssFeedItem.count(),
+    prisma.rssFeed.count({
+      where: {
+        userRssFeeds: { some: {} },
+        OR: [{ lastFetchedAt: null }, { lastFetchedAt: { lt: staleBefore } }],
+      },
+    }),
+    prisma.rssFeed.count({
+      where: {
+        userRssFeeds: { some: {} },
+        rssFeedItems: { none: {} },
+      },
+    }),
     prisma.user.findMany({
       select: {
         id: true,
@@ -90,6 +114,16 @@ export default defineEventHandler(async (event) => {
       today: todayWallpapersCount,
       upcoming: upcomingWallpapersCount,
       outlined: outlinedWallpapersCount,
+    },
+    rss: {
+      feeds: rssFeedsCount,
+      subscriptions: rssSubscriptionsCount,
+      items: rssItemsCount,
+      staleFeeds: staleRssFeedsCount,
+      feedsWithNoItems: rssFeedsWithNoItemsCount,
+      perUserFeedLimit: RSS_FEED_LIMIT,
+      perFeedItemLimit: RSS_ITEM_LIMIT,
+      staleAfterHours: RSS_STALE_HOURS,
     },
     limits: {
       itemLimit: ITEM_LIMIT,
