@@ -54,7 +54,9 @@ watch(activeTab, (newVal) => {
         Pomodoro content
       </div>
 
-      <div v-else-if="activeTab === 'notes'" class="mt-4">Notes content</div>
+      <div v-else-if="activeTab === 'notes'" class="mt-4">
+        <TabNotes />
+      </div>
 
       <div v-else-if="activeTab === 'countdown'" class="mt-4">
         Countdown content

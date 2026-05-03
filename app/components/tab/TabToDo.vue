@@ -5,7 +5,7 @@ interface Todo {
   isCompleted: boolean;
 }
 
-const { loggedIn, user } = useUserSession();
+const { loggedIn } = useUserSession();
 
 const { data, error } = await useFetch<Todo[]>("/api/todo");
 
@@ -15,9 +15,14 @@ if (error.value) {
   console.error("Error fetching todos:", error.value);
 }
 
+const TODO_MAX_LENGTH = 500;
+
 const newContent = ref("");
 const isAdding = ref(false);
 const isClearingCompleted = ref(false);
+
+const todoCharCount = computed(() => newContent.value.length);
+const todoAtLimit = computed(() => todoCharCount.value >= TODO_MAX_LENGTH);
 
 const addTodo = async () => {
   const content = newContent.value.trim();
@@ -137,10 +142,18 @@ const onInputKeydown = (e: KeyboardEvent) => {
           v-model="newContent"
           type="text"
           placeholder="Add a task..."
+          :maxlength="TODO_MAX_LENGTH"
           class="flex-1 bg-transparent text-sm text-white/70 placeholder-white/50 outline-none disabled:cursor-not-allowed disabled:opacity-30"
           :disabled="isAdding"
           @keydown="onInputKeydown"
         />
+
+        <span
+          v-if="newContent.length > 0"
+          class="text-xs transition-colors"
+          :class="todoAtLimit ? 'text-red-400/70' : 'text-white/25'"
+          >{{ todoCharCount }}/{{ TODO_MAX_LENGTH }}</span
+        >
 
         <button
           type="button"
