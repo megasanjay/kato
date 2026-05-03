@@ -17,7 +17,7 @@
     "prisma:migrate:deploy": "prisma migrate deploy",
     "prisma:migrate:dev": "prisma migrate dev --preview-feature",
     "prisma:studio": "prisma studio",
-    "prisma:db:push": "prisma db push",
+    "prisma:db:push": "prisma db push && pnpm prisma:generate",
     "prisma:db:pull": "prisma db pull",
     "postinstall": "nuxt prepare && prisma generate",
     "scripts:generate:background:images": "tsx ./scripts/generate-background-images.ts",

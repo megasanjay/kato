@@ -74,6 +74,7 @@ model User {
     createdAt    DateTime      @default(now())
     updatedAt    DateTime      @updatedAt
     currentViews CurrentView[]
+    todos        Todo[]
 }
 
 model CurrentView {
@@ -81,4 +82,18 @@ model CurrentView {
     user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
     tabName String @default("todo")
+}
+
+model Todo {
+    id String @id @default(cuid(2))
+
+    userId String
+    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    content String
+
+    isCompleted Boolean @default(false)
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }

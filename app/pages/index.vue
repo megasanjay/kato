@@ -29,7 +29,7 @@ onBeforeUnmount(() => {
     </Transition>
 
     <Transition name="fast-fade-blur" appear mode="out-in">
-      <div v-if="mounted" class="bottom-left">
+      <div class="bottom-left">
         <MainTabs />
       </div>
     </Transition>
@@ -53,6 +53,11 @@ onBeforeUnmount(() => {
 
 .bottom-left {
   grid-area: 7 / 2 / 12 / 7;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  min-height: 0;
+  /* border: 1px solid; */
 }
 .bottom-right {
   grid-area: 7 / 8 / 12 / 12;

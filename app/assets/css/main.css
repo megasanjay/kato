@@ -40,6 +40,34 @@ body {
   @apply text-base md:text-base dark:text-white;
 }
 
+/* Global scrollbar: transparent track, subtle thumb only on hover. */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+html:hover {
+  scrollbar-color: rgba(255, 255, 255, 0.28) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 9999px;
+}
+
+html:hover *::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.28);
+}
+
 pre {
   @apply text-xs whitespace-pre-wrap;
 }
