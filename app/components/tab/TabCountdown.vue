@@ -22,7 +22,6 @@ interface CountdownForm {
 
 interface CountdownView extends Countdown {
   nextTargetAt: Date;
-  progress: number;
   remainingMs: number;
   remainingLabel: string;
   hoverLabel: string;
@@ -280,19 +279,6 @@ const formatRecurringLabel = (countdown: Countdown) => {
   return `Every ${countdown.recurrenceValue} ${countdown.recurrenceUnit}${countdown.recurrenceValue === 1 ? "" : "s"}`;
 };
 
-const getProgress = (countdown: Countdown, referenceMs: number) => {
-  const { previousTargetAt, nextTargetAt } = getSchedule(
-    countdown,
-    referenceMs,
-  );
-  const startMs = previousTargetAt.getTime();
-  const endMs = nextTargetAt.getTime();
-  const total = Math.max(endMs - startMs, 1);
-  const elapsed = Math.min(Math.max(referenceMs - startMs, 0), total);
-
-  return Math.round((elapsed / total) * 100);
-};
-
 const sortedCountdowns = computed<CountdownView[]>(() => {
   const referenceMs = now.value;
 
@@ -303,7 +289,6 @@ const sortedCountdowns = computed<CountdownView[]>(() => {
       return {
         ...countdown,
         nextTargetAt: timing.nextTargetAt,
-        progress: getProgress(countdown, referenceMs),
         remainingMs: timing.remainingMs,
         remainingLabel: timing.remainingLabel,
         hoverLabel: timing.hoverLabel,
@@ -449,9 +434,7 @@ watch(
 
     <div v-else class="flex flex-col gap-3">
       <div class="flex items-center justify-between gap-3">
-        <p class="text-sm text-white/25">
-          Track important dates with a simple progress view.
-        </p>
+        <p class="text-sm text-white/25">Add an event to track...</p>
 
         <button
           type="button"
@@ -609,13 +592,6 @@ watch(
                 {{ countdown.nextTargetAt.toLocaleDateString() }}
               </p>
             </div>
-
-            <UProgress
-              :model-value="countdown.progress"
-              status
-              color="neutral"
-              class="w-full"
-            />
           </button>
 
           <button
@@ -627,10 +603,6 @@ watch(
           </button>
         </li>
       </TransitionGroup>
-
-      <p v-if="sortedCountdowns.length === 0" class="text-sm text-white/25">
-        No countdowns yet. Add one to start tracking.
-      </p>
     </div>
   </div>
 </template>

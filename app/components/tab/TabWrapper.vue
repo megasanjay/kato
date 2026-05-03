@@ -21,13 +21,13 @@ const activeTab = computed({
 </script>
 
 <template>
-  <div class="group relative w-full">
+  <div class="relative w-full">
     <div class="scroll-wrapper max-h-[calc(5/12*100vh)] overflow-y-scroll px-1">
       <slot :active-tab="activeTab" />
     </div>
 
     <div
-      class="pointer-events-none absolute top-full left-0 z-10 w-full pt-2 opacity-0 transition-opacity duration-300 group-hover:pointer-events-auto group-hover:opacity-100"
+      class="absolute top-full left-0 z-10 w-full pt-2 opacity-0 transition-opacity duration-300 hover:pointer-events-auto hover:opacity-100"
     >
       <div class="w-full border-b border-white/20" />
 
