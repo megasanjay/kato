@@ -76,6 +76,7 @@ model User {
     currentViews CurrentView[]
     todos        Todo[]
     notes        Note[]
+    countdowns   Countdown[]
 }
 
 model CurrentView {
@@ -107,6 +108,23 @@ model Note {
 
     title   String
     content String
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model Countdown {
+    id String @id @default(cuid(2))
+
+    userId String
+    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    title      String
+    targetDate DateTime
+
+    recurring       Boolean @default(false)
+    recurrenceUnit  String? // "day", "week", "month", "year"
+    recurrenceValue Int? // e.g. every 2 weeks, every 3 months
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt

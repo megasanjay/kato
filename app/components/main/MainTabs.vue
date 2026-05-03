@@ -59,7 +59,7 @@ watch(activeTab, (newVal) => {
       </div>
 
       <div v-else-if="activeTab === 'countdown'" class="mt-4">
-        Countdown content
+        <TabCountdown />
       </div>
     </Transition>
   </TabWrapper>
