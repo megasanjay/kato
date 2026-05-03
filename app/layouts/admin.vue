@@ -25,6 +25,12 @@ const items = computed<NavigationMenuItem[][]>(() => [
       to: "/admin/users",
       active: isActive("/admin/users"),
     },
+    {
+      label: "Metrics",
+      icon: "material-symbols:monitoring",
+      to: "/admin/metrics",
+      active: isActive("/admin/metrics"),
+    },
   ],
 ]);
 </script>

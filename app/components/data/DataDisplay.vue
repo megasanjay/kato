@@ -7,18 +7,23 @@ const props = defineProps({
   },
   content: {
     default: "",
-    type: String,
+    type: [String, Number],
   },
 });
 
-const hasContent = computed(() => props.content.length > 0);
+const hasContent = computed(
+  () =>
+    props.content !== "" &&
+    props.content !== null &&
+    props.content !== undefined,
+);
 </script>
 
 <template>
   <div>
     <h3 class="text-lg font-semibold">{{ title }}</h3>
 
-    <p v-if="hasContent" class="text-lg">{{ content }}</p>
+    <p v-if="hasContent" class="pl-1 text-lg">{{ content }}</p>
 
     <slot v-else />
   </div>
