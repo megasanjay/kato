@@ -6,6 +6,8 @@ declare module "#auth-utils" {
     firstName: string;
     lastName: string;
     username: string;
+
+    admin: boolean;
   }
 
   interface UserSession {

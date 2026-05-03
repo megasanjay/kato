@@ -4,13 +4,16 @@ const dayjs = useDayjs();
 
 const now = ref(dayjs());
 
-const formattedTime = computed(() => now.value.format("h:mm"));
+const formattedTime = computed(() => {
+  return now.value.format("h:mm");
+});
 const formattedDate = computed(() => now.value.format("dddd, MMMM D, YYYY"));
 
 let intervalId: ReturnType<typeof setInterval> | undefined;
 
 const today = dayjs().format("YYYY-MM-DD");
 
+const strokeData = ref<{ addTextStroke: boolean } | null>(null);
 const { data, error } = await useFetch(`/api/wallpaper/${today}/stroke`, {
   method: "GET",
 });
@@ -19,8 +22,10 @@ if (error.value) {
   console.error("Error fetching stroke wallpaper:", error.value);
 }
 
+strokeData.value = data.value ?? null;
+
 const addStroke = computed(() => {
-  return data.value ? data.value.addTextStroke : false;
+  return strokeData.value ? strokeData.value.addTextStroke : false;
 });
 
 onMounted(() => {
@@ -45,7 +50,10 @@ onBeforeUnmount(() => {
       {{ formattedTime }}
     </h1>
 
-    <p class="w-full text-center text-4xl text-white">
+    <p
+      class="w-full text-center text-4xl text-white"
+      :class="{ 'add-stroke': addStroke }"
+    >
       {{ formattedDate }}
     </p>
   </div>

@@ -157,10 +157,12 @@ const main = async () => {
   const today = now.format("YYYY-MM-DD");
   const tomorrow = now.add(1, "day").format("YYYY-MM-DD");
   const dayAfterTomorrow = now.add(2, "day").format("YYYY-MM-DD");
+  const dayAfterThat = now.add(3, "day").format("YYYY-MM-DD");
 
   await generateImage(today);
   await generateImage(tomorrow);
   await generateImage(dayAfterTomorrow);
+  await generateImage(dayAfterThat);
 
   console.log("Deleting old images");
 
