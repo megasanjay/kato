@@ -6,6 +6,10 @@ interface Todo {
 }
 
 const { loggedIn } = useUserSession();
+const toast = useToast();
+
+const ITEM_LIMIT = 100;
+const ITEM_WARN_THRESHOLD = 90;
 
 const { data, error } = await useFetch<Todo[]>("/api/todo");
 
@@ -29,6 +33,16 @@ const addTodo = async () => {
 
   if (!content) return;
 
+  if (todos.value.length >= ITEM_LIMIT) {
+    toast.add({
+      title: "Limit reached",
+      description: `You've reached the ${ITEM_LIMIT} todo limit. Delete some to add more.`,
+      color: "error",
+    });
+
+    return;
+  }
+
   isAdding.value = true;
 
   try {
@@ -39,7 +53,28 @@ const addTodo = async () => {
 
     todos.value.push(created);
     newContent.value = "";
+
+    const count = todos.value.length;
+
+    if (count >= ITEM_LIMIT) {
+      toast.add({
+        title: "Limit reached",
+        description: `You've reached the ${ITEM_LIMIT} todo limit. Delete some to add more.`,
+        color: "error",
+      });
+    } else if (count >= ITEM_WARN_THRESHOLD) {
+      toast.add({
+        title: "Approaching limit",
+        description: `You have ${count}/${ITEM_LIMIT} todos.`,
+        color: "warning",
+      });
+    }
   } catch (e) {
+    toast.add({
+      title: "Limit reached",
+      description: `You've reached the ${ITEM_LIMIT} todo limit. Delete some to add more.`,
+      color: "error",
+    });
     console.error("Failed to add todo:", e);
   } finally {
     isAdding.value = false;

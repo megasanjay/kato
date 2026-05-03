@@ -9,6 +9,15 @@ export default defineEventHandler(async (event) => {
 
   const body = await readValidatedBody(event, schema.parse);
 
+  const count = await prisma.todo.count({ where: { userId: user.id } });
+
+  if (count >= 100) {
+    throw createError({
+      statusCode: 429,
+      statusMessage: "Todo limit reached",
+    });
+  }
+
   return prisma.todo.create({
     data: {
       userId: user.id,

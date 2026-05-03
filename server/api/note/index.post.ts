@@ -12,6 +12,15 @@ export default defineEventHandler(async (event) => {
   const content = body.content.trim();
   const title = body.title?.trim() || "Untitled note";
 
+  const count = await prisma.note.count({ where: { userId: user.id } });
+
+  if (count >= 100) {
+    throw createError({
+      statusCode: 429,
+      statusMessage: "Note limit reached",
+    });
+  }
+
   return prisma.note.create({
     data: {
       userId: user.id,

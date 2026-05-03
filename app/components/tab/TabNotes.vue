@@ -8,6 +8,10 @@ interface Note {
 }
 
 const { loggedIn } = useUserSession();
+const toast = useToast();
+
+const ITEM_LIMIT = 100;
+const ITEM_WARN_THRESHOLD = 90;
 
 const NOTE_MAX_LENGTH = 500;
 const NOTE_TITLE_MAX_LENGTH = 120;
@@ -49,6 +53,16 @@ const addNote = async () => {
 
   if (!content) return;
 
+  if (notes.value.length >= ITEM_LIMIT) {
+    toast.add({
+      title: "Limit reached",
+      description: `You've reached the ${ITEM_LIMIT} note limit. Delete some to add more.`,
+      color: "error",
+    });
+
+    return;
+  }
+
   const title = newTitle.value.trim() || randomTitle();
 
   isAdding.value = true;
@@ -62,7 +76,28 @@ const addNote = async () => {
     notes.value.push(created);
     newTitle.value = "";
     newContent.value = "";
+
+    const count = notes.value.length;
+
+    if (count >= ITEM_LIMIT) {
+      toast.add({
+        title: "Limit reached",
+        description: `You've reached the ${ITEM_LIMIT} note limit. Delete some to add more.`,
+        color: "error",
+      });
+    } else if (count >= ITEM_WARN_THRESHOLD) {
+      toast.add({
+        title: "Approaching limit",
+        description: `You have ${count}/${ITEM_LIMIT} notes.`,
+        color: "warning",
+      });
+    }
   } catch (e) {
+    toast.add({
+      title: "Limit reached",
+      description: `You've reached the ${ITEM_LIMIT} note limit. Delete some to add more.`,
+      color: "error",
+    });
     console.error("Failed to add note:", e);
   } finally {
     isAdding.value = false;
