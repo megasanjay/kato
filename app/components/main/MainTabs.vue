@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { TabItem } from "~/components/tab/TabComponent.vue";
+import type { TabItem } from "~/components/tab/TabWrapper.vue";
 
 const tabs: TabItem[] = [
   { label: "To Do", value: "todo", icon: "i-lucide-list-check" },
-  { label: "Pomodoro", value: "pomodoro", icon: "i-lucide-timer" },
+  { label: "Pomodoro", value: "pomodoro", icon: "arcticons:pomodoro" },
   { label: "Notes", value: "notes", icon: "glyphs:note-pad-1-bold" },
   { label: "Countdown", value: "countdown", icon: "basil:timer-solid" },
 ];
@@ -51,7 +51,7 @@ watch(activeTab, (newVal) => {
       </div>
 
       <div v-else-if="activeTab === 'pomodoro'" class="mt-4">
-        Pomodoro content
+        <TabPomodoro />
       </div>
 
       <div v-else-if="activeTab === 'notes'" class="mt-4">

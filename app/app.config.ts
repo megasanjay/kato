@@ -18,6 +18,45 @@ export default defineAppConfig({
         root: "w-full",
       },
     },
+    progress: {
+      slots: {
+        base: "relative overflow-hidden rounded-full bg-white/10",
+      },
+      variants: {
+        color: {
+          neutral: {
+            indicator: "bg-white/60",
+          },
+        },
+      },
+    },
+    tabs: {
+      slots: {
+        list: "border-white/15",
+        indicator: "bg-white/60",
+        trigger:
+          "data-[state=inactive]:text-white/30 hover:data-[state=inactive]:not-disabled:text-white/60 data-[state=active]:text-white/80 font-medium transition-colors",
+        content: "focus:outline-none w-full",
+      },
+      variants: {
+        variant: {
+          link: {
+            list: "border-white/15",
+          },
+        },
+      },
+      compoundVariants: [
+        {
+          color: "neutral",
+          variant: "link",
+          class: {
+            indicator: "bg-white/60",
+            trigger:
+              "data-[state=active]:text-white/80 focus-visible:ring-white/20",
+          },
+        },
+      ],
+    },
     modal: {
       slots: {
         overlay: "fixed inset-0 !bg-black/50",
