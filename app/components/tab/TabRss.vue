@@ -88,15 +88,19 @@ const addFeed = async () => {
       title:
         status === 409
           ? "Already subscribed"
-          : status === 422
-            ? "Could not fetch feed"
-            : "Failed to add feed",
+          : status === 403
+            ? "Feed limit reached"
+            : status === 422
+              ? "Could not fetch feed"
+              : "Failed to add feed",
       description:
         status === 409
           ? "You've already added this feed."
-          : status === 422
-            ? "The URL could not be fetched. Check that it points to a valid RSS or Atom feed."
-            : "Please check the URL and try again.",
+          : status === 403
+            ? "You can subscribe to up to 10 feeds per account."
+            : status === 422
+              ? "The URL could not be fetched. Check that it points to a valid RSS or Atom feed."
+              : "Please check the URL and try again.",
       color: "error",
     });
 

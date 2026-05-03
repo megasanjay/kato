@@ -31,6 +31,12 @@ const items = computed<NavigationMenuItem[][]>(() => [
       active: isActive("/admin/users"),
     },
     {
+      label: "RSS",
+      icon: "material-symbols:rss-feed",
+      to: "/admin/rss",
+      active: isActive("/admin/rss"),
+    },
+    {
       label: "Metrics",
       icon: "material-symbols:monitoring",
       to: "/admin/metrics",

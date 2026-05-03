@@ -1,6 +1,8 @@
 import { z } from "zod";
 import Parser from "rss-parser";
 
+const USER_FEED_LIMIT = 10;
+
 const schema = z.object({
   url: z.url(),
 });
@@ -128,6 +130,17 @@ const parser = new Parser();
 export default defineEventHandler(async (event) => {
   const { user } = await requireUserSession(event);
   const body = await readValidatedBody(event, schema.parse);
+
+  const userFeedCount = await prisma.userRssFeed.count({
+    where: { userId: user.id },
+  });
+
+  if (userFeedCount >= USER_FEED_LIMIT) {
+    throw createError({
+      statusCode: 403,
+      statusMessage: `You can subscribe to at most ${USER_FEED_LIMIT} feeds`,
+    });
+  }
 
   const normalizedUrl = normalizeUrl(body.url);
 
