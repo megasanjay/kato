@@ -6,6 +6,7 @@ const tabs: TabItem[] = [
   { label: "Pomodoro", value: "pomodoro", icon: "arcticons:pomodoro" },
   { label: "Notes", value: "notes", icon: "glyphs:note-pad-1-bold" },
   { label: "Countdown", value: "countdown", icon: "basil:timer-solid" },
+  { label: "RSS Feed", value: "rss", icon: "i-lucide-rss" },
 ];
 const activeTab = ref("todo");
 
@@ -60,6 +61,10 @@ watch(activeTab, (newVal) => {
 
       <div v-else-if="activeTab === 'countdown'" class="mt-4">
         <TabCountdown />
+      </div>
+
+      <div v-else-if="activeTab === 'rss'" class="mt-4">
+        <TabRss />
       </div>
     </Transition>
   </TabWrapper>

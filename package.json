@@ -22,6 +22,7 @@
     "postinstall": "nuxt prepare && prisma generate",
     "scripts:generate:background:images": "tsx ./scripts/generate-background-images.ts",
     "scripts:generate:affirmations": "tsx ./scripts/generate-affirmations.ts",
+    "scripts:refresh:rss": "tsx ./scripts/refresh-rss-feeds.ts",
     "reset": "rimraf node_modules && rimraf .nuxt && rimraf .output && rimraf dist && pnpm install",
     "l-reset": "rm -rf node_modules && rm -rf .nuxt && rm -rf .output && rm -rf dist && pnpm install",
     "prune-branches": "git removed-branches --prune --force"
@@ -35,6 +36,7 @@
     "kysely-postgres-js": "3.0.0",
     "marked": "18.0.3",
     "prisma-kysely": "3.1.0",
+    "rss-parser": "^3.13.0",
     "sanitize-html": "2.17.3"
   },
   "devDependencies": {

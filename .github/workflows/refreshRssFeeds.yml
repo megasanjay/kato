@@ -1,0 +1,32 @@
+# Refreshes stale RSS feeds every 2 hours and trims each feed to the latest 20 items.
+name: Refresh RSS feeds
+
+on:
+  workflow_dispatch:
+
+  schedule:
+    - cron: "0 */2 * * *"
+
+jobs:
+  refresh-rss-feeds:
+    runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+    steps:
+      - name: Checkout the repo
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 22
+
+      - name: Setup pnpm
+        run: corepack enable && corepack prepare pnpm@10.15.0 --activate
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Refresh stale RSS feeds
+        run: pnpm scripts:refresh:rss

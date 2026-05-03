@@ -14,6 +14,11 @@ const isActive = (path: string) => {
 const items = computed<NavigationMenuItem[][]>(() => [
   [
     {
+      label: "Kato",
+      icon: "fluent-emoji-flat:sun-with-face",
+      to: "/",
+    },
+    {
       label: "Wallpaper",
       icon: "material-symbols:image",
       to: "/admin/wallpaper",

@@ -73,12 +73,15 @@ model User {
 
     admin Boolean @default(false)
 
-    createdAt    DateTime      @default(now())
-    updatedAt    DateTime      @updatedAt
-    currentViews CurrentView[]
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    currentView CurrentView?
+
     todos        Todo[]
     notes        Note[]
     countdowns   Countdown[]
+    userRssFeeds UserRssFeed[]
 }
 
 model CurrentView {
@@ -127,6 +130,51 @@ model Countdown {
     recurring       Boolean @default(false)
     recurrenceUnit  String? // "day", "week", "month", "year"
     recurrenceValue Int? // e.g. every 2 weeks, every 3 months
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model RssFeed {
+    id String @id @default(cuid(2))
+
+    title String @default("")
+    url   String @unique
+
+    lastFetchedAt DateTime?
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    rssFeedItems RssFeedItem[]
+    userRssFeeds UserRssFeed[]
+}
+
+model UserRssFeed {
+    id String @id @default(cuid(2))
+
+    userId String
+    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    feedId String
+    feed   RssFeed @relation(fields: [feedId], references: [id], onDelete: Cascade)
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@unique([userId, feedId])
+}
+
+model RssFeedItem {
+    id String @id @default(cuid(2))
+
+    feedId String
+    feed   RssFeed @relation(fields: [feedId], references: [id], onDelete: Cascade)
+
+    title       String
+    link        String
+    pubDate     DateTime
+    description String
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
