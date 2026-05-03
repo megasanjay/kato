@@ -1,6 +1,7 @@
 <script setup lang="ts">
 definePageMeta({
   middleware: ["auth"],
+  layout: "admin",
 });
 
 useSeoMeta({
@@ -36,14 +37,9 @@ const {
   data: wallpapers,
   error,
   status,
-  refresh,
 } = await useFetch<AdminWallpaper[]>("/api/admin/wallpaper", {
   method: "GET",
 });
-
-const refreshWallpapers = async (_event: MouseEvent) => {
-  await refresh();
-};
 
 if (error.value) {
   toast.add({
@@ -153,7 +149,7 @@ const deleteWallpaper = async (wallpaper: AdminWallpaper) => {
 </script>
 
 <template>
-  <div class="relative h-full overflow-y-auto px-5 py-6 md:px-8 md:py-8">
+  <div class="relative h-full overflow-y-auto">
     <div class="mx-auto w-full max-w-7xl">
       <div
         v-if="status === 'pending' && !wallpapers?.length"
