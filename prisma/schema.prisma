@@ -24,12 +24,11 @@ model Background {
     theme String
 
     addTextStroke Boolean @default(false)
+    blurhash      String
 
     imageID     String @unique
     url         String
     unsplashUrl String
-
-    index Int
 
     description String
 

@@ -141,10 +141,10 @@ const generateImage = async (searchDate: string) => {
         date: searchDate,
         description,
         imageID: photo.id,
-        index: 0,
         theme,
         url: `${photo.urls.raw}&auto=format`,
         unsplashUrl: photo.links.html,
+        blurhash: photo.blur_hash ?? "",
       },
     });
 
