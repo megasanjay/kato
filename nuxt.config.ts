@@ -6,6 +6,9 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ["@nuxt/ui", "nuxt-auth-utils", "dayjs-nuxt", "@nuxt/eslint"],
   runtimeConfig: {
+    session: {
+      password: process.env.NUXT_SESSION_PASSWORD || "",
+    },
     emailVerificationDomain: process.env.EMAIL_VERIFICATION_DOMAIN || "",
     mailFrom: process.env.MAIL_FROM || "noreply@example.com",
     mailHost: process.env.MAIL_HOST || "smtp.example.com",
