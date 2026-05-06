@@ -24,42 +24,47 @@ const INTERVAL_OPTIONS: IntervalOption[] = [
   {
     value: "minute",
     label: "Minute",
-    description: "60 points, updates every second",
+    description: "60 intervals, updates every second",
   },
   {
     value: "hour",
     label: "Hour",
-    description: "60 points, updates every minute",
+    description: "60 intervals, updates every minute",
   },
   {
     value: "day",
-    label: "Day",
-    description: "24 points, updates every hour",
+    label: "Day (hour updates)",
+    description: "24 intervals, updates every hour",
+  },
+  {
+    value: "day-minute",
+    label: "Day (minute updates)",
+    description: "1440 intervals, updates every minute",
   },
   {
     value: "week",
     label: "Week",
-    description: "7 points, updates every day",
+    description: "7 intervals, updates every day",
   },
   {
     value: "month",
     label: "Month",
-    description: "30 points, updates every day",
+    description: "30 intervals, updates every day",
   },
   {
     value: "quarter",
     label: "Quarter",
-    description: "91 points, updates every day",
-  },
-  {
-    value: "financial-quarter",
-    label: "Financial Quarter",
-    description: "13 points, updates every week",
+    description: "3 intervals, updates every month",
   },
   {
     value: "year",
     label: "Year",
-    description: "365 points, updates every day",
+    description: "365 intervals, updates every day",
+  },
+  {
+    value: "year-month",
+    label: "Year (Month updates)",
+    description: "12 intervals, updates every month",
   },
 ];
 
@@ -150,9 +155,9 @@ const saveInterval = async () => {
 
       <div v-else class="space-y-4">
         <p class=" ">
-          Choose one interval that remains active at all times. The countdown
-          tracks how many full intervals have passed since this setting was last
-          changed.
+          Choose one settings that tracks your progress throughout the day,
+          week, month, or year. The countdown widget will update at regular
+          intervals based on your selection.
         </p>
 
         <URadioGroup

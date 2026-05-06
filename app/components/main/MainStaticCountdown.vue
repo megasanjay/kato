@@ -4,63 +4,47 @@ const now = ref(dayjs());
 
 type IntervalConfig = {
   label: string;
-  durationMs: number;
   pointsPerInterval: number;
-  pointStepMs: number;
 };
-
-const DAY_MS = 24 * 60 * 60 * 1000;
 
 const INTERVALS: Record<string, IntervalConfig> = {
   minute: {
-    label: "Minute",
-    durationMs: 60 * 1000,
+    label: "minute",
     pointsPerInterval: 60,
-    pointStepMs: 1000,
   },
   hour: {
-    label: "Hour",
-    durationMs: 60 * 60 * 1000,
+    label: "hour",
     pointsPerInterval: 60,
-    pointStepMs: 60 * 1000,
   },
   day: {
-    label: "Day",
-    durationMs: DAY_MS,
+    label: "day",
     pointsPerInterval: 24,
-    pointStepMs: 60 * 60 * 1000,
+  },
+  "day-minute": {
+    label: "day-minute",
+    pointsPerInterval: 1440, // 24 * 60
   },
   week: {
-    label: "Week",
-    durationMs: 7 * DAY_MS,
+    label: "week",
     pointsPerInterval: 7,
-    pointStepMs: DAY_MS,
   },
   month: {
-    label: "Month",
-    durationMs: 30 * DAY_MS,
+    label: "month",
     pointsPerInterval: 30,
-    pointStepMs: DAY_MS,
   },
   quarter: {
-    label: "Quarter",
-    durationMs: 91 * DAY_MS,
+    label: "quarter",
     pointsPerInterval: 91,
-    pointStepMs: DAY_MS,
   },
   year: {
-    label: "Year",
-    durationMs: 365 * DAY_MS,
+    label: "year",
     pointsPerInterval: 365,
-    pointStepMs: DAY_MS,
   },
 };
 
 const DEFAULT_INTERVAL: IntervalConfig = {
-  label: "Minute",
-  durationMs: 60 * 1000,
+  label: "minute",
   pointsPerInterval: 60,
-  pointStepMs: 1000,
 };
 
 const currentInterval = ref<IntervalConfig>(DEFAULT_INTERVAL);
@@ -83,10 +67,38 @@ if (data.value) {
     INTERVALS[data.value.intervalName] ?? DEFAULT_INTERVAL;
 }
 
+const getPassedIntervalSegments = computed(() => {
+  if (currentInterval.value.label === "minute") {
+    return now.value.second();
+  }
+
+  if (currentInterval.value.label === "hour") {
+    return now.value.minute();
+  }
+
+  if (currentInterval.value.label === "day") {
+    return now.value.hour();
+  }
+
+  if (currentInterval.value.label === "day-minute") {
+    return now.value.hour() * 60 + now.value.minute();
+  }
+
+  if (currentInterval.value.label === "week") {
+    return (now.value.day() + 6) % 7; // day() returns sunday as 0, we want it to be monday as 0
+  }
+
+  if (currentInterval.value.label === "month") {
+    return now.value.date() - 1; // date() returns 1-31, we want it to be 0-30
+  }
+
+  return dayjs().second();
+});
+
 onMounted(() => {
   timer = setInterval(() => {
     now.value = dayjs();
-  }, 1000);
+  }, 500);
 });
 
 onBeforeUnmount(() => {
@@ -100,18 +112,25 @@ onBeforeUnmount(() => {
 <template>
   <div class="flex justify-end p-3">
     <div class="space-y-1">
-      <p class="text-right text-[10px] text-white/35">{{ data }}</p>
+      <p class="text-right text-[10px] text-white/35">
+        {{ getPassedIntervalSegments }} /
+        {{ currentInterval.pointsPerInterval }}
+      </p>
 
-      <div
-        class="debug flex w-full flex-row-reverse flex-wrap-reverse content-end"
-      >
+      <div class="flex w-full flex-row-reverse flex-wrap-reverse content-end">
         <div
-          v-for="dot in currentInterval.pointsPerInterval"
-          :key="dot"
-          class="m-px flex items-center justify-center pl-1 text-white"
-        >
-          {{ dot }}
-        </div>
+          v-for="(point, index) in currentInterval.pointsPerInterval"
+          :key="`${point}-${index}`"
+          class="m-0.5 flex size-2 items-center justify-center rounded-full border text-xs transition-all"
+          :class="{
+            'border-white/75 bg-white/25':
+              currentInterval.pointsPerInterval - index >
+              getPassedIntervalSegments,
+            'border-white/25 bg-transparent':
+              currentInterval.pointsPerInterval - index <=
+              getPassedIntervalSegments,
+          }"
+        />
       </div>
     </div>
   </div>

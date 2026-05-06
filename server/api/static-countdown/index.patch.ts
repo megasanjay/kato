@@ -4,11 +4,12 @@ const ALLOWED_INTERVALS = [
   "minute",
   "hour",
   "day",
+  "day-minute",
   "week",
   "month",
   "quarter",
-  "financial-quarter",
   "year",
+  "year-month",
 ] as const;
 
 const schema = z.object({
