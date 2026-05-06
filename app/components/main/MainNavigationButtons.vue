@@ -12,11 +12,13 @@ const handleLogout = async () => {
 <template>
   <div class="flex h-full items-end justify-end">
     <div class="flex items-center gap-1">
-      <UColorModeButton class="text-white/75" />
+      <UColorModeButton
+        class="text-white/75 hover:text-slate-600 dark:hover:text-white/75"
+      />
 
       <UTooltip text="Adjust Kato settings" placement="top">
         <UButton
-          to="/settings/rss"
+          to="/settings/wallpaper"
           variant="ghost"
           size="lg"
           icon="mingcute:settings-3-fill"

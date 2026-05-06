@@ -19,6 +19,12 @@ const items = computed<NavigationMenuItem[][]>(() => [
       to: "/",
     },
     {
+      label: "Wallpaper",
+      icon: "material-symbols:image",
+      to: "/settings/wallpaper",
+      active: isActive("/settings/wallpaper"),
+    },
+    {
       label: "RSS Feeds",
       icon: "material-symbols:rss-feed",
       to: "/settings/rss",
@@ -34,12 +40,14 @@ const items = computed<NavigationMenuItem[][]>(() => [
   >
     <WallpaperImage />
 
-    <main class="z-10 h-full overflow-y-auto px-4 py-4 md:px-7 md:py-6">
+    <main class="z-10 h-full overflow-y-auto p-5">
       <UContainer>
         <div class="flex items-center justify-between">
           <UNavigationMenu :items="items" />
 
-          <UColorModeButton class="text-white/75" />
+          <UColorModeButton
+            class="text-white/75 hover:text-slate-600 dark:hover:text-white/75"
+          />
         </div>
 
         <div class="pb-4">
