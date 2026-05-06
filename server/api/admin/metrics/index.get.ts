@@ -1,13 +1,13 @@
-const ITEM_LIMIT = 100;
-const RSS_FEED_LIMIT = 10;
-const RSS_ITEM_LIMIT = 20;
-const RSS_STALE_HOURS = 6;
-
 export default defineEventHandler(async (event) => {
+  const {
+    public: { limits },
+  } = useRuntimeConfig(event);
   await isAdmin(event);
 
   const today = new Date().toISOString().slice(0, 10);
-  const staleBefore = new Date(Date.now() - RSS_STALE_HOURS * 60 * 60 * 1000);
+  const staleBefore = new Date(
+    Date.now() - limits.rss.staleHours * 60 * 60 * 1000,
+  );
 
   const [
     usersCount,
@@ -74,10 +74,10 @@ export default defineEventHandler(async (event) => {
   let maxCountdownsUsagePercent = 0;
 
   for (const user of users) {
-    const todosUsage = Math.round((user._count.todos / ITEM_LIMIT) * 100);
-    const notesUsage = Math.round((user._count.notes / ITEM_LIMIT) * 100);
+    const todosUsage = Math.round((user._count.todos / limits.itemLimit) * 100);
+    const notesUsage = Math.round((user._count.notes / limits.itemLimit) * 100);
     const countdownsUsage = Math.round(
-      (user._count.countdowns / ITEM_LIMIT) * 100,
+      (user._count.countdowns / limits.itemLimit) * 100,
     );
 
     maxTodosUsagePercent = Math.max(maxTodosUsagePercent, todosUsage);
@@ -87,15 +87,15 @@ export default defineEventHandler(async (event) => {
       countdownsUsage,
     );
 
-    if (user._count.todos >= ITEM_LIMIT) {
+    if (user._count.todos >= limits.itemLimit) {
       todosAtOrOverLimit += 1;
     }
 
-    if (user._count.notes >= ITEM_LIMIT) {
+    if (user._count.notes >= limits.itemLimit) {
       notesAtOrOverLimit += 1;
     }
 
-    if (user._count.countdowns >= ITEM_LIMIT) {
+    if (user._count.countdowns >= limits.itemLimit) {
       countdownsAtOrOverLimit += 1;
     }
   }
@@ -121,12 +121,12 @@ export default defineEventHandler(async (event) => {
       items: rssItemsCount,
       staleFeeds: staleRssFeedsCount,
       feedsWithNoItems: rssFeedsWithNoItemsCount,
-      perUserFeedLimit: RSS_FEED_LIMIT,
-      perFeedItemLimit: RSS_ITEM_LIMIT,
-      staleAfterHours: RSS_STALE_HOURS,
+      perUserFeedLimit: limits.rss.userFeedLimit,
+      perFeedItemLimit: limits.rss.itemsPerFeed,
+      staleAfterHours: limits.rss.staleHours,
     },
     limits: {
-      itemLimit: ITEM_LIMIT,
+      itemLimit: limits.itemLimit,
       usersAtOrOverLimit: {
         todos: todosAtOrOverLimit,
         notes: notesAtOrOverLimit,

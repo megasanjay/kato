@@ -9,12 +9,14 @@ interface Note {
 
 const { loggedIn } = useUserSession();
 const toast = useToast();
+const config = useRuntimeConfig();
+const limits = config.public.limits;
 
-const ITEM_LIMIT = 100;
-const ITEM_WARN_THRESHOLD = 90;
+const ITEM_LIMIT = limits.itemLimit;
+const ITEM_WARN_THRESHOLD = limits.itemWarnThreshold;
 
-const NOTE_MAX_LENGTH = 500;
-const NOTE_TITLE_MAX_LENGTH = 120;
+const NOTE_MAX_LENGTH = limits.text.noteMaxLength;
+const NOTE_TITLE_MAX_LENGTH = limits.text.titleMaxLength;
 
 const { data, error } = await useFetch<Note[]>("/api/note");
 

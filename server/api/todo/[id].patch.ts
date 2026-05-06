@@ -1,11 +1,13 @@
 import { z } from "zod";
 
-const schema = z.object({
-  isCompleted: z.boolean().optional(),
-  content: z.string().min(1).max(500).optional(),
-});
-
 export default defineEventHandler(async (event) => {
+  const {
+    public: { limits },
+  } = useRuntimeConfig(event);
+  const schema = z.object({
+    isCompleted: z.boolean().optional(),
+    content: z.string().min(1).max(limits.text.todoMaxLength).optional(),
+  });
   const { user } = await requireUserSession(event);
   const { id } = event.context.params as { id: string };
 

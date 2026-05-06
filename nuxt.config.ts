@@ -19,6 +19,27 @@ export default defineNuxtConfig({
       ENABLE_EMAIL_VERIFICATION: process.env.ENABLE_EMAIL_VERIFICATION
         ? process.env.ENABLE_EMAIL_VERIFICATION === "true"
         : false,
+      limits: {
+        itemLimit: 100,
+        itemWarnThreshold: 90,
+        text: {
+          titleMaxLength: 120,
+          noteMaxLength: 500,
+          todoMaxLength: 500,
+        },
+        countdown: {
+          recurrenceMin: 1,
+          recurrenceMax: 365,
+        },
+        rss: {
+          userFeedLimit: 10,
+          itemsPerFeed: 20,
+          staleHours: 6,
+          feedTitleMaxLength: 200,
+          itemTitleMaxLength: 500,
+          itemDescriptionMaxLength: 1000,
+        },
+      },
     },
   },
   eslint: {},

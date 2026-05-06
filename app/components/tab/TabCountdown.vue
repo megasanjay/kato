@@ -31,9 +31,11 @@ interface CountdownView extends Countdown {
 
 const { loggedIn } = useUserSession();
 const toast = useToast();
+const config = useRuntimeConfig();
+const limits = config.public.limits;
 
-const TITLE_MAX_LENGTH = 120;
-const ITEM_LIMIT = 100;
+const TITLE_MAX_LENGTH = limits.text.titleMaxLength;
+const ITEM_LIMIT = limits.itemLimit;
 
 const { data, error } = await useFetch<Countdown[]>("/api/countdown");
 
@@ -520,8 +522,8 @@ watch(
               <input
                 v-model.number="form.recurrenceValue"
                 type="number"
-                min="1"
-                max="365"
+                :min="limits.countdown.recurrenceMin"
+                :max="limits.countdown.recurrenceMax"
                 class="border-b border-white/10 bg-transparent pb-2 text-sm text-white/70 transition-colors outline-none focus:border-white/30"
               />
             </div>

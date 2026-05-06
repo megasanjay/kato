@@ -1,6 +1,7 @@
-const ITEM_LIMIT = 100;
-
 export default defineEventHandler(async (event) => {
+  const {
+    public: { limits },
+  } = useRuntimeConfig(event);
   await isAdmin(event);
 
   const users = await prisma.user.findMany({
@@ -26,9 +27,9 @@ export default defineEventHandler(async (event) => {
     firstName: user.firstName,
     createdAt: user.createdAt,
     limits: {
-      todos: { current: user._count.todos, max: ITEM_LIMIT },
-      notes: { current: user._count.notes, max: ITEM_LIMIT },
-      countdowns: { current: user._count.countdowns, max: ITEM_LIMIT },
+      todos: { current: user._count.todos, max: limits.itemLimit },
+      notes: { current: user._count.notes, max: limits.itemLimit },
+      countdowns: { current: user._count.countdowns, max: limits.itemLimit },
     },
   }));
 });

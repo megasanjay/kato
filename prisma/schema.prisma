@@ -151,6 +151,7 @@ model RssFeed {
     title String @default("")
     url   String @unique
 
+    bypassCache   Boolean   @default(false) // if true, the feed will be fetched in more shorter intervals
     lastFetchedAt DateTime?
 
     createdAt DateTime @default(now())

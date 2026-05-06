@@ -1,8 +1,6 @@
 import { z } from "zod";
 import Parser from "rss-parser";
 
-const USER_FEED_LIMIT = 10;
-
 const schema = z.object({
   url: z.url(),
 });
@@ -128,6 +126,9 @@ const extractLink = (item: Parser.Item): string => {
 const parser = new Parser();
 
 export default defineEventHandler(async (event) => {
+  const {
+    public: { limits },
+  } = useRuntimeConfig(event);
   const { user } = await requireUserSession(event);
   const body = await readValidatedBody(event, schema.parse);
 
@@ -135,10 +136,10 @@ export default defineEventHandler(async (event) => {
     where: { userId: user.id },
   });
 
-  if (userFeedCount >= USER_FEED_LIMIT) {
+  if (userFeedCount >= limits.rss.userFeedLimit) {
     throw createError({
       statusCode: 403,
-      statusMessage: `You can subscribe to at most ${USER_FEED_LIMIT} feeds`,
+      statusMessage: `You can subscribe to at most ${limits.rss.userFeedLimit} feeds`,
     });
   }
 
@@ -212,20 +213,26 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    feedTitle = stripHtml(String(parsedFeed.title ?? "")).slice(0, 200);
+    feedTitle = stripHtml(String(parsedFeed.title ?? "")).slice(
+      0,
+      limits.rss.feedTitleMaxLength,
+    );
 
     const rawItems: RawItem[] = (parsedFeed.items ?? [])
-      .slice(0, 20)
+      .slice(0, limits.rss.itemsPerFeed)
       .map((item) => {
         const { summary } = item as Record<string, unknown>;
 
         return {
-          title: stripHtml(String(item.title ?? "")).slice(0, 500),
+          title: stripHtml(String(item.title ?? "")).slice(
+            0,
+            limits.rss.itemTitleMaxLength,
+          ),
           link: extractLink(item),
           pubDate: parseDate(item.isoDate ?? item.pubDate),
           description: stripHtml(
             String(item.contentSnippet ?? item.content ?? summary ?? ""),
-          ).slice(0, 1000),
+          ).slice(0, limits.rss.itemDescriptionMaxLength),
         };
       });
 
@@ -244,7 +251,7 @@ export default defineEventHandler(async (event) => {
   const items = await prisma.rssFeedItem.findMany({
     where: { feedId },
     orderBy: { pubDate: "desc" },
-    take: 20,
+    take: limits.rss.itemsPerFeed,
     select: {
       id: true,
       title: true,

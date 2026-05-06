@@ -1,11 +1,13 @@
 import { z } from "zod";
 
-const schema = z.object({
-  title: z.string().trim().max(120).optional(),
-  content: z.string().min(1).max(500),
-});
-
 export default defineEventHandler(async (event) => {
+  const {
+    public: { limits },
+  } = useRuntimeConfig(event);
+  const schema = z.object({
+    title: z.string().trim().max(limits.text.titleMaxLength).optional(),
+    content: z.string().min(1).max(limits.text.noteMaxLength),
+  });
   const { user } = await requireUserSession(event);
 
   const body = await readValidatedBody(event, schema.parse);
@@ -14,7 +16,7 @@ export default defineEventHandler(async (event) => {
 
   const count = await prisma.note.count({ where: { userId: user.id } });
 
-  if (count >= 100) {
+  if (count >= limits.itemLimit) {
     throw createError({
       statusCode: 429,
       statusMessage: "Note limit reached",

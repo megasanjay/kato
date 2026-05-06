@@ -1,15 +1,30 @@
 import { z } from "zod";
 
-const schema = z
-  .object({
-    title: z.string().trim().min(1).max(120).optional(),
-    content: z.string().trim().min(1).max(500).optional(),
-  })
-  .refine((value) => value.title !== undefined || value.content !== undefined, {
-    message: "At least one field must be provided",
-  });
-
 export default defineEventHandler(async (event) => {
+  const {
+    public: { limits },
+  } = useRuntimeConfig(event);
+  const schema = z
+    .object({
+      title: z
+        .string()
+        .trim()
+        .min(1)
+        .max(limits.text.titleMaxLength)
+        .optional(),
+      content: z
+        .string()
+        .trim()
+        .min(1)
+        .max(limits.text.noteMaxLength)
+        .optional(),
+    })
+    .refine(
+      (value) => value.title !== undefined || value.content !== undefined,
+      {
+        message: "At least one field must be provided",
+      },
+    );
   const { user } = await requireUserSession(event);
   const { id } = event.context.params as { id: string };
 

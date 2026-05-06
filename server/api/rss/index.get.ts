@@ -1,4 +1,7 @@
 export default defineEventHandler(async (event) => {
+  const {
+    public: { limits },
+  } = useRuntimeConfig(event);
   const { user } = await requireUserSession(event);
 
   const userFeeds = await prisma.userRssFeed.findMany({
@@ -8,7 +11,7 @@ export default defineEventHandler(async (event) => {
         include: {
           rssFeedItems: {
             orderBy: { pubDate: "desc" },
-            take: 20,
+            take: limits.rss.itemsPerFeed,
             select: {
               id: true,
               title: true,
@@ -37,5 +40,5 @@ export default defineEventHandler(async (event) => {
       })),
     )
     .sort((a, b) => b.pubDate.getTime() - a.pubDate.getTime())
-    .slice(0, 20);
+    .slice(0, limits.rss.itemsPerFeed);
 });

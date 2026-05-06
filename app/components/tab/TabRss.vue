@@ -12,6 +12,8 @@ interface RssFeedItem {
 
 const { loggedIn } = useUserSession();
 const toast = useToast();
+const config = useRuntimeConfig();
+const limits = config.public.limits;
 
 const { data, error } = await useFetch<RssFeedItem[]>("/api/rss");
 
@@ -78,7 +80,7 @@ const addFeed = async () => {
       .sort(
         (a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime(),
       )
-      .slice(0, 20);
+      .slice(0, limits.rss.itemsPerFeed);
 
     closeModal();
   } catch (cause: unknown) {
@@ -97,7 +99,7 @@ const addFeed = async () => {
         status === 409
           ? "You've already added this feed."
           : status === 403
-            ? "You can subscribe to up to 10 feeds per account."
+            ? `You can subscribe to up to ${limits.rss.userFeedLimit} feeds per account.`
             : status === 422
               ? "The URL could not be fetched. Check that it points to a valid RSS or Atom feed."
               : "Please check the URL and try again.",

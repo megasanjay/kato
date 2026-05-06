@@ -1,10 +1,12 @@
-const FEED_ITEM_LIMIT = 20;
-const STALE_HOURS = 6;
-
 export default defineEventHandler(async (event) => {
+  const {
+    public: { limits },
+  } = useRuntimeConfig(event);
   await isAdmin(event);
 
-  const staleBefore = new Date(Date.now() - STALE_HOURS * 60 * 60 * 1000);
+  const staleBefore = new Date(
+    Date.now() - limits.rss.staleHours * 60 * 60 * 1000,
+  );
 
   const [
     totalFeeds,
@@ -56,8 +58,8 @@ export default defineEventHandler(async (event) => {
   return {
     generatedAt: new Date().toISOString(),
     summary: {
-      feedItemLimit: FEED_ITEM_LIMIT,
-      staleAfterHours: STALE_HOURS,
+      feedItemLimit: limits.rss.itemsPerFeed,
+      staleAfterHours: limits.rss.staleHours,
       totalFeeds,
       subscribedFeeds,
       staleFeeds,
@@ -70,7 +72,10 @@ export default defineEventHandler(async (event) => {
       url: feed.url,
       subscriberCount: feed._count.userRssFeeds,
       itemCount: feed._count.rssFeedItems,
-      overLimitBy: Math.max(0, feed._count.rssFeedItems - FEED_ITEM_LIMIT),
+      overLimitBy: Math.max(
+        0,
+        feed._count.rssFeedItems - limits.rss.itemsPerFeed,
+      ),
       lastFetchedAt: feed.lastFetchedAt,
       latestItemDate: feed.rssFeedItems[0]?.pubDate ?? null,
       createdAt: feed.createdAt,

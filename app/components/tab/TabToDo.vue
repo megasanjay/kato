@@ -7,9 +7,11 @@ interface Todo {
 
 const { loggedIn } = useUserSession();
 const toast = useToast();
+const config = useRuntimeConfig();
+const limits = config.public.limits;
 
-const ITEM_LIMIT = 100;
-const ITEM_WARN_THRESHOLD = 90;
+const ITEM_LIMIT = limits.itemLimit;
+const ITEM_WARN_THRESHOLD = limits.itemWarnThreshold;
 
 const { data, error } = await useFetch<Todo[]>("/api/todo");
 
@@ -19,7 +21,7 @@ if (error.value) {
   console.error("Error fetching todos:", error.value);
 }
 
-const TODO_MAX_LENGTH = 500;
+const TODO_MAX_LENGTH = limits.text.todoMaxLength;
 
 const newContent = ref("");
 const isAdding = ref(false);
