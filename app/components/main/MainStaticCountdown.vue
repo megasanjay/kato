@@ -47,8 +47,6 @@ const DEFAULT_INTERVAL: IntervalConfig = {
   pointsPerInterval: 60,
 };
 
-const currentInterval = ref<IntervalConfig>(DEFAULT_INTERVAL);
-
 let timer: ReturnType<typeof setInterval> | null = null;
 
 const { data, error } = await useFetch("/api/static-countdown", {
@@ -57,38 +55,43 @@ const { data, error } = await useFetch("/api/static-countdown", {
 
 if (error.value) {
   console.error("Failed to load static countdown:", error.value);
-
-  // set the default interval in case of error
-  currentInterval.value = DEFAULT_INTERVAL;
 }
 
-if (data.value) {
-  currentInterval.value =
-    INTERVALS[data.value.intervalName] ?? DEFAULT_INTERVAL;
-}
+const currentIntervalLabel = computed(() =>
+  data.value
+    ? (INTERVALS[data.value.intervalName]?.label ?? DEFAULT_INTERVAL.label)
+    : DEFAULT_INTERVAL.label,
+);
+
+const currentIntervalPointsPerInterval = computed(() =>
+  data.value
+    ? (INTERVALS[data.value.intervalName]?.pointsPerInterval ??
+      DEFAULT_INTERVAL.pointsPerInterval)
+    : DEFAULT_INTERVAL.pointsPerInterval,
+);
 
 const getPassedIntervalSegments = computed(() => {
-  if (currentInterval.value.label === "minute") {
+  if (currentIntervalLabel.value === "minute") {
     return now.value.second();
   }
 
-  if (currentInterval.value.label === "hour") {
+  if (currentIntervalLabel.value === "hour") {
     return now.value.minute();
   }
 
-  if (currentInterval.value.label === "day") {
+  if (currentIntervalLabel.value === "day") {
     return now.value.hour();
   }
 
-  if (currentInterval.value.label === "day-minute") {
+  if (currentIntervalLabel.value === "day-minute") {
     return now.value.hour() * 60 + now.value.minute();
   }
 
-  if (currentInterval.value.label === "week") {
+  if (currentIntervalLabel.value === "week") {
     return (now.value.day() + 6) % 7; // day() returns sunday as 0, we want it to be monday as 0
   }
 
-  if (currentInterval.value.label === "month") {
+  if (currentIntervalLabel.value === "month") {
     return now.value.date() - 1; // date() returns 1-31, we want it to be 0-30
   }
 
@@ -114,20 +117,23 @@ onBeforeUnmount(() => {
     <div class="space-y-1">
       <p class="text-right text-[10px] text-white/35">
         {{ getPassedIntervalSegments }} /
-        {{ currentInterval.pointsPerInterval }}
+        {{ currentIntervalPointsPerInterval }}
       </p>
 
-      <div class="flex w-full flex-row-reverse flex-wrap-reverse content-end">
+      <div
+        :key="getPassedIntervalSegments"
+        class="flex w-full flex-row-reverse flex-wrap-reverse content-end"
+      >
         <div
-          v-for="(point, index) in currentInterval.pointsPerInterval"
+          v-for="(point, index) in currentIntervalPointsPerInterval"
           :key="`${point}-${index}`"
-          class="m-0.5 flex size-2 items-center justify-center rounded-full border text-xs transition-all"
+          class="mt-0.5 ml-0.5 flex size-2 items-center justify-center rounded-full border text-xs transition-all"
           :class="{
             'border-white/75 bg-white/25':
-              currentInterval.pointsPerInterval - index >
+              currentIntervalPointsPerInterval - index >
               getPassedIntervalSegments,
             'border-white/25 bg-transparent':
-              currentInterval.pointsPerInterval - index <=
+              currentIntervalPointsPerInterval - index <=
               getPassedIntervalSegments,
           }"
         />
