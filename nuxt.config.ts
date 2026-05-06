@@ -8,6 +8,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     session: {
       password: process.env.NUXT_SESSION_PASSWORD || "",
+      maxAge: 60 * 60 * 24 * 30, // 1 month
     },
     emailVerificationDomain: process.env.EMAIL_VERIFICATION_DOMAIN || "",
     mailFrom: process.env.MAIL_FROM || "noreply@example.com",
