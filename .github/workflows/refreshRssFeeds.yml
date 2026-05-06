@@ -1,11 +1,13 @@
-# Refreshes stale RSS feeds every 2 hours and trims each feed to the latest 20 items.
+# Refreshes RSS feeds every 90 minutes and trims each feed to the latest 20 items.
 name: Refresh RSS feeds
 
 on:
   workflow_dispatch:
 
   schedule:
-    - cron: "0 */2 * * *"
+    # Every 90 minutes: 00:00, 01:30, 03:00, 04:30, ...
+    - cron: "0 */3 * * *"
+    - cron: "30 1-23/3 * * *"
 
 jobs:
   refresh-rss-feeds:

@@ -1,5 +1,6 @@
 /**
- * Refreshes stale RSS feeds and keeps only the latest items per feed.
+ * Refreshes stale RSS feeds and bypass-cache feeds,
+ * then keeps only the latest items per feed.
  */
 
 import "dotenv/config";
@@ -237,16 +238,26 @@ const main = async () => {
 
   const staleFeeds = await prisma.rssFeed.findMany({
     where: {
-      userRssFeeds: { some: {} },
-      OR: [{ lastFetchedAt: null }, { lastFetchedAt: { lt: staleBefore } }],
+      OR: [
+        { bypassCache: true },
+        {
+          userRssFeeds: { some: {} },
+          OR: [{ lastFetchedAt: null }, { lastFetchedAt: { lt: staleBefore } }],
+        },
+      ],
     },
     select: {
       id: true,
       url: true,
+      bypassCache: true,
     },
   });
 
-  console.log(`Found ${staleFeeds.length} stale feeds to refresh.`);
+  const bypassFeedCount = staleFeeds.filter((feed) => feed.bypassCache).length;
+
+  console.log(
+    `Found ${staleFeeds.length} feeds to refresh (${bypassFeedCount} bypass-cache).`,
+  );
 
   for (const feed of staleFeeds) {
     await refreshFeed(feed);

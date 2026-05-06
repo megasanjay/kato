@@ -38,6 +38,7 @@ export default defineEventHandler(async (event) => {
         id: true,
         title: true,
         url: true,
+        bypassCache: true,
         lastFetchedAt: true,
         createdAt: true,
         _count: {
@@ -70,6 +71,7 @@ export default defineEventHandler(async (event) => {
       id: feed.id,
       title: feed.title,
       url: feed.url,
+      bypassCache: feed.bypassCache,
       subscriberCount: feed._count.userRssFeeds,
       itemCount: feed._count.rssFeedItems,
       overLimitBy: Math.max(

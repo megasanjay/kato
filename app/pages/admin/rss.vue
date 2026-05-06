@@ -15,6 +15,7 @@ type AdminRssFeed = {
   id: string;
   title: string;
   url: string;
+  bypassCache: boolean;
   subscriberCount: number;
   itemCount: number;
   overLimitBy: number;
@@ -71,6 +72,7 @@ if (error.value) {
 const model = computed(() => data.value);
 const summary = computed(() => model.value?.summary);
 const feeds = computed(() => model.value?.feeds ?? []);
+const isTogglingFeedId = ref<string | null>(null);
 
 const dateLabel = (value: string | null) => {
   if (!value) {
@@ -99,6 +101,56 @@ const feedName = (feed: AdminRssFeed) => {
     return new URL(feed.url).hostname;
   } catch {
     return feed.url;
+  }
+};
+
+const toggleBypassCache = async (feed: AdminRssFeed) => {
+  if (isTogglingFeedId.value) {
+    return;
+  }
+
+  const nextBypassCache = !feed.bypassCache;
+  isTogglingFeedId.value = feed.id;
+
+  try {
+    const updated = await $fetch<{ id: string; bypassCache: boolean }>(
+      `/api/admin/rss/${feed.id}`,
+      {
+        method: "PATCH",
+        body: { bypassCache: nextBypassCache },
+      },
+    );
+
+    if (!data.value?.feeds) {
+      await refresh();
+
+      return;
+    }
+
+    const target = data.value.feeds.find((item) => item.id === updated.id);
+
+    if (target) {
+      target.bypassCache = updated.bypassCache;
+    }
+
+    toast.add({
+      title: updated.bypassCache
+        ? "Bypass cache mode enabled"
+        : "Bypass cache mode disabled",
+      description: updated.bypassCache
+        ? "This feed will bypass cache freshness checks during refresh runs."
+        : "This feed will use normal stale-cache refresh behavior.",
+      color: "success",
+    });
+  } catch (cause) {
+    console.error("Failed to toggle bypass cache for feed:", cause);
+    toast.add({
+      title: "Failed to update feed",
+      description: "Could not update this feed setting. Please try again.",
+      color: "error",
+    });
+  } finally {
+    isTogglingFeedId.value = null;
   }
 };
 
@@ -157,6 +209,22 @@ const columns: TableColumn<AdminRssFeed>[] = [
   {
     accessorKey: "subscriberCount",
     header: "Subscribers",
+  },
+  {
+    id: "bypassCache",
+    header: "Bypass Cache",
+    cell: ({ row }) => {
+      const feed = row.original;
+
+      return h(UButton, {
+        size: "xs",
+        variant: feed.bypassCache ? "solid" : "subtle",
+        color: feed.bypassCache ? "warning" : "neutral",
+        label: feed.bypassCache ? "Fast refresh" : "Regular refresh",
+        loading: isTogglingFeedId.value === feed.id,
+        onClick: () => toggleBypassCache(feed),
+      });
+    },
   },
   {
     id: "latestItemDate",
