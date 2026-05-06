@@ -35,7 +35,9 @@ onBeforeUnmount(() => {
     </Transition>
 
     <Transition name="fast-fade-blur" appear mode="out-in">
-      <div class="bottom-right">
+      <div class="bottom-right flex flex-col items-end justify-end">
+        <!-- <MainStaticCountdown /> -->
+
         <MainNavigationButtons />
       </div>
     </Transition>

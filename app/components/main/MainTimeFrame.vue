@@ -37,6 +37,7 @@ onMounted(() => {
 onBeforeUnmount(() => {
   if (intervalId) {
     clearInterval(intervalId);
+    intervalId = undefined;
   }
 });
 </script>

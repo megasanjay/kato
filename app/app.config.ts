@@ -2,9 +2,7 @@
 export default defineAppConfig({
   ui: {
     button: {
-      defaultVariants: {
-        size: "lg",
-      },
+      defaultVariants: {},
       slots: {
         base: "cursor-pointer rounded-lg",
       },

@@ -25,6 +25,12 @@ const items = computed<NavigationMenuItem[][]>(() => [
       active: isActive("/settings/wallpaper"),
     },
     {
+      label: "Countdown",
+      icon: "material-symbols:timer",
+      to: "/settings/countdown",
+      active: isActive("/settings/countdown"),
+    },
+    {
       label: "RSS Feeds",
       icon: "material-symbols:rss-feed",
       to: "/settings/rss",

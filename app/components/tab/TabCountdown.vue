@@ -530,28 +530,23 @@ watch(
 
         <template #footer>
           <div class="flex w-full items-center justify-between gap-3">
-            <button
-              type="button"
-              class="text-sm text-white/25 transition-colors hover:text-white/55"
+            <UButton
+              label="Cancel"
+              color="error"
+              variant="subtle"
+              icon="material-symbols:close"
               @click="closeModal"
-            >
-              Cancel
-            </button>
+            />
 
-            <button
-              type="button"
-              class="text-sm text-white/40 transition-colors hover:text-white/70 disabled:cursor-not-allowed disabled:opacity-30"
+            <UButton
+              :label="editingId ? 'Save changes' : 'Add countdown'"
+              color="success"
+              variant="soft"
+              :loading="isSaving"
               :disabled="isSaving || !form.title.trim() || !form.targetDate"
+              icon="material-symbols:check"
               @click="saveCountdown"
-            >
-              {{
-                isSaving
-                  ? "Saving..."
-                  : editingId
-                    ? "Save changes"
-                    : "Add countdown"
-              }}
-            </button>
+            />
           </div>
         </template>
       </UModal>
