@@ -64,10 +64,12 @@ const currentIntervalLabel = computed(() =>
 );
 
 const currentIntervalPointsPerInterval = computed(() =>
-  data.value
-    ? (INTERVALS[data.value.intervalName]?.pointsPerInterval ??
-      DEFAULT_INTERVAL.pointsPerInterval)
-    : DEFAULT_INTERVAL.pointsPerInterval,
+  currentIntervalLabel.value === "month"
+    ? now.value.daysInMonth()
+    : data.value
+      ? (INTERVALS[data.value.intervalName]?.pointsPerInterval ??
+        DEFAULT_INTERVAL.pointsPerInterval)
+      : DEFAULT_INTERVAL.pointsPerInterval,
 );
 
 const getPassedIntervalSegments = computed(() => {
@@ -98,6 +100,13 @@ const getPassedIntervalSegments = computed(() => {
   return dayjs().second();
 });
 
+const cursorIndex = computed(() => {
+  const totalPoints = currentIntervalPointsPerInterval.value;
+  const passedPoints = getPassedIntervalSegments.value;
+
+  return totalPoints - passedPoints - 1;
+});
+
 onMounted(() => {
   timer = setInterval(() => {
     now.value = dayjs();
@@ -116,7 +125,7 @@ onBeforeUnmount(() => {
   <div class="flex justify-end p-3">
     <div class="space-y-1">
       <p class="text-right text-[10px] text-white/35">
-        {{ getPassedIntervalSegments }} /
+        {{ getPassedIntervalSegments + 1 }}/
         {{ currentIntervalPointsPerInterval }}
       </p>
 
@@ -127,14 +136,9 @@ onBeforeUnmount(() => {
         <div
           v-for="(point, index) in currentIntervalPointsPerInterval"
           :key="`${point}-${index}`"
-          class="mt-0.5 ml-0.5 flex size-2 items-center justify-center rounded-full border text-xs transition-all"
+          class="mt-0.5 ml-0.5 flex h-2 w-1 origin-bottom scale-y-120 items-center justify-center rounded-[2px] border border-white/20 bg-white/20 text-xs transition-all duration-300 ease-in-out"
           :class="{
-            'border-white/75 bg-white/25':
-              currentIntervalPointsPerInterval - index >
-              getPassedIntervalSegments,
-            'border-white/25 bg-transparent':
-              currentIntervalPointsPerInterval - index <=
-              getPassedIntervalSegments,
+            'cursor-blink border-white/75 bg-white/30': index === cursorIndex,
           }"
         />
       </div>
@@ -156,5 +160,20 @@ onBeforeUnmount(() => {
   align-items: center;
   justify-content: center;
   margin: 1px;
+}
+
+@keyframes cursor-blink {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+.cursor-blink {
+  animation: cursor-blink 1.6s ease-in-out infinite;
 }
 </style>
