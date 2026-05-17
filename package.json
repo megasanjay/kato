@@ -2,7 +2,6 @@
   "name": "kato",
   "private": true,
   "type": "module",
-  "packageManager": "pnpm@10.15.0",
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
@@ -33,12 +32,12 @@
     "bcrypt": "6.0.0",
     "blurhash": "2.0.5",
     "date-fns": "4.1.0",
-    "kysely": "0.28.17",
+    "kysely": "0.29.0",
     "kysely-postgres-js": "3.0.0",
     "marked": "18.0.3",
     "prisma-kysely": "3.1.0",
     "rss-parser": "^3.13.0",
-    "sanitize-html": "2.17.3"
+    "sanitize-html": "2.17.4"
   },
   "devDependencies": {
     "@faker-js/faker": "10.4.0",
@@ -51,37 +50,26 @@
     "@tailwindcss/typography": "0.5.19",
     "@types/bcrypt": "6.0.0",
     "@types/sanitize-html": "2.16.1",
-    "@typescript-eslint/parser": "8.59.1",
+    "@typescript-eslint/parser": "8.59.2",
     "dayjs-nuxt": "2.1.11",
-    "eslint": "10.3.0",
+    "eslint": "10.4.0",
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-perfectionist": "5.9.0",
     "eslint-plugin-prettier": "5.5.5",
     "eslint-plugin-unused-imports": "4.4.1",
-    "eslint-plugin-vue": "10.9.0",
+    "eslint-plugin-vue": "10.9.1",
     "nuxt": "4.4.4",
     "nuxt-auth-utils": "0.5.29",
     "prettier": "3.8.3",
     "prettier-plugin-tailwindcss": "0.8.0",
     "prisma": "7.8.0",
     "rimraf": "6.1.3",
-    "tailwindcss": "4.2.4",
+    "tailwindcss": "4.3.0",
     "tailwindcss-debug-screens": "3.0.1",
     "tsx": "4.21.0",
     "typescript": "6.0.3",
     "vue": "latest",
-    "zod": "4.4.2"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "@parcel/watcher",
-      "@prisma/engines",
-      "bcrypt",
-      "esbuild",
-      "prisma",
-      "unrs-resolver",
-      "vue-demi"
-    ]
+    "zod": "4.4.3"
   },
   "engines": {
     "node": "22"
