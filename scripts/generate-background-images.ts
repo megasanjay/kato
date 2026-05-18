@@ -41,7 +41,7 @@ const selectTheme = async (): Promise<string> => {
     return neverUsed[Math.floor(Math.random() * neverUsed.length)];
   }
 
-  // All themes have been used at least once — find the oldest.
+  // All themes have been used at least once - find the oldest.
   // allImages is ordered date desc so the first occurrence of each theme = most recent use.
   const lastUsed = new Map<string, string>();
   for (const img of allImages) {

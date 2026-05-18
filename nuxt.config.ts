@@ -5,6 +5,11 @@ export default defineNuxtConfig({
   css: ["~/assets/css/main.css"],
   devtools: { enabled: true },
   modules: ["@nuxt/ui", "nuxt-auth-utils", "dayjs-nuxt", "@nuxt/eslint"],
+  dayjs: {
+    locales: ["en"],
+    plugins: ["relativeTime", "utc", "timezone", "dayOfYear"],
+    defaultLocale: "en",
+  },
   runtimeConfig: {
     session: {
       password: process.env.NUXT_SESSION_PASSWORD || "",
@@ -50,6 +55,7 @@ export default defineNuxtConfig({
         "dayjs", // CJS
         "dayjs/plugin/updateLocale", // CJS
         "dayjs/plugin/relativeTime", // CJS
+        "dayjs/plugin/dayOfYear", // CJS
         "dayjs/plugin/utc", // CJS
         "@faker-js/faker",
         "blurhash",

@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { RadioGroupItem } from "@nuxt/ui";
+import { useRouter } from "vue-router";
 
 definePageMeta({
   middleware: ["auth"],
@@ -14,65 +15,75 @@ type StaticCountdownResponse = {
   intervalName: string;
 };
 
-type IntervalOption = {
-  value: string;
-  label: string;
-  description: string;
-};
-
-const INTERVAL_OPTIONS: IntervalOption[] = [
+const INTERVAL_OPTIONS = [
   {
     value: "minute",
     label: "Minute",
-    description: "60 intervals, updates every second",
+    description:
+      "Shows the current minute split into 60 seconds. Updates every second.",
   },
   {
     value: "hour",
     label: "Hour",
-    description: "60 intervals, updates every minute",
+    description:
+      "Shows the current hour split into 60 minutes. Updates every minute.",
   },
   {
     value: "day",
-    label: "Day (hour updates)",
-    description: "24 intervals, updates every hour",
+    label: "Day (Hourly)",
+    description:
+      "Shows the current day split into 24 hours. Updates every hour.",
   },
   {
     value: "day-minute",
-    label: "Day (minute updates)",
-    description: "1440 intervals, updates every minute",
+    label: "Day (Minute-by-Minute)",
+    description:
+      "Shows the full day split into 1,440 minutes. Updates every minute.",
   },
   {
     value: "week",
     label: "Week",
-    description: "7 intervals, updates every day",
+    description:
+      "Shows the current week split into 7 days. Updates once per day.",
   },
   {
     value: "month",
     label: "Month",
-    description: "30 intervals, updates every day",
+    description:
+      "Shows the current month split into 30 daily intervals. Updates once per day.",
   },
   {
     value: "quarter",
     label: "Quarter",
-    description: "3 intervals, updates every month",
+    description:
+      "Shows the current quarter split into 3 months. Updates once per month.",
+    disabled: true,
   },
   {
     value: "year",
-    label: "Year",
-    description: "365 intervals, updates every day",
+    label: "Year (Daily)",
+    description:
+      "Shows the current year split into 365 days. Updates once per day.",
   },
   {
     value: "year-month",
-    label: "Year (Month updates)",
-    description: "12 intervals, updates every month",
+    label: "Year (Monthly)",
+    description:
+      "Shows the current year split into 12 months. Updates once per month.",
+  },
+  {
+    value: "workday",
+    label: "Workday (9 AM - 5 PM)",
+    description:
+      "Tracks an 8-hour workday during business hours. Outside work hours, it counts down to the next workday - or to Monday on weekends.",
   },
 ];
 
 const intervalItems = computed<RadioGroupItem[]>(() => INTERVAL_OPTIONS);
-
 const toast = useToast();
 const saving = ref(false);
 const selectedInterval = ref("minute");
+const router = useRouter();
 
 const { data, error, status, refresh } =
   await useFetch<StaticCountdownResponse>("/api/static-countdown", {
@@ -95,14 +106,7 @@ watchEffect(() => {
   }
 });
 
-const currentOption = computed(
-  (): IntervalOption =>
-    INTERVAL_OPTIONS.find(
-      (option) => option.value === selectedInterval.value,
-    ) || INTERVAL_OPTIONS[0]!,
-);
-
-const saveInterval = async () => {
+const saveInterval = async (value: string) => {
   if (saving.value) {
     return;
   }
@@ -113,7 +117,7 @@ const saveInterval = async () => {
     await $fetch("/api/static-countdown", {
       method: "PATCH",
       body: {
-        intervalName: selectedInterval.value,
+        intervalName: value,
       },
     });
 
@@ -121,9 +125,11 @@ const saveInterval = async () => {
 
     toast.add({
       title: "Countdown updated",
-      description: `Static countdown interval set to ${currentOption.value.label}.`,
+      description: `Static countdown interval set to ${selectedInterval.value}.`,
       color: "success",
     });
+
+    router.push("/"); // Navigate to the homepage after saving
   } catch (cause: unknown) {
     const message =
       cause && typeof cause === "object" && "data" in cause
@@ -155,9 +161,9 @@ const saveInterval = async () => {
 
       <div v-else class="space-y-4">
         <p class=" ">
-          Choose one settings that tracks your progress throughout the day,
-          week, month, or year. The countdown widget will update at regular
-          intervals based on your selection.
+          Choose one setting that tracks your progress throughout the day, week,
+          month, or year. The countdown widget will update at regular intervals
+          based on your selection.
         </p>
 
         <URadioGroup
@@ -165,31 +171,8 @@ const saveInterval = async () => {
           variant="card"
           color="secondary"
           :items="intervalItems"
+          @update:model-value="(value) => saveInterval(value as string)"
         />
-
-        <UCard>
-          <div class="space-y-1">
-            <p class="font-medium">
-              {{ currentOption.label }}
-            </p>
-
-            <p class="text-xs">
-              {{ currentOption.description }}
-            </p>
-          </div>
-        </UCard>
-
-        <div class="flex justify-end">
-          <UButton
-            color="success"
-            icon="material-symbols:save"
-            variant="subtle"
-            :loading="saving"
-            @click="saveInterval"
-          >
-            Save Interval
-          </UButton>
-        </div>
       </div>
     </UCard>
   </div>

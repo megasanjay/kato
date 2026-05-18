@@ -25,5 +25,10 @@ export default defineEventHandler(async (event) => {
     });
   }
 
+  console.log("Found existing static countdown interval for user:", {
+    userId: user.id,
+    intervalName: staticCountdownInterval.intervalName,
+  });
+
   return staticCountdownInterval;
 });

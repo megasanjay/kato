@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { TabsItem } from "@nuxt/ui";
 
-// Pomodoro timer — fully local, no API.
+// Pomodoro timer - fully local, no API.
 // Synthesises a short tone via Web Audio API when each phase ends.
 
 type Phase = "work" | "short-break" | "long-break";
@@ -89,7 +89,7 @@ const playTone = () => {
 
     setTimeout(() => ctx.close(), 2000);
   } catch {
-    // AudioContext unavailable (e.g. SSR) — silently skip.
+    // AudioContext unavailable (e.g. SSR) - silently skip.
   }
 };
 
@@ -173,7 +173,7 @@ onMounted(() => {
       running.value = true;
       interval = setInterval(tick, 1000);
     } else {
-      // Timer finished while away — advance to next phase silently
+      // Timer finished while away - advance to next phase silently
       nextPhase();
       startedAt.value = null;
     }

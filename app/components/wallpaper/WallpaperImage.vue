@@ -33,7 +33,7 @@ const image = computed(() => {
 
 const wallpaperUrl = computed(() => image.value?.url ?? null);
 
-// Decode at 1×1 to get the average color — pure JS, safe to run on the server.
+// Decode at 1×1 to get the average color - pure JS, safe to run on the server.
 const blurhashBgColor = computed(() => {
   const hash = image.value?.blurhash;
   if (!hash) return "rgb(30,41,59)"; // slate-800 fallback
