@@ -200,7 +200,7 @@ const unsubscribe = async (feed: RssSubscription) => {
 </script>
 
 <template>
-  <div class="space-y-5 py-6">
+  <div class="space-y-5 pb-6">
     <UPageHeader
       title="RSS Feeds"
       description="Manage your RSS feed subscriptions here."

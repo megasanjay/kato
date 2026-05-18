@@ -162,12 +162,8 @@ const columns: TableColumn<AdminRssFeed>[] = [
       const feed = row.original;
 
       return h("div", { class: "min-w-0" }, [
-        h(
-          "p",
-          { class: "truncate text-sm font-medium text-white" },
-          feedName(feed),
-        ),
-        h("p", { class: "truncate text-xs text-white/55" }, feed.url),
+        h("p", { class: "truncate text-sm font-medium" }, feedName(feed)),
+        h("p", { class: "truncate text-xs " }, feed.url),
       ]);
     },
   },
@@ -292,14 +288,14 @@ const columns: TableColumn<AdminRssFeed>[] = [
 
         <div
           v-if="!feeds.length"
-          class="rounded-2xl border border-white/15 bg-black/40 p-8 text-center text-white/75 backdrop-blur-sm"
+          class="rounded-2xl border border-white/15 p-8 text-center backdrop-blur-sm"
         >
           No subscribed RSS feeds found.
         </div>
 
         <div
           v-else
-          class="overflow-hidden rounded-2xl border border-white/20 bg-black/45 backdrop-blur-md"
+          class="overflow-hidden rounded-2xl border border-white/20 bg-white dark:bg-slate-800"
         >
           <UTable :data="feeds" :columns="columns" class="flex-1" />
         </div>

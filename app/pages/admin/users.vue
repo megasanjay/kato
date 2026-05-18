@@ -39,12 +39,9 @@ watchEffect(() => {
   }
 });
 
-const { data, error, status } = await useFetch<AdminUser[]>(
-  "/api/admin/users",
-  {
-    method: "GET",
-  },
-);
+const { data, error } = await useFetch<AdminUser[]>("/api/admin/users", {
+  method: "GET",
+});
 
 if (error.value) {
   toast.add({
@@ -152,25 +149,10 @@ const columns: TableColumn<AdminUser>[] = [
 </script>
 
 <template>
-  <div class="relative h-full overflow-y-auto">
+  <div class="relative h-full overflow-y-auto py-6">
     <div class="mx-auto w-full max-w-7xl">
       <div
-        v-if="status === 'pending' && !users.length"
-        class="rounded-2xl border border-white/15 bg-black/40 p-8 text-center text-white/75 backdrop-blur-sm"
-      >
-        Loading users...
-      </div>
-
-      <div
-        v-else-if="!users.length"
-        class="rounded-2xl border border-white/15 bg-black/40 p-8 text-center text-white/75 backdrop-blur-sm"
-      >
-        No users found.
-      </div>
-
-      <div
-        v-else
-        class="overflow-hidden rounded-2xl border border-white/20 bg-black/45 backdrop-blur-md"
+        class="overflow-hidden rounded-2xl border bg-white dark:bg-slate-800"
       >
         <UTable :data="users" :columns="columns" class="flex-1" />
       </div>

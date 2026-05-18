@@ -76,13 +76,13 @@ const hasPortfolioLink = computed(() =>
 </script>
 
 <template>
-  <div class="space-y-5 py-6">
+  <div class="space-y-5 pb-6">
     <UPageHeader
       title="Wallpaper Details"
       description="More information about the current wallpaper shown in Kato."
     />
 
-    <div class="flex rounded-lg bg-black/40 px-4 py-4">
+    <div class="flex rounded-lg px-4 py-4">
       <div
         v-if="status === 'pending' && !wallpaper"
         class="py-6 text-center text-sm"

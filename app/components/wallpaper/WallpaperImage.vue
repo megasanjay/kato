@@ -7,6 +7,14 @@ const toast = useToast();
 const isImageLoaded = ref(false);
 const blurhashDataUrl = ref<string | null>(null);
 const wallpaperImg = useTemplateRef<HTMLImageElement>("wallpaperImg");
+const props = withDefaults(
+  defineProps<{
+    overlayMode?: "vignette" | "full";
+  }>(),
+  {
+    overlayMode: "vignette",
+  },
+);
 
 const today = dayjs().format("YYYY-MM-DD");
 
@@ -73,6 +81,14 @@ onMounted(() => {
 watch(wallpaperUrl, () => {
   isImageLoaded.value = false;
 });
+
+const overlayClass = computed(() => {
+  if (props.overlayMode === "full") {
+    return "bg-white/45 dark:bg-black/55";
+  }
+
+  return "bg-[radial-gradient(circle,transparent_30%,rgba(0,0,0,0.38)_62%,rgba(0,0,0,0.84)_100%)] dark:bg-[radial-gradient(circle,transparent_30%,rgba(0,0,0,0.38)_62%,rgba(0,0,0,0.84)_100%)]";
+});
 </script>
 
 <template>
@@ -101,7 +117,8 @@ watch(wallpaperUrl, () => {
     />
 
     <div
-      class="pointer-events-none absolute inset-0 z-10 bg-[radial-gradient(circle,transparent_30%,rgba(0,0,0,0.38)_62%,rgba(0,0,0,0.84)_100%)] transition-opacity duration-700"
+      class="pointer-events-none absolute inset-0 z-10 transition-opacity duration-700"
+      :class="overlayClass"
     />
   </div>
 </template>

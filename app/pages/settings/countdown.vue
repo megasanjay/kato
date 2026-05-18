@@ -148,7 +148,7 @@ const saveInterval = async (value: string) => {
 </script>
 
 <template>
-  <div class="space-y-5 py-6">
+  <div class="space-y-5 pb-6">
     <UPageHeader
       title="Countdown Settings"
       description="Set the static interval used by the always-on countdown widget."

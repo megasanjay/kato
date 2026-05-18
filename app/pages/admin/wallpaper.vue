@@ -186,10 +186,10 @@ const deleteWallpaper = async (wallpaper: AdminWallpaper) => {
       </div>
 
       <div v-else class="grid grid-cols-1 gap-5 lg:grid-cols-3">
-        <article
+        <div
           v-for="wallpaper in wallpapers"
           :key="wallpaper.id"
-          class="overflow-hidden rounded-2xl border border-white/20 bg-black/45 backdrop-blur-md"
+          class="overflow-hidden rounded-2xl border bg-white dark:bg-slate-800"
         >
           <div class="relative h-64 w-full overflow-hidden md:h-72">
             <img
@@ -202,7 +202,9 @@ const deleteWallpaper = async (wallpaper: AdminWallpaper) => {
               class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle,transparent_35%,rgba(0,0,0,0.45)_68%,rgba(0,0,0,0.8)_100%)]"
             />
 
-            <div class="absolute inset-0 flex items-center justify-center px-4">
+            <div
+              class="absolute top-25 left-1/2 flex -translate-x-1/2 -translate-y-1/2 transform items-center justify-center px-4"
+            >
               <div class="flex w-max flex-col">
                 <h2
                   class="text-center text-5xl font-semibold tracking-tight text-white"
@@ -241,16 +243,16 @@ const deleteWallpaper = async (wallpaper: AdminWallpaper) => {
 
           <div class="space-y-4 p-4 md:p-5">
             <div>
-              <p class="text-sm font-semibold text-white">
+              <p class="text-sm font-semibold">
                 {{ formattedDate(wallpaper.date) }}
               </p>
 
-              <p class="mt-1 line-clamp-2 text-sm text-white/75">
+              <p class="mt-1 line-clamp-2 text-sm">
                 {{ wallpaper.description }}
               </p>
             </div>
 
-            <p class="text-xs text-white/65">
+            <p class="text-xs">
               by {{ wallpaper.authorName }} ({{ wallpaper.username }}) •
               {{ wallpaper.city }},
               {{ wallpaper.country }}
@@ -261,7 +263,7 @@ const deleteWallpaper = async (wallpaper: AdminWallpaper) => {
                 <UButton
                   size="sm"
                   color="neutral"
-                  variant="soft"
+                  variant="solid"
                   :loading="updatingId === wallpaper.id"
                   @click="setTextOutline(wallpaper, !wallpaper.addTextStroke)"
                 >
@@ -273,7 +275,9 @@ const deleteWallpaper = async (wallpaper: AdminWallpaper) => {
                   :color="wallpaper.addTextStroke ? 'success' : 'neutral'"
                   variant="subtle"
                   :label="
-                    wallpaper.addTextStroke ? 'Outline On' : 'Outline Off'
+                    wallpaper.addTextStroke
+                      ? 'Outline is currently on'
+                      : 'Outline is currently off'
                   "
                 />
               </div>
@@ -337,7 +341,7 @@ const deleteWallpaper = async (wallpaper: AdminWallpaper) => {
               </div>
             </div>
           </div>
-        </article>
+        </div>
       </div>
     </div>
   </div>
