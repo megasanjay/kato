@@ -54,7 +54,12 @@ if (error.value) {
 
 const deletingId = ref<string | null>(null);
 const updatingId = ref<string | null>(null);
+const regeneratingId = ref<string | null>(null);
 const ultrawide = ref(false);
+
+const toggleUltrawide = () => {
+  ultrawide.value = !ultrawide.value;
+};
 
 const today = computed(() => dayjs().format("YYYY-MM-DD"));
 
@@ -147,6 +152,55 @@ const deleteWallpaper = async (wallpaper: AdminWallpaper) => {
     deletingId.value = null;
   }
 };
+
+const regenerateWallpaper = async (wallpaper: AdminWallpaper) => {
+  if (regeneratingId.value) {
+    return;
+  }
+
+  regeneratingId.value = wallpaper.id;
+
+  try {
+    const updated = await $fetch<AdminWallpaper>(
+      `/api/admin/wallpaper/${wallpaper.id}/regenerate`,
+      {
+        method: "POST",
+      },
+    );
+
+    if (wallpapers.value) {
+      const index = wallpapers.value.findIndex(
+        (item) => item.id === wallpaper.id,
+      );
+      if (index !== -1) {
+        wallpapers.value[index] = updated;
+      }
+    }
+
+    toast.add({
+      title: "Wallpaper regenerated",
+      description: `${formattedDate(wallpaper.date)} has a new image now.`,
+      color: "success",
+      icon: "material-symbols:refresh",
+    });
+  } catch (regenerateError: unknown) {
+    const message =
+      regenerateError &&
+      typeof regenerateError === "object" &&
+      "data" in regenerateError
+        ? (regenerateError as { data?: { message?: string } }).data?.message
+        : undefined;
+
+    toast.add({
+      title: "Regeneration failed",
+      description: message || "Could not replace this wallpaper.",
+      color: "error",
+      icon: "material-symbols:error",
+    });
+  } finally {
+    regeneratingId.value = null;
+  }
+};
 </script>
 
 <template>
@@ -165,7 +219,7 @@ const deleteWallpaper = async (wallpaper: AdminWallpaper) => {
               ? 'material-symbols:fullscreen-exit'
               : 'material-symbols:fullscreen'
           "
-          @click="ultrawide = !ultrawide"
+          @click="toggleUltrawide"
         >
           {{ ultrawide ? "Normal Width" : "Ultrawide" }}
         </UButton>
@@ -283,6 +337,17 @@ const deleteWallpaper = async (wallpaper: AdminWallpaper) => {
               </div>
 
               <div class="flex items-center gap-2">
+                <UButton
+                  size="sm"
+                  color="primary"
+                  variant="soft"
+                  icon="material-symbols:refresh"
+                  :loading="regeneratingId === wallpaper.id"
+                  @click="regenerateWallpaper(wallpaper)"
+                >
+                  Regenerate
+                </UButton>
+
                 <UButton
                   :to="wallpaper.unsplashUrl"
                   target="_blank"
