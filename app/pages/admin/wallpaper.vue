@@ -169,11 +169,11 @@ const regenerateWallpaper = async (wallpaper: AdminWallpaper) => {
     );
 
     if (wallpapers.value) {
-      const index = wallpapers.value.findIndex(
-        (item) => item.id === wallpaper.id,
-      );
-      if (index !== -1) {
-        wallpapers.value[index] = updated;
+      for (let i = 0; i < wallpapers.value.length; i += 1) {
+        if (wallpapers.value[i]?.id === wallpaper.id) {
+          wallpapers.value[i] = updated;
+          break;
+        }
       }
     }
 
